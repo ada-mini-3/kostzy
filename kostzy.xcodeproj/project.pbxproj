@@ -48,6 +48,7 @@
 		881D366924BD579C00521220 /* Community.swift in Sources */ = {isa = PBXBuildFile; fileRef = 881D366824BD579C00521220 /* Community.swift */; };
 		881D366B24BD57B200521220 /* Discussion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 881D366A24BD57B200521220 /* Discussion.swift */; };
 		881D366D24BD57BB00521220 /* DiscussionComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 881D366C24BD57BB00521220 /* DiscussionComment.swift */; };
+		88AC2EEB24BED07B00708B76 /* Menu.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 88AC2EEA24BED07B00708B76 /* Menu.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -94,6 +95,7 @@
 		881D366824BD579C00521220 /* Community.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Community.swift; sourceTree = "<group>"; };
 		881D366A24BD57B200521220 /* Discussion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Discussion.swift; sourceTree = "<group>"; };
 		881D366C24BD57BB00521220 /* DiscussionComment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscussionComment.swift; sourceTree = "<group>"; };
+		88AC2EEA24BED07B00708B76 /* Menu.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Menu.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,6 +151,7 @@
 				881D361224BD4AF900521220 /* Feeds */,
 				881D361124BD4AEF00521220 /* Auth */,
 				881D363C24BD521500521220 /* Main.storyboard */,
+				88AC2EEA24BED07B00708B76 /* Menu.storyboard */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -393,6 +396,7 @@
 				881D362724BD4D9500521220 /* FeedsCreate.storyboard in Resources */,
 				881D362C24BD4E4000521220 /* Map.storyboard in Resources */,
 				881D362124BD4C6700521220 /* Feeds.storyboard in Resources */,
+				88AC2EEB24BED07B00708B76 /* Menu.storyboard in Resources */,
 				881D362524BD4C9B00521220 /* FeedsLocation.storyboard in Resources */,
 				881D362324BD4C7800521220 /* FeedsDetail.storyboard in Resources */,
 				881D361524BD4B4700521220 /* Login.storyboard in Resources */,
