@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="VHW-3e-aM1">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Tab Bar Controller-->
+        <scene sceneID="vak-9h-o0u">
+            <objects>
+                <tabBarController id="VHW-3e-aM1" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="VNz-my-QaC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="tintColor" red="1" green="0.74117647058823533" blue="0.086274509803921567" alpha="0.84705882352941175" colorSpace="calibratedRGB"/>
+                        <color key="selectedImageTintColor" red="1" green="0.74117647060000003" blue="0.086274509799999996" alpha="0.84705882349999995" colorSpace="calibratedRGB"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="h3h-K3-249" kind="relationship" relationship="viewControllers" id="raE-Re-329"/>
+                        <segue destination="qdw-oO-8MR" kind="relationship" relationship="viewControllers" id="fQ1-jl-bv6"/>
+                        <segue destination="gYr-eV-15y" kind="relationship" relationship="viewControllers" id="AXS-bu-QpA"/>
+                        <segue destination="sLi-oQ-i8k" kind="relationship" relationship="viewControllers" id="shs-KA-W7W"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xxk-gJ-RJL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2273" y="-221"/>
+        </scene>
+        <!--Feeds-->
+        <scene sceneID="UHJ-aM-TeZ">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Feeds" id="h3h-K3-249" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Feeds" image="paperplane.fill" catalog="system" landscapeImage="paperplane.fill" selectedImage="paperplane.fill" id="nbV-3v-1f1">
+                        <color key="badgeColor" red="0.12941176469999999" green="0.78039215689999997" blue="0.87450980389999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </tabBarItem>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3Jg-d3-wqC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1575" y="-450"/>
+        </scene>
+        <!--Community-->
+        <scene sceneID="VrP-DM-a77">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Community" id="qdw-oO-8MR" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" tag="1" title="Community" image="person.3.fill" catalog="system" landscapeImage="person.3.fill" selectedImage="person.3.fill" id="cGJ-02-P6j"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="z0w-1w-40r" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1552" y="-262"/>
+        </scene>
+        <!--Notification-->
+        <scene sceneID="wxb-cc-d7A">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Notification" id="gYr-eV-15y" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Notification" image="bell.fill" catalog="system" id="bRa-HO-WJ3"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yTR-pD-Zr2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1531" y="-127"/>
+        </scene>
+        <!--Profile-->
+        <scene sceneID="7th-WR-rBS">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Profile" id="sLi-oQ-i8k" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Profile" image="person.fill" catalog="system" id="9yT-7h-PSX"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FXQ-HU-ADY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1531" y="-12"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="bell.fill" catalog="system" width="128" height="124"/>
+        <image name="paperplane.fill" catalog="system" width="128" height="121"/>
+        <image name="person.3.fill" catalog="system" width="128" height="61"/>
+        <image name="person.fill" catalog="system" width="128" height="120"/>
+    </resources>
+</document>
