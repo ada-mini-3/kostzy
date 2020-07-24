@@ -9,11 +9,18 @@
 import UIKit
 
 class FeedsCreateVC: UIViewController {
-
+    
+    @IBOutlet weak var addPhoto: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        setupAddPhoto()
+    }
+    
+    private func setupAddPhoto() {
+        addPhoto.layer.borderWidth = 1
+        addPhoto.layer.borderColor = UIColor.lightGray.cgColor
+        addPhoto.layer.cornerRadius = 10
     }
     
 
