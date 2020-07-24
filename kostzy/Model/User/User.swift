@@ -11,3 +11,9 @@ import Foundation
 struct User {
     
 }
+
+var userImage: String?
+var userFullName: String?
+var userTitle: String?
+var userLike: Int?
+var userAboutMe: String?

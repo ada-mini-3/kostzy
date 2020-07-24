@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C518EAB24C7DDD800B0B383 /* HelperExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C518EAA24C7DDD800B0B383 /* HelperExtension.swift */; };
+		2C518EB624C84DB000B0B383 /* ProfileTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C518EB424C84DB000B0B383 /* ProfileTableVC.swift */; };
+		2C518EC324C85AB500B0B383 /* MyCommunityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C518EC224C85AB500B0B383 /* MyCommunityCell.swift */; };
+		2C69C68524C938820050C751 /* MyCommunityTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C69C68424C938820050C751 /* MyCommunityTable.swift */; };
+		2C69C68724C93A030050C751 /* BadgeCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C69C68624C93A030050C751 /* BadgeCollectionCell.swift */; };
 		881D35FD24BD4A7800521220 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 881D35FC24BD4A7800521220 /* AppDelegate.swift */; };
 		881D35FF24BD4A7800521220 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 881D35FE24BD4A7800521220 /* SceneDelegate.swift */; };
 		881D360624BD4A7900521220 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 881D360524BD4A7900521220 /* Assets.xcassets */; };
@@ -37,7 +42,6 @@
 		881D364F24BD54E400521220 /* RegisterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 881D364E24BD54E400521220 /* RegisterVC.swift */; };
 		881D365124BD54F600521220 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 881D365024BD54F600521220 /* LoginVC.swift */; };
 		881D365324BD551F00521220 /* NotificationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 881D365224BD551F00521220 /* NotificationVC.swift */; };
-		881D365524BD563200521220 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 881D365424BD563200521220 /* ProfileVC.swift */; };
 		881D365724BD564100521220 /* EditProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 881D365624BD564100521220 /* EditProfileVC.swift */; };
 		881D365924BD565200521220 /* OffLimitVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 881D365824BD565200521220 /* OffLimitVC.swift */; };
 		881D365B24BD566800521220 /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 881D365A24BD566800521220 /* MapVC.swift */; };
@@ -52,6 +56,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2C518EAA24C7DDD800B0B383 /* HelperExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelperExtension.swift; sourceTree = "<group>"; };
+		2C518EB424C84DB000B0B383 /* ProfileTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableVC.swift; sourceTree = "<group>"; };
+		2C518EC224C85AB500B0B383 /* MyCommunityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCommunityCell.swift; sourceTree = "<group>"; };
+		2C69C68424C938820050C751 /* MyCommunityTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCommunityTable.swift; sourceTree = "<group>"; };
+		2C69C68624C93A030050C751 /* BadgeCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeCollectionCell.swift; sourceTree = "<group>"; };
 		881D35F924BD4A7800521220 /* kostzy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = kostzy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		881D35FC24BD4A7800521220 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		881D35FE24BD4A7800521220 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -84,7 +93,6 @@
 		881D364E24BD54E400521220 /* RegisterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterVC.swift; sourceTree = "<group>"; };
 		881D365024BD54F600521220 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		881D365224BD551F00521220 /* NotificationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationVC.swift; sourceTree = "<group>"; };
-		881D365424BD563200521220 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		881D365624BD564100521220 /* EditProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileVC.swift; sourceTree = "<group>"; };
 		881D365824BD565200521220 /* OffLimitVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffLimitVC.swift; sourceTree = "<group>"; };
 		881D365A24BD566800521220 /* MapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
@@ -109,6 +117,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2C69C68124C935520050C751 /* MyCommunityTable */ = {
+			isa = PBXGroup;
+			children = (
+				2C69C68424C938820050C751 /* MyCommunityTable.swift */,
+				2C518EC224C85AB500B0B383 /* MyCommunityCell.swift */,
+			);
+			path = MyCommunityTable;
+			sourceTree = "<group>";
+		};
 		881D35F024BD4A7800521220 = {
 			isa = PBXGroup;
 			children = (
@@ -133,6 +150,7 @@
 				881D361024BD4AB200521220 /* View */,
 				881D35FC24BD4A7800521220 /* AppDelegate.swift */,
 				881D35FE24BD4A7800521220 /* SceneDelegate.swift */,
+				2C518EAA24C7DDD800B0B383 /* HelperExtension.swift */,
 				881D360524BD4A7900521220 /* Assets.xcassets */,
 				881D360724BD4A7900521220 /* LaunchScreen.storyboard */,
 				881D360A24BD4A7900521220 /* Info.plist */,
@@ -253,8 +271,10 @@
 		881D363724BD500500521220 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				881D365424BD563200521220 /* ProfileVC.swift */,
+				2C69C68124C935520050C751 /* MyCommunityTable */,
+				2C518EB424C84DB000B0B383 /* ProfileTableVC.swift */,
 				881D365624BD564100521220 /* EditProfileVC.swift */,
+				2C69C68624C93A030050C751 /* BadgeCollectionCell.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -424,7 +444,6 @@
 				881D364D24BD54B600521220 /* FeedsCreateVC.swift in Sources */,
 				881D366D24BD57BB00521220 /* DiscussionComment.swift in Sources */,
 				881D363F24BD523E00521220 /* ViewController.swift in Sources */,
-				881D365524BD563200521220 /* ProfileVC.swift in Sources */,
 				881D365124BD54F600521220 /* LoginVC.swift in Sources */,
 				881D364B24BD549E00521220 /* FeedsLocationVC.swift in Sources */,
 				881D364924BD53B300521220 /* FeedsDetailVC.swift in Sources */,
@@ -434,9 +453,14 @@
 				881D364524BD533A00521220 /* DetailDiscussionVC.swift in Sources */,
 				881D366924BD579C00521220 /* Community.swift in Sources */,
 				881D364124BD52D900521220 /* CommunityVC.swift in Sources */,
+				2C518EC324C85AB500B0B383 /* MyCommunityCell.swift in Sources */,
+				2C69C68524C938820050C751 /* MyCommunityTable.swift in Sources */,
+				2C518EAB24C7DDD800B0B383 /* HelperExtension.swift in Sources */,
 				881D365B24BD566800521220 /* MapVC.swift in Sources */,
+				2C518EB624C84DB000B0B383 /* ProfileTableVC.swift in Sources */,
 				881D366224BD572800521220 /* FeedComment.swift in Sources */,
 				881D366024BD570B00521220 /* Tag.swift in Sources */,
+				2C69C68724C93A030050C751 /* BadgeCollectionCell.swift in Sources */,
 				881D365724BD564100521220 /* EditProfileVC.swift in Sources */,
 				881D35FD24BD4A7800521220 /* AppDelegate.swift in Sources */,
 				881D35FF24BD4A7800521220 /* SceneDelegate.swift in Sources */,
@@ -580,7 +604,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = RTU67JB7DC;
+				DEVELOPMENT_TEAM = QWVAEMBXMM;
 				INFOPLIST_FILE = kostzy/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -597,7 +621,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = RTU67JB7DC;
+				DEVELOPMENT_TEAM = QWVAEMBXMM;
 				INFOPLIST_FILE = kostzy/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
