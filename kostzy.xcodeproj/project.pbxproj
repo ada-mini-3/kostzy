@@ -7,12 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8810C60B24C9BBDC00B8207D /* FeedsCreate.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8810C60A24C9BBDC00B8207D /* FeedsCreate.storyboard */; };
 		2C518EAB24C7DDD800B0B383 /* HelperExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C518EAA24C7DDD800B0B383 /* HelperExtension.swift */; };
 		2C518EB624C84DB000B0B383 /* ProfileTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C518EB424C84DB000B0B383 /* ProfileTableVC.swift */; };
 		2C518EC324C85AB500B0B383 /* MyCommunityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C518EC224C85AB500B0B383 /* MyCommunityCell.swift */; };
 		2C69C68524C938820050C751 /* MyCommunityTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C69C68424C938820050C751 /* MyCommunityTable.swift */; };
 		2C69C68724C93A030050C751 /* BadgeCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C69C68624C93A030050C751 /* BadgeCollectionCell.swift */; };
+		8810C60B24C9BBDC00B8207D /* FeedsCreate.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8810C60A24C9BBDC00B8207D /* FeedsCreate.storyboard */; };
 		881D35FD24BD4A7800521220 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 881D35FC24BD4A7800521220 /* AppDelegate.swift */; };
 		881D35FF24BD4A7800521220 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 881D35FE24BD4A7800521220 /* SceneDelegate.swift */; };
 		881D360624BD4A7900521220 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 881D360524BD4A7900521220 /* Assets.xcassets */; };
@@ -59,12 +59,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		8810C60A24C9BBDC00B8207D /* FeedsCreate.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FeedsCreate.storyboard; sourceTree = "<group>"; };
 		2C518EAA24C7DDD800B0B383 /* HelperExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelperExtension.swift; sourceTree = "<group>"; };
 		2C518EB424C84DB000B0B383 /* ProfileTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableVC.swift; sourceTree = "<group>"; };
 		2C518EC224C85AB500B0B383 /* MyCommunityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCommunityCell.swift; sourceTree = "<group>"; };
 		2C69C68424C938820050C751 /* MyCommunityTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCommunityTable.swift; sourceTree = "<group>"; };
 		2C69C68624C93A030050C751 /* BadgeCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeCollectionCell.swift; sourceTree = "<group>"; };
+		8810C60A24C9BBDC00B8207D /* FeedsCreate.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FeedsCreate.storyboard; sourceTree = "<group>"; };
 		881D35F924BD4A7800521220 /* kostzy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = kostzy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		881D35FC24BD4A7800521220 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		881D35FE24BD4A7800521220 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -624,7 +624,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = QWVAEMBXMM;
+				DEVELOPMENT_TEAM = 928NUAMW33;
 				INFOPLIST_FILE = kostzy/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -641,7 +641,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = QWVAEMBXMM;
+				DEVELOPMENT_TEAM = 928NUAMW33;
 				INFOPLIST_FILE = kostzy/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
