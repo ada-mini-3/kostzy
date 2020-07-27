@@ -303,7 +303,7 @@
                     <navigationItem key="navigationItem" title="Feeds" largeTitleDisplayMode="always" id="2nq-gM-rzP"/>
                     <connections>
                         <outlet property="actityIndicator" destination="UbT-jV-h7e" id="UrL-ZE-gxv"/>
-                        <outlet property="btnLocation" destination="Kka-NS-Bx2" id="CZk-vB-MnL"/>
+                        <outlet property="btnLocation" destination="Kka-NS-Bx2" id="Yor-Ei-K8K"/>
                         <outlet property="feedsCollectionView" destination="c0l-ss-4XP" id="ck7-tE-cHQ"/>
                         <outlet property="segmentedCategory" destination="oyD-rP-R8l" id="wei-rg-0ar"/>
                         <segue destination="f8F-FQ-EJk" kind="show" identifier="detailFeedSegue" id="G31-wR-wyJ"/>

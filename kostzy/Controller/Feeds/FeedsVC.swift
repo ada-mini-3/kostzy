@@ -7,9 +7,12 @@
 //
 
 import UIKit
+import MapKit
 
-class FeedsVC: UIViewController {
+class FeedsVC: UIViewController, MKMapViewDelegate {
     
+    
+
     @IBOutlet weak var btnLocation: UIButton!
     
     @IBOutlet weak var segmentedCategory: UISegmentedControl!
@@ -33,6 +36,43 @@ class FeedsVC: UIViewController {
         setupRefreshControl()
         setupIndicator()
     }
+    
+    func openMapForPlace () {
+        //Defining destination
+        let latitude: CLLocationDegrees = -6.200696
+        let longitude: CLLocationDegrees = 106.784262
+
+        let regionDistance:CLLocationDistance = 1000
+        let coordinates = CLLocationCoordinate2DMake(latitude, longitude)
+        let regionSpan = MKCoordinateRegion(center: coordinates, latitudinalMeters: regionDistance, longitudinalMeters: regionDistance)
+
+        let options = [
+            MKLaunchOptionsMapCenterKey: NSValue(mkCoordinate: regionSpan.center),
+            MKLaunchOptionsMapSpanKey: NSValue(mkCoordinateSpan: regionSpan.span)
+        ]
+        let placemark = MKPlacemark(coordinate: coordinates)
+        let mapItem = MKMapItem(placemark: placemark)
+        mapItem.name = "Syahdan"
+        mapItem.openInMaps(launchOptions: options)
+    }
+    
+//    //Customizing the annotation
+//    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+//        let identifier = "MyMarker"
+//
+//        if annotation.isKind(of: MKUserLocation.self) {
+//            return nil
+//        }
+//        //reuse the annotation if possible
+//        var annotationView: MKMarkerAnnotationView? = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKMarkerAnnotationView
+//        if annotationView == nil {
+//            annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+//        }
+//
+//        annotationView?.glyphImage = #imageLiteral(resourceName: "location-icon ")
+//
+//        return annotationView
+//    }
     
     private func setupIndicator() {
         actityIndicator.startAnimating()
@@ -176,10 +216,13 @@ extension FeedsVC : UICollectionViewDelegate, UICollectionViewDataSource {
         }
         cell.locationTapAction = {() in
             print("Location Clicked!!")
+            self.openMapForPlace()
+            
         }
         cell.configure()
         
         return cell
     }
     
+ 
 }
