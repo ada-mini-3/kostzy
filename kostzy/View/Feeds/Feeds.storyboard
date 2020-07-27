@@ -102,9 +102,6 @@
                                                     <state key="normal" title="Kost Mandala" image="chevron.left" catalog="system">
                                                         <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </state>
-                                                    <connections>
-                                                        <action selector="openFeedPlaceInMap:" destination="8hK-6j-bY4" eventType="touchUpInside" id="9QP-1i-vCY"/>
-                                                    </connections>
                                                 </button>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tS2-T6-PQk">
                                                     <rect key="frame" x="340" y="14" width="34" height="34"/>
@@ -306,7 +303,7 @@
                     <navigationItem key="navigationItem" title="Feeds" largeTitleDisplayMode="always" id="2nq-gM-rzP"/>
                     <connections>
                         <outlet property="actityIndicator" destination="UbT-jV-h7e" id="UrL-ZE-gxv"/>
-                        <outlet property="btnLocation" destination="Kka-NS-Bx2" id="CZk-vB-MnL"/>
+                        <outlet property="btnLocation" destination="Kka-NS-Bx2" id="Yor-Ei-K8K"/>
                         <outlet property="feedsCollectionView" destination="c0l-ss-4XP" id="ck7-tE-cHQ"/>
                         <outlet property="segmentedCategory" destination="oyD-rP-R8l" id="wei-rg-0ar"/>
                         <segue destination="f8F-FQ-EJk" kind="show" identifier="detailFeedSegue" id="G31-wR-wyJ"/>

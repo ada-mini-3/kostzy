@@ -13,9 +13,6 @@ class FeedsVC: UIViewController, MKMapViewDelegate {
     
     
 
-    @IBAction func openFeedPlaceInMap(_ sender: Any) {
-        openMapForPlace()
-    }
     @IBOutlet weak var btnLocation: UIButton!
     
     @IBOutlet weak var segmentedCategory: UISegmentedControl!
@@ -219,6 +216,8 @@ extension FeedsVC : UICollectionViewDelegate, UICollectionViewDataSource {
         }
         cell.locationTapAction = {() in
             print("Location Clicked!!")
+            self.openMapForPlace()
+            
         }
         cell.configure()
         
