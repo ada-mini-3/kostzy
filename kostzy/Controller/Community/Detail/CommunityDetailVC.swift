@@ -41,9 +41,9 @@ class CommunityDetailVC: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        communityDetailImageView.image = UIImage(named: communityImage[selectedRow!])
-        communityNameLabel.text = communityName[selectedRow!]
-        communityLocationLabel.text = "\(communityLocation[selectedRow!]) • \(communityPost[selectedRow!]) POSTS"
+//        communityDetailImageView.image = UIImage(named: communityImage[selectedRow!])
+//        communityNameLabel.text = communityName[selectedRow!]
+//        communityLocationLabel.text = "\(communityLocation[selectedRow!]) • \(communityPost[selectedRow!]) POSTS"
         communityDescriptionLabel.text = communityDescription[selectedRow!]
         
         /* memberCountLabel.text = "\(memberCount[selectedRow!]) Members" */
@@ -109,15 +109,18 @@ class CommunityDetailVC: UIViewController {
     // Delete or comment this function when user testing is finished
     func debugCustomization() {
         if communityIsRequested[selectedRow!] == false {
-            aboutAndDiscussionSegmentedControl.isHidden = true
+//            aboutAndDiscussionSegmentedControl.isHidden = true
+            albumPlaceholderTextLabel.isHidden = true
             albumCollectionView.isHidden = true
             
-            memberCountSeparatorConstraint.constant = 16
-            requestJoinSeparatorConstraint.constant = 16
+//            memberCountSeparatorConstraint.constant = 16
+            requestJoinSeparatorConstraint.constant = 20
         }
         else if communityIsRequested[selectedRow!] == true {
-            requestJoinButtonOutlet.isHidden = true
+//            let segmentedControlTitle = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 12)]
+//            aboutAndDiscussionSegmentedControl.setTitleTextAttributes(segmentedControlTitle, for: .selected)
             
+            requestJoinButtonOutlet.isHidden = true
             requestJoinSeparatorConstraint.constant = 120
         }
     }

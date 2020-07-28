@@ -316,6 +316,16 @@ extension UITextField {
 }
 
 extension UITextView {
+    func underlinedTextView() {
+        let border = CALayer()
+        let width = CGFloat(1.0)
+        border.borderColor = UIColor.init(red: 133/255, green: 170/255, blue: 209/255, alpha: 0.61).cgColor
+        border.frame = CGRect(x: 0, y: self.frame.size.height - width, width:  self.frame.size.width, height: self.frame.size.height)
+        border.borderWidth = width
+        self.layer.addSublayer(border)
+        self.layer.masksToBounds = true
+    }
+    
     func centerVertically() {
         let fittingSize = CGSize(width: bounds.width, height: CGFloat.greatestFiniteMagnitude)
         let size = sizeThatFits(fittingSize)
