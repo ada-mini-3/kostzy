@@ -20,17 +20,60 @@ class FeedsDetailVC: UIViewController {
     
     @IBOutlet weak var tagsCollectionView: UICollectionView!
     
+    @IBOutlet weak var likeButton: UIButton!
+    
     @IBOutlet weak var commentCount: UILabel!
     
     @IBOutlet weak var likeCount: UILabel!
     
+    @IBOutlet weak var commentTableView: UITableView!
+    
+    @IBOutlet weak var profileImage: UIImageView!
+    
+    @IBOutlet weak var commentFormView: UIView!
+    
+    @IBOutlet weak var commentField: UITextField!
+    
     var feeds : Feeds?
+       
+    var comments = FeedComment.initData()
+       
+    var bottomConstraint : NSLayoutConstraint?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
         setupNavigationBar()
+        setupCommentTableView()
+        bottomConstraint = NSLayoutConstraint(item: commentFormView!, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotifiation), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotifiation), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+        view.addConstraint(bottomConstraint!)
+        
         tagsCollectionView.dataSource = self
+    }
+    
+    @objc private func handleKeyboardNotifiation(notification: Notification) {
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardRect = keyboardFrame.cgRectValue
+            
+            let isKeyboardShowing = notification.name == UIResponder.keyboardWillShowNotification
+            print("Test")
+            bottomConstraint?.constant = isKeyboardShowing ? -keyboardRect.height : 0
+            UIView.animate(withDuration: 0, delay: 0, options: UIView.AnimationOptions.curveEaseOut, animations: {
+                self.view.layoutIfNeeded()
+            }) { (completed) in
+                
+            }
+        }
+    }
+    
+    
+    private func setupCommentTableView() {
+        commentTableView.delegate = self
+        commentTableView.dataSource = self
+        commentTableView.tableFooterView = UIView()
     }
     
     private func setupView() {
@@ -46,13 +89,28 @@ class FeedsDetailVC: UIViewController {
         feedLocation.imageEdgeInsets = UIEdgeInsets(top: 2, left: 5, bottom: 2, right: 5)
         userImage.layer.cornerRadius = userImage.frame.height / 2
         userImage.clipsToBounds = true
+        
+        profileImage.layer.cornerRadius = profileImage.frame.height / 2
+        profileImage.clipsToBounds = true
     }
     
     private func setupNavigationBar() {
         navigationItem.largeTitleDisplayMode = .never
     }
     
-
+    
+    @IBAction func replyCommentClicked(_ sender: Any) {
+        comments.insert(FeedComment(user: User.initUser(), time: Date(), comment: commentField.text ?? "Hello"), at: 0)
+        view.endEditing(true)
+        commentTableView.reloadData()
+    }
+    
+    
+    @IBAction func likeButtonClicked(_ sender: Any) {
+        likeButton.setImage(UIImage(systemName: "hand.thumbsup.fill"), for: .normal)
+        likeButton.tintColor = UIColor.red
+    }
+    
 }
 
 extension FeedsDetailVC: UICollectionViewDataSource {
@@ -67,5 +125,26 @@ extension FeedsDetailVC: UICollectionViewDataSource {
         cell.configureTagColor(index: indexPath.row)
         return cell
     }
+    
+}
+
+extension FeedsDetailVC: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        comments.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = commentTableView.dequeueReusableCell(withIdentifier: "commentCell", for: indexPath) as! FeedCommentCell
+        
+        cell.userimage.image = comments[indexPath.row].user.image
+        cell.userName.text = comments[indexPath.row].user.name
+        cell.comment.text = comments[indexPath.row].comment
+        
+        return cell
+    }
+    
+    
+    
     
 }

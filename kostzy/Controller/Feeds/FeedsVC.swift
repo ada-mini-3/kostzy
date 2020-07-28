@@ -6,6 +6,7 @@
 //  Copyright © 2020 Apple Developer Academy. All rights reserved.
 //
 
+import CoreLocation
 import UIKit
 
 class FeedsVC: UIViewController {
@@ -21,9 +22,14 @@ class FeedsVC: UIViewController {
     @IBOutlet weak var actityIndicator: UIActivityIndicatorView!
     
     var location : Location?
-    var feeds = Feeds.initData().filter {
-        $0.category == 1
-    }
+    
+    var feedsInfo = Feeds.initData()
+    var feedsFood = Feeds.initFeedCatData()
+    var feedsExp = Feeds.initFeedExpData()
+    var feedsHangouts = Feeds.initFeedHangoutsData()
+    
+    lazy var feedsToDisplay = feedsInfo
+    var locationManager : CLLocationManager?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +38,15 @@ class FeedsVC: UIViewController {
         setupButtonToLocation()
         setupRefreshControl()
         setupIndicator()
+        setupLocationManager()
     }
+    
+    private func setupLocationManager() {
+        locationManager = CLLocationManager()
+        locationManager?.delegate = self
+        locationManager?.requestAlwaysAuthorization()
+    }
+    
     
     private func setupIndicator() {
         actityIndicator.startAnimating()
@@ -52,7 +66,7 @@ class FeedsVC: UIViewController {
             feedsCollectionView.addSubview(refreshControl)
         }
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
-        refreshControl.attributedTitle = NSAttributedString(string: "Fetching New Feeds ...", attributes: nil)
+        refreshControl.attributedTitle = NSAttributedString(string: "Fetching New Post ...", attributes: nil)
 
     }
     
@@ -80,7 +94,20 @@ class FeedsVC: UIViewController {
         segmentedCategory.selectedSegmentTintColor = UIColor(red: 255.0/255, green: 184.0/255, blue: 0.0/255, alpha: 1)
         let attrs = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 12)]
         segmentedCategory.setTitleTextAttributes(attrs, for: .selected)
-        segmentedCategory.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1)
+        segmentedCategory.backgroundColor = UIColor.white
+        fixBackgroundSegmentControl(segmentedCategory)
+    }
+    
+    func fixBackgroundSegmentControl( _ segmentControl: UISegmentedControl){
+        if #available(iOS 13.0, *) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                for i in 0...(segmentControl.numberOfSegments-1)  {
+                    let backgroundSegmentView = segmentControl.subviews[i]
+                    //it is not enogh changing the background color. It has some kind of shadow layer
+                    backgroundSegmentView.isHidden = true
+                }
+            }
+        }
     }
     
     private func setupButtonToLocation() {
@@ -92,6 +119,10 @@ class FeedsVC: UIViewController {
     
     @IBAction func unwindToFeeds(_ sender: UIStoryboardSegue) {
         setupButtonToLocation()
+        segmentedCategory.selectedSegmentIndex = 0
+        changeSegmentedImage()
+        feedsToDisplay = feedsInfo
+        feedsCollectionView.reloadData()
     }
     
     @IBAction func changeCategory(_ sender: UISegmentedControl) {
@@ -101,18 +132,16 @@ class FeedsVC: UIViewController {
     }
     
     private func filterFeedBasedOnCategory() {
-        var temp = Feeds.initData()
         switch segmentedCategory.selectedSegmentIndex {
-        case 0:
-            temp = temp.filter {
-                $0.category == 1
-            }
-        default:
-            temp = temp.filter {
-                $0.category == 2
-            }
+            case 0:
+                feedsToDisplay = feedsInfo
+            case 1:
+                feedsToDisplay = feedsFood
+            case 2:
+                feedsToDisplay = feedsExp
+            default:
+                feedsToDisplay = feedsHangouts
         }
-        feeds = temp
     }
     
     private func changeSegmentedImage() {
@@ -142,6 +171,20 @@ class FeedsVC: UIViewController {
     
 }
 
+extension FeedsVC : CLLocationManagerDelegate {
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        if status == .authorizedAlways {
+            if CLLocationManager.isMonitoringAvailable(for: CLBeacon.self) {
+                if CLLocationManager.isRangingAvailable() {
+                    
+                }
+            }
+        }
+    }
+    
+}
+
 extension FeedsVC : UICollectionViewDelegate, UICollectionViewDataSource {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -152,33 +195,49 @@ extension FeedsVC : UICollectionViewDelegate, UICollectionViewDataSource {
         }
     }
 
-    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-         performSegue(withIdentifier: "detailFeedSegue", sender: feeds[indexPath.row])
+         performSegue(withIdentifier: "detailFeedSegue", sender: feedsToDisplay[indexPath.row])
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        feeds.count
+        feedsToDisplay.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "feedCell", for: indexPath) as! FeedCell
-        let feed = feeds[indexPath.row]
+        var feed = feedsToDisplay[indexPath.row]
         cell.userName.text = feed.user.name
         cell.userImage.image = feed.user.image
-        cell.feedLocation.setTitle(feed.location, for: .normal)
+        if feed.location == nil {
+            cell.feedLocation.isHidden = true
+        } else {
+            cell.feedLocation.setTitle(feed.location, for: .normal)
+        }
         cell.feed.text = feed.feed
         cell.tags = feed.tags
         cell.likeCount.text = "\(feed.likeCount) Likes"
         cell.commentCount.text = "\(feed.commentCount) Comments"
         cell.commentTapAction = {() in
-            self.performSegue(withIdentifier: "detailFeedSegue", sender: self.feeds[indexPath.row])
+            self.performSegue(withIdentifier: "detailFeedSegue", sender: self.feedsInfo[indexPath.row])
         }
         cell.locationTapAction = {() in
             print("Location Clicked!!")
         }
-        cell.configure()
+        cell.likeTapAction = {() in
+            feed.likeStatus = true
+            cell.likeButton.setImage(UIImage(systemName: "hand.thumbsup.fill"), for: .normal)
+            cell.likeButton.tintColor = UIColor.red
+        }
         
+        if feed.likeStatus == true {
+            cell.likeButton.setImage(UIImage(systemName: "hand.thumbsup.fill"), for: .normal)
+            cell.likeButton.tintColor = UIColor.red
+        } else {
+            cell.likeButton.setImage(UIImage(systemName: "hand.thumbsup"), for: .normal)
+            cell.likeButton.tintColor = UIColor.darkGray
+        }
+        
+        cell.configure()
         return cell
     }
     

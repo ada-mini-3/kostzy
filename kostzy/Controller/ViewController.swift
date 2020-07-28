@@ -56,11 +56,11 @@ class ViewController: UIViewController, UIScrollViewDelegate {
             txt1.font = UIFont.boldSystemFont(ofSize: 24.0)
             txt1.text = titles[index]
 
-            let txt2 = UILabel.init(frame: CGRect(x:32,y:txt1.frame.maxY+10,width:scrollWidth-70
+            let txt2 = UILabel.init(frame: CGRect(x:32,y:txt1.frame.maxY - 20,width:scrollWidth-70
                 ,height:100))
             txt2.textAlignment = .center
             txt2.numberOfLines = 5
-            txt2.font = UIFont.systemFont(ofSize: 16.0)
+            txt2.font = UIFont.systemFont(ofSize: 14.0)
             txt2.text = descs[index]
 
             slide.addSubview(imageView)
@@ -158,4 +158,4 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         btnNext.isHidden = true
     }
     
-        }
+}

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="69t-T5-ybd">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="69t-T5-ybd">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -34,22 +34,27 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ohl-tr-Nej">
-                                <rect key="frame" x="37" y="797" width="341" height="39"/>
-                                <state key="normal" title="Button" image="Start Button"/>
+                                <rect key="frame" x="37" y="802" width="341" height="34"/>
+                                <color key="backgroundColor" red="1" green="0.71764705880000002" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Start"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <segue destination="ojq-Hr-BcS" kind="show" id="DwW-Nm-CET"/>
                                 </connections>
                             </button>
                             <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="xBQ-3C-J8N">
-                                <rect key="frame" x="188" y="687" width="39" height="37"/>
+                                <rect key="frame" x="188" y="692" width="39" height="37"/>
                                 <color key="pageIndicatorTintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <action selector="pageChanged:" destination="0aK-z1-uTr" eventType="valueChanged" id="vvj-cY-Tej"/>
                                 </connections>
                             </pageControl>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0lr-ws-FRC">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0lr-ws-FRC">
                                 <rect key="frame" x="326" y="774" width="52" height="22"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="18"/>
                                 <state key="normal" image="next button">
                                     <color key="titleColor" red="1" green="0.71764705882352942" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -59,7 +64,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0D1-oD-XRS">
-                                <rect key="frame" x="37" y="774" width="118" height="22"/>
+                                <rect key="frame" x="37" y="779" width="118" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="22" id="iGg-LD-xnI"/>
                                 </constraints>
@@ -75,10 +80,10 @@
                             <constraint firstItem="0D1-oD-XRS" firstAttribute="top" secondItem="P92-7J-rDb" secondAttribute="bottom" constant="104" id="2rs-yF-HwK"/>
                             <constraint firstItem="A1c-Ek-REx" firstAttribute="bottom" secondItem="Ohl-tr-Nej" secondAttribute="bottom" constant="26" id="3Od-Vc-f6C"/>
                             <constraint firstItem="Ohl-tr-Nej" firstAttribute="top" secondItem="0D1-oD-XRS" secondAttribute="bottom" constant="1" id="DWS-fG-ib2"/>
-                            <constraint firstItem="Ohl-tr-Nej" firstAttribute="top" secondItem="xBQ-3C-J8N" secondAttribute="bottom" constant="73" id="MhG-BJ-asL"/>
                             <constraint firstItem="Ohl-tr-Nej" firstAttribute="leading" secondItem="A1c-Ek-REx" secondAttribute="leading" constant="37" id="PaH-wb-mA4"/>
                             <constraint firstItem="xBQ-3C-J8N" firstAttribute="leading" secondItem="A1c-Ek-REx" secondAttribute="leading" constant="188" id="V8B-k3-1io"/>
                             <constraint firstItem="0D1-oD-XRS" firstAttribute="leading" secondItem="A1c-Ek-REx" secondAttribute="leading" constant="37" id="Vqu-b6-7ZM"/>
+                            <constraint firstItem="A1c-Ek-REx" firstAttribute="trailing" secondItem="0lr-ws-FRC" secondAttribute="trailing" constant="36" id="YNF-p9-XQ9"/>
                             <constraint firstItem="A1c-Ek-REx" firstAttribute="trailing" secondItem="xBQ-3C-J8N" secondAttribute="trailing" constant="187" id="bcC-y2-oLd"/>
                             <constraint firstItem="xBQ-3C-J8N" firstAttribute="top" secondItem="P92-7J-rDb" secondAttribute="bottom" constant="17" id="iXh-oV-zM3"/>
                             <constraint firstItem="P92-7J-rDb" firstAttribute="top" secondItem="Qxb-Qd-mht" secondAttribute="top" id="kzI-Hm-HtS"/>
@@ -86,6 +91,7 @@
                             <constraint firstItem="A1c-Ek-REx" firstAttribute="trailing" secondItem="pRO-ld-aLM" secondAttribute="trailing" constant="35" id="rfM-Tf-mFq"/>
                             <constraint firstItem="P92-7J-rDb" firstAttribute="trailing" secondItem="A1c-Ek-REx" secondAttribute="trailing" id="swT-jK-7Tn"/>
                             <constraint firstItem="A1c-Ek-REx" firstAttribute="trailing" secondItem="Ohl-tr-Nej" secondAttribute="trailing" constant="36" id="xJ6-iG-Ijw"/>
+                            <constraint firstItem="Ohl-tr-Nej" firstAttribute="top" secondItem="0lr-ws-FRC" secondAttribute="bottom" constant="6" id="zez-We-va6"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="A1c-Ek-REx"/>
                     </view>
@@ -133,7 +139,6 @@
     </scenes>
     <resources>
         <image name="Previous button" width="78" height="22"/>
-        <image name="Start Button" width="342" height="39"/>
         <image name="next button" width="52" height="22"/>
     </resources>
 </document>

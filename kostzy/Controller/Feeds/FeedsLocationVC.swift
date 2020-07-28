@@ -28,10 +28,6 @@ class FeedsLocationVC: UIViewController {
         setupTableView()
     }
     
-    private func setupRefreshControl() {
-        
-    }
-    
     private func setupTableView() {
         locationTableView.dataSource = self
         locationTableView.delegate = self

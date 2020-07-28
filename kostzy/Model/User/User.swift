@@ -19,6 +19,10 @@ struct User {
         self.image = image
     }
     
+    static func initUser() -> User {
+        return User(name: "Desti", image: #imageLiteral(resourceName: "destong"))
+    }
+    
 }
 
 var userImage: String?
