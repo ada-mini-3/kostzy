@@ -10,11 +10,12 @@ import UIKit
 
 class FeedTagsCell: UICollectionViewCell {
     
-    let colorArr : [UIColor] = [UIColor(red: 42/255, green: 139/255, blue: 211/255, alpha: 1),
-                                UIColor(red: 243/255, green: 77/255, blue: 114/255, alpha: 1)]
+    var colorArr : [UIColor] = Tag.colorArr
     
     @IBOutlet weak var tagName: UILabel!
     
+    @IBOutlet weak var tagCreateName: UILabel!
+        
     override func awakeFromNib() {
         self.contentView.layer.cornerRadius = 10
     }

@@ -30,15 +30,20 @@ class FeedCell: UICollectionViewCell, UICollectionViewDataSource {
     
     @IBOutlet weak var likeCount: UILabel!
     
+    @IBOutlet weak var reportButton: UIButton!
+    
     var tags = [Tag]()
     
     var commentTapAction : (()->())?
     
     var locationTapAction : (()->())?
     
+    var likeTapAction : (()->())?
+    
     override func awakeFromNib() {
         self.layer.cornerRadius = 10
         self.layer.masksToBounds = true
+        reportButton.image(for: .normal)?.withHorizontallyFlippedOrientation()
     }
     
     func configure() {
@@ -47,17 +52,22 @@ class FeedCell: UICollectionViewCell, UICollectionViewDataSource {
         userImage.layer.cornerRadius = userImage.frame.height / 2
         userImage.clipsToBounds = true
         feedTags.dataSource = self
+        feedTags.reloadData()
+        
         commentButton.addTarget(self, action: #selector(commentButtonClicked), for: .touchUpInside)
         feedLocation.addTarget(self, action: #selector(locationButtonClicked), for: .touchUpInside)
+        likeButton.addTarget(self, action: #selector(likeButtonClicked), for: .touchUpInside)
+    }
+    
+    @objc func likeButtonClicked() {
+        likeTapAction?()
     }
     
     @objc func commentButtonClicked() {
-        print("Btn Comment Clicked")
         commentTapAction?()
     }
     
     @objc func locationButtonClicked() {
-        print("Location Clicked")
         locationTapAction?()
     }
     
@@ -68,7 +78,7 @@ class FeedCell: UICollectionViewCell, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "tagCell", for: indexPath) as! FeedTagsCell
         cell.tagName.text = tags[indexPath.row].name
-        cell.configureTagColor(index: indexPath.row)
+        cell.contentView.backgroundColor = tags[indexPath.row].color
         return cell
     }
     
