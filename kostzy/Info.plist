@@ -6,6 +6,10 @@
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIcons</key>
+	<dict/>
+	<key>CFBundleIcons~ipad</key>
+	<dict/>
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -21,11 +25,11 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Koszy will filter the feeds to show only relevant information about kost life in your chosen location</string>
+	<string>Kostzy will filter the feeds to show only relevant information about kost life in your chosen location</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Koszy will filter the feeds to show only relevant information about kost life in your chosen location</string>
+	<string>Kostzy will filter the feeds to show only relevant information about kost life in your chosen location</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Koszy needs to access you photos</string>
+	<string>Kostzy needs to access you photos</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
@@ -56,8 +60,6 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>

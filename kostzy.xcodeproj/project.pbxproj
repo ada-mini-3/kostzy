@@ -82,6 +82,7 @@
 		2C625BCF24CA89DC005EF2EF /* CommunityCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityCollectionCell.swift; sourceTree = "<group>"; };
 		2C63250524CD338E00A780B5 /* CommunityMemberCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityMemberCollectionCell.swift; sourceTree = "<group>"; };
 		2C63250824CDCB9500A780B5 /* CommunityAlbumCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityAlbumCollectionCell.swift; sourceTree = "<group>"; };
+		2C642D2A24D01E21007BAE36 /* kostzy.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = kostzy.entitlements; sourceTree = "<group>"; };
 		2C65296B24CEE8EF00D242D2 /* CommunityDetailContainerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityDetailContainerVC.swift; sourceTree = "<group>"; };
 		2C66A7F124CFC6790039A167 /* NewDiscussionTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewDiscussionTableVC.swift; sourceTree = "<group>"; };
 		2C66A7F324CFE6690039A167 /* OffLimitsTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffLimitsTableVC.swift; sourceTree = "<group>"; };
@@ -223,6 +224,7 @@
 		881D35FB24BD4A7800521220 /* kostzy */ = {
 			isa = PBXGroup;
 			children = (
+				2C642D2A24D01E21007BAE36 /* kostzy.entitlements */,
 				881D365C24BD56AC00521220 /* Model */,
 				881D363424BD4FE700521220 /* Controller */,
 				881D361024BD4AB200521220 /* View */,
@@ -653,7 +655,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -707,7 +709,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -720,11 +722,13 @@
 		881D360E24BD4A7900521220 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = kostzy/kostzy.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = QWVAEMBXMM;
 				INFOPLIST_FILE = kostzy/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -741,11 +745,13 @@
 		881D360F24BD4A7900521220 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = kostzy/kostzy.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = QWVAEMBXMM;
 				INFOPLIST_FILE = kostzy/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
