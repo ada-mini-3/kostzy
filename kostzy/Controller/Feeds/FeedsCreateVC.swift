@@ -24,7 +24,7 @@ class FeedsCreateVC: UIViewController {
     
     let tags = Tag.initData()
     
-    let categories = Category.initData()
+    let categories = FeedCategory.initData()
     
     var categoryPicker = UIPickerView()
     
