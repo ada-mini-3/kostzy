@@ -50,7 +50,6 @@ class CommunityDetailContainerVC: UIViewController {
         // Instantiate View Controller
         var viewController = storyboard.instantiateViewController(withIdentifier: "CommunityDetailVC") as! CommunityDetailVC
         viewController.selectedRow = selectedRow
-        containerViewheight = 460
         
         // Add View Controller as Child View Controller
         self.add(asChildViewController: viewController)
@@ -64,7 +63,7 @@ class CommunityDetailContainerVC: UIViewController {
         
         // Instantiate View Controller
         var viewController = storyboard.instantiateViewController(withIdentifier: "DetailDiscussionVC") as! DetailDiscussionVC
-        containerViewheight = 1140
+        containerViewheight = viewController.height
         
         // Add View Controller as Child View Controller
         self.add(asChildViewController: viewController)
@@ -146,12 +145,26 @@ class CommunityDetailContainerVC: UIViewController {
             
             newDiscussionButtonOutlet.isHidden = true
             sortByButtonOutlet.isHidden = true
+            
+            containerViewheight = 1220
+            DispatchQueue.main.async(execute: {
+                //In my case i had to call this method after some delay, because (i think) it will allow tableView to reload completely and then calculate the height required for itself. (This might be a workaround, but it worked for me)
+                self.perform(#selector(self.adjustHeightOfContainerView), with: nil)
+                self.communityDetailContainerView.updateConstraints()
+            })
         } else {
             remove(asChildViewController: CommunityAboutVC)
             add(asChildViewController: CommunityDiscussionVC)
             
             newDiscussionButtonOutlet.isHidden = false
             sortByButtonOutlet.isHidden = false
+            
+            containerViewheight = 1220
+            DispatchQueue.main.async(execute: {
+                //In my case i had to call this method after some delay, because (i think) it will allow tableView to reload completely and then calculate the height required for itself. (This might be a workaround, but it worked for me)
+                self.perform(#selector(self.adjustHeightOfContainerView), with: nil)
+                self.communityDetailContainerView.updateConstraints()
+            })
         }
     }
     
@@ -199,14 +212,10 @@ class CommunityDetailContainerVC: UIViewController {
         })
     }
     
-    /*
+    
     override func preferredContentSizeDidChange(forChildContentContainer container: UIContentContainer) {
-        if let child = container as? DetailDiscussionVC {
-            containerViewHeightConstraint.constant = child.preferredContentSize.height
-            communityDetailContainerView.updateConstraints()
-        }
+        setupView()
     }
-    */
     
     
     //----------------------------------------------------------------
@@ -217,6 +226,7 @@ class CommunityDetailContainerVC: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
         communityDetailImageView.image = UIImage(named: communityImage[selectedRow!])
         communityNameLabel.text = communityName[selectedRow!]
         communityLocationLabel.text = "\(communityLocation[selectedRow!]) • \(communityPost[selectedRow!]) POSTS"
@@ -236,12 +246,10 @@ class CommunityDetailContainerVC: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        /*
         DispatchQueue.main.async(execute: {
             //In my case i had to call this method after some delay, because (i think) it will allow tableView to reload completely and then calculate the height required for itself. (This might be a workaround, but it worked for me)
             self.perform(#selector(self.adjustHeightOfContainerView), with: nil)
         })
-        */
     }
     
     
