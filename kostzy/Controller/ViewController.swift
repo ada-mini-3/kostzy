@@ -11,28 +11,42 @@ import UIKit
 class ViewController: UIViewController, UIScrollViewDelegate {
 
     @IBOutlet weak var scrollView: UIScrollView!
+    
     @IBOutlet weak var btnSkip: UIButton!
+    
     @IBOutlet weak var pageControl: UIPageControl!
+    
     @IBOutlet weak var btnBack: UIButton!
+    
     @IBOutlet weak var btnNext: UIButton!
+    
     @IBOutlet weak var btnStart: UIButton!
 
     var scrollWidth: CGFloat! = 0.0
+    
     var scrollHeight: CGFloat! = 0.0
+    
     var pageCount:Int = 0
+    
     var titles = ["Find Information","Sharing Experiences","Join Community"]
+    
     var descs = ["Find the most relatable kost information, experience, culinary and hangout places that could be filtered based on your location.","Share your extraordinary kost experiences to help the new anak kost to know better about the real kost life.","We provide you the Community based on your kost location. Join, socialize, and discuss anything around kost there! "]
+    
     var imgs = ["onboarding1","onboarding2","onboarding3"]
 
     override func viewDidLayoutSubviews() {
         scrollWidth = scrollView.frame.size.width
         scrollHeight = scrollView.frame.size.height
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.layoutIfNeeded()
         UserDefaults.standard.bool(forKey: "FirstLaunch")
-
+        setupScrollView()
+    }
+    
+    private func setupScrollView() {
         self.scrollView.delegate = self
         scrollView.isPagingEnabled = true
         scrollView.showsHorizontalScrollIndicator = false
@@ -68,14 +82,12 @@ class ViewController: UIViewController, UIScrollViewDelegate {
             slide.addSubview(txt2)
             scrollView.addSubview(slide)
             btnStart.isHidden = true
-            
         }
-               scrollView.contentSize = CGSize(width: scrollWidth * CGFloat(titles.count), height: scrollHeight)
-               self.scrollView.contentSize.height = 1.0
-               pageControl.numberOfPages = titles.count
-               pageControl.currentPage = 0
-
-           }
+        scrollView.contentSize = CGSize(width: scrollWidth * CGFloat(titles.count), height: scrollHeight)
+        self.scrollView.contentSize.height = 1.0
+        pageControl.numberOfPages = titles.count
+        pageControl.currentPage = 0
+    }
     
     override func viewDidAppear(_ animated: Bool) {
         if UserDefaults.standard.bool(forKey: "First Launch") == true {
@@ -88,24 +100,19 @@ class ViewController: UIViewController, UIScrollViewDelegate {
             btnBack.isHidden = true
         }
     }
-    
-    func setIndicatorForCurrentPage() {
-        let page = (scrollView?.contentOffset.x)!/scrollWidth
-        pageControl?.currentPage = Int(page)
-    }
         
     @IBAction func pageChanged(_ sender: Any) {
          scrollView!.scrollRectToVisible(CGRect(x: scrollWidth * CGFloat ((pageControl?.currentPage)!), y: 0, width: scrollWidth, height: scrollHeight), animated: true)
-            }
+    }
 
-            func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-                setIndiactorForCurrentPage()
-            }
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        setIndicatorForCurrentPage()
+    }
 
-            func setIndiactorForCurrentPage()  {
-                let page = (scrollView?.contentOffset.x)!/scrollWidth
-                pageControl?.currentPage = Int(page)
-            }
+    private func setIndicatorForCurrentPage()  {
+        let page = (scrollView?.contentOffset.x)!/scrollWidth
+        pageControl?.currentPage = Int(page)
+    }
     
     func scrollToPage(page: Int, animated: Bool) {
           var frame: CGRect = self.scrollView.frame

@@ -75,7 +75,6 @@ class FeedsLocationVC: UIViewController {
         }
     }
     
-    
     @IBAction func searchLocation(_ sender: UITextField) {
         setSegmentedData()
         if let text = sender.text {

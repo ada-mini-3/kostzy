@@ -12,8 +12,6 @@ import MapKit
 
 class FeedsVC: UIViewController, MKMapViewDelegate {
     
-    
-
     @IBOutlet weak var btnLocation: UIButton!
     
     @IBOutlet weak var segmentedCategory: UISegmentedControl!
@@ -68,24 +66,6 @@ class FeedsVC: UIViewController, MKMapViewDelegate {
         mapItem.name = "Syahdan"
         mapItem.openInMaps(launchOptions: options)
     }
-    
-//    //Customizing the annotation
-//    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-//        let identifier = "MyMarker"
-//
-//        if annotation.isKind(of: MKUserLocation.self) {
-//            return nil
-//        }
-//        //reuse the annotation if possible
-//        var annotationView: MKMarkerAnnotationView? = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKMarkerAnnotationView
-//        if annotationView == nil {
-//            annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-//        }
-//
-//        annotationView?.glyphImage = #imageLiteral(resourceName: "location-icon ")
-//
-//        return annotationView
-//    }
     
     private func setupIndicator() {
         actityIndicator.startAnimating()
