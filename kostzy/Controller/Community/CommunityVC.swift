@@ -11,27 +11,48 @@ import UIKit
 class CommunityVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     // MARK: - Variable
+    var location: Location?
     
     
     // MARK: - IBOutlet
     @IBOutlet weak var communityTableView: UITableView!
+    
+    @IBOutlet weak var locationButtonOutlet: UIButton!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        
+        setupLocationButton()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        print("Community Request Status: \(communityIsRequested)")
+        communityTableView.reloadData()
+    }
+    
+    
+    // MARK: - IBAction Function
+    @IBAction func unwindSegueToCommunity(_ sender: UIStoryboardSegue) {
+        setupLocationButton()
+    }
+    
+    @IBAction func locationButtonAction(_ sender: Any) {
+        
     }
     
     
     // MARK: - Function
+    func setupLocationButton() {
+        if location == nil {
+            locationButtonOutlet.setTitle("Slipi", for: .normal)
+        }
+        else {
+            locationButtonOutlet.setTitle(location?.name, for: .normal)
+        }
+    }
     
     
     // MARK: - Table view data source
@@ -144,7 +165,7 @@ class CommunityVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
         if segue.identifier == "CommunityDetailSegue"{
-            if let destination = segue.destination as? CommunityDetailVC {
+            if let destination = segue.destination as? CommunityDetailContainerVC {
                 let selectedRow = sender as? Int
                 
                 destination.selectedRow = selectedRow

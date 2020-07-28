@@ -15,13 +15,18 @@
 		2C625BD024CA89DC005EF2EF /* CommunityCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C625BCF24CA89DC005EF2EF /* CommunityCollectionCell.swift */; };
 		2C63250624CD338E00A780B5 /* CommunityMemberCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C63250524CD338E00A780B5 /* CommunityMemberCollectionCell.swift */; };
 		2C63250924CDCB9500A780B5 /* CommunityAlbumCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C63250824CDCB9500A780B5 /* CommunityAlbumCollectionCell.swift */; };
+		2C65296C24CEE8EF00D242D2 /* CommunityDetailContainerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C65296B24CEE8EF00D242D2 /* CommunityDetailContainerVC.swift */; };
+		2C66A7F224CFC6790039A167 /* NewDiscussionTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C66A7F124CFC6790039A167 /* NewDiscussionTableVC.swift */; };
+		2C66A7F424CFE6690039A167 /* OffLimitsTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C66A7F324CFE6690039A167 /* OffLimitsTableVC.swift */; };
 		2C69C68524C938820050C751 /* MyCommunityTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C69C68424C938820050C751 /* MyCommunityTable.swift */; };
 		2C69C68724C93A030050C751 /* BadgeCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C69C68624C93A030050C751 /* BadgeCollectionCell.swift */; };
-		8810C60B24C9BBDC00B8207D /* FeedsCreate.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8810C60A24C9BBDC00B8207D /* FeedsCreate.storyboard */; };
+		2C6BA97024CF01C5004C39ED /* CommunityDiscussionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6BA96F24CF01C5004C39ED /* CommunityDiscussionCell.swift */; };
+		2C7D57C224CE868400F66FA6 /* CommunityLocationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7D57C124CE868400F66FA6 /* CommunityLocationVC.swift */; };
 		2CE981B024C9E246007B2FF4 /* CommunityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE981AF24C9E246007B2FF4 /* CommunityCell.swift */; };
 		2CE981B924CA6B1E007B2FF4 /* CommunityDraftVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE981B824CA6B1E007B2FF4 /* CommunityDraftVC.swift */; };
 		2CE981BB24CA6BC6007B2FF4 /* CommunityDraftCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE981BA24CA6BC6007B2FF4 /* CommunityDraftCollectionCell.swift */; };
 		2CE981BE24CA753A007B2FF4 /* CommunityDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE981BD24CA753A007B2FF4 /* CommunityDetailVC.swift */; };
+		8810C60B24C9BBDC00B8207D /* FeedsCreate.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8810C60A24C9BBDC00B8207D /* FeedsCreate.storyboard */; };
 		881D35FD24BD4A7800521220 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 881D35FC24BD4A7800521220 /* AppDelegate.swift */; };
 		881D35FF24BD4A7800521220 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 881D35FE24BD4A7800521220 /* SceneDelegate.swift */; };
 		881D360624BD4A7900521220 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 881D360524BD4A7900521220 /* Assets.xcassets */; };
@@ -42,7 +47,6 @@
 		881D363D24BD521500521220 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 881D363C24BD521500521220 /* Main.storyboard */; };
 		881D363F24BD523E00521220 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 881D363E24BD523E00521220 /* ViewController.swift */; };
 		881D364124BD52D900521220 /* CommunityVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 881D364024BD52D900521220 /* CommunityVC.swift */; };
-		881D364324BD531E00521220 /* CreateDiscussionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 881D364224BD531E00521220 /* CreateDiscussionVC.swift */; };
 		881D364524BD533A00521220 /* DetailDiscussionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 881D364424BD533A00521220 /* DetailDiscussionVC.swift */; };
 		881D364724BD539C00521220 /* FeedsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 881D364624BD539C00521220 /* FeedsVC.swift */; };
 		881D364924BD53B300521220 /* FeedsDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 881D364824BD53B300521220 /* FeedsDetailVC.swift */; };
@@ -76,13 +80,18 @@
 		2C625BCF24CA89DC005EF2EF /* CommunityCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityCollectionCell.swift; sourceTree = "<group>"; };
 		2C63250524CD338E00A780B5 /* CommunityMemberCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityMemberCollectionCell.swift; sourceTree = "<group>"; };
 		2C63250824CDCB9500A780B5 /* CommunityAlbumCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityAlbumCollectionCell.swift; sourceTree = "<group>"; };
+		2C65296B24CEE8EF00D242D2 /* CommunityDetailContainerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityDetailContainerVC.swift; sourceTree = "<group>"; };
+		2C66A7F124CFC6790039A167 /* NewDiscussionTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewDiscussionTableVC.swift; sourceTree = "<group>"; };
+		2C66A7F324CFE6690039A167 /* OffLimitsTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffLimitsTableVC.swift; sourceTree = "<group>"; };
 		2C69C68424C938820050C751 /* MyCommunityTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCommunityTable.swift; sourceTree = "<group>"; };
 		2C69C68624C93A030050C751 /* BadgeCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeCollectionCell.swift; sourceTree = "<group>"; };
-		8810C60A24C9BBDC00B8207D /* FeedsCreate.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FeedsCreate.storyboard; sourceTree = "<group>"; };
+		2C6BA96F24CF01C5004C39ED /* CommunityDiscussionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityDiscussionCell.swift; sourceTree = "<group>"; };
+		2C7D57C124CE868400F66FA6 /* CommunityLocationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityLocationVC.swift; sourceTree = "<group>"; };
 		2CE981AF24C9E246007B2FF4 /* CommunityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityCell.swift; sourceTree = "<group>"; };
 		2CE981B824CA6B1E007B2FF4 /* CommunityDraftVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityDraftVC.swift; sourceTree = "<group>"; };
 		2CE981BA24CA6BC6007B2FF4 /* CommunityDraftCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityDraftCollectionCell.swift; sourceTree = "<group>"; };
 		2CE981BD24CA753A007B2FF4 /* CommunityDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityDetailVC.swift; sourceTree = "<group>"; };
+		8810C60A24C9BBDC00B8207D /* FeedsCreate.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FeedsCreate.storyboard; sourceTree = "<group>"; };
 		881D35F924BD4A7800521220 /* kostzy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = kostzy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		881D35FC24BD4A7800521220 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		881D35FE24BD4A7800521220 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -105,7 +114,6 @@
 		881D363C24BD521500521220 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		881D363E24BD523E00521220 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		881D364024BD52D900521220 /* CommunityVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityVC.swift; sourceTree = "<group>"; };
-		881D364224BD531E00521220 /* CreateDiscussionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateDiscussionVC.swift; sourceTree = "<group>"; };
 		881D364424BD533A00521220 /* DetailDiscussionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailDiscussionVC.swift; sourceTree = "<group>"; };
 		881D364624BD539C00521220 /* FeedsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedsVC.swift; sourceTree = "<group>"; };
 		881D364824BD53B300521220 /* FeedsDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedsDetailVC.swift; sourceTree = "<group>"; };
@@ -156,8 +164,21 @@
 				2CE981AF24C9E246007B2FF4 /* CommunityCell.swift */,
 				2C63250524CD338E00A780B5 /* CommunityMemberCollectionCell.swift */,
 				2C63250824CDCB9500A780B5 /* CommunityAlbumCollectionCell.swift */,
+				2C6BA96F24CF01C5004C39ED /* CommunityDiscussionCell.swift */,
 			);
 			path = Cell;
+			sourceTree = "<group>";
+		};
+		2C65296D24CEEF7900D242D2 /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				2C65296B24CEE8EF00D242D2 /* CommunityDetailContainerVC.swift */,
+				2CE981BD24CA753A007B2FF4 /* CommunityDetailVC.swift */,
+				881D364424BD533A00521220 /* DetailDiscussionVC.swift */,
+				2C66A7F124CFC6790039A167 /* NewDiscussionTableVC.swift */,
+				2C66A7F324CFE6690039A167 /* OffLimitsTableVC.swift */,
+			);
+			path = Detail;
 			sourceTree = "<group>";
 		};
 		2C69C68124C935520050C751 /* MyCommunityTable */ = {
@@ -364,13 +385,12 @@
 		881D363B24BD502700521220 /* Community */ = {
 			isa = PBXGroup;
 			children = (
+				881D364024BD52D900521220 /* CommunityVC.swift */,
+				2C7D57C124CE868400F66FA6 /* CommunityLocationVC.swift */,
+				2C65296D24CEEF7900D242D2 /* Detail */,
+				2C63250724CDCB7100A780B5 /* Cell */,
 				2C625BCC24CA898A005EF2EF /* CardViewDraft */,
 				2CE981BC24CA7285007B2FF4 /* DraftVC */,
-				2C63250724CDCB7100A780B5 /* Cell */,
-				881D364024BD52D900521220 /* CommunityVC.swift */,
-				2CE981BD24CA753A007B2FF4 /* CommunityDetailVC.swift */,
-				881D364224BD531E00521220 /* CreateDiscussionVC.swift */,
-				881D364424BD533A00521220 /* DetailDiscussionVC.swift */,
 			);
 			path = Community;
 			sourceTree = "<group>";
@@ -515,6 +535,7 @@
 			files = (
 				881D364D24BD54B600521220 /* FeedsCreateVC.swift in Sources */,
 				881D366D24BD57BB00521220 /* DiscussionComment.swift in Sources */,
+				2C66A7F224CFC6790039A167 /* NewDiscussionTableVC.swift in Sources */,
 				881D363F24BD523E00521220 /* ViewController.swift in Sources */,
 				2C63250624CD338E00A780B5 /* CommunityMemberCollectionCell.swift in Sources */,
 				2CE981BE24CA753A007B2FF4 /* CommunityDetailVC.swift in Sources */,
@@ -522,6 +543,7 @@
 				881D365124BD54F600521220 /* LoginVC.swift in Sources */,
 				881D364B24BD549E00521220 /* FeedsLocationVC.swift in Sources */,
 				88E028EF24C7F071005EF2AE /* Location.swift in Sources */,
+				2C7D57C224CE868400F66FA6 /* CommunityLocationVC.swift in Sources */,
 				881D364924BD53B300521220 /* FeedsDetailVC.swift in Sources */,
 				2C625BD024CA89DC005EF2EF /* CommunityCollectionCell.swift in Sources */,
 				881D364F24BD54E400521220 /* RegisterVC.swift in Sources */,
@@ -546,12 +568,14 @@
 				881D365324BD551F00521220 /* NotificationVC.swift in Sources */,
 				2CE981BB24CA6BC6007B2FF4 /* CommunityDraftCollectionCell.swift in Sources */,
 				881D365924BD565200521220 /* OffLimitVC.swift in Sources */,
+				2C65296C24CEE8EF00D242D2 /* CommunityDetailContainerVC.swift in Sources */,
 				2CE981B924CA6B1E007B2FF4 /* CommunityDraftVC.swift in Sources */,
 				2C625BCB24CA8681005EF2EF /* Expandable.swift in Sources */,
 				88E028F424C86FF0005EF2AE /* FeedTagsCell.swift in Sources */,
 				881D365924BD565200521220 /* OffLimitVC.swift in Sources */,
 				88DF73C224C724840081B8B0 /* FeedCell.swift in Sources */,
-				881D364324BD531E00521220 /* CreateDiscussionVC.swift in Sources */,
+				2C66A7F424CFE6690039A167 /* OffLimitsTableVC.swift in Sources */,
+				2C6BA97024CF01C5004C39ED /* CommunityDiscussionCell.swift in Sources */,
 				881D365E24BD56E300521220 /* Feeds.swift in Sources */,
 				881D366624BD576900521220 /* User.swift in Sources */,
 			);
@@ -690,7 +714,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 928NUAMW33;
+				DEVELOPMENT_TEAM = QWVAEMBXMM;
 				INFOPLIST_FILE = kostzy/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.3;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -710,7 +734,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 928NUAMW33;
+				DEVELOPMENT_TEAM = QWVAEMBXMM;
 				INFOPLIST_FILE = kostzy/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.3;
 				LD_RUNPATH_SEARCH_PATHS = (
