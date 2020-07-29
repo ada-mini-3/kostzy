@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17140" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Ic2-hJ-im9">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Ic2-hJ-im9">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17115"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -36,7 +34,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="ZRH-KJ-S0s">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <sections>
                             <tableViewSection id="qn0-EJ-G5s">
                                 <cells>
@@ -60,7 +58,7 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HIr-bS-ZaL">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HIr-bS-ZaL">
                                                     <rect key="frame" x="152" y="163" width="110" height="25"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="110" id="009-0W-wg2"/>
@@ -107,7 +105,7 @@
                                             <subviews>
                                                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="BCY-hy-paF">
                                                     <rect key="frame" x="0.0" y="0.0" width="414" height="125"/>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                     <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="VAn-lg-abh">
                                                         <size key="itemSize" width="414" height="125"/>
                                                         <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -152,7 +150,6 @@
                                                                                 <nil key="highlightedColor"/>
                                                                             </label>
                                                                         </subviews>
-                                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <constraints>
                                                                             <constraint firstItem="z6C-Dp-3X6" firstAttribute="centerX" secondItem="DDx-Om-XkW" secondAttribute="centerX" id="3ZQ-r3-xUx"/>
                                                                             <constraint firstAttribute="bottom" secondItem="4vl-92-BkB" secondAttribute="bottom" constant="16" id="5wR-mU-XLw"/>
@@ -190,7 +187,6 @@
                                                                                 <nil key="highlightedColor"/>
                                                                             </label>
                                                                         </subviews>
-                                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="trailing" secondItem="TgL-xQ-udp" secondAttribute="trailing" constant="16" id="IDh-PC-tlf"/>
                                                                             <constraint firstAttribute="width" constant="100" id="Imc-4o-Wvl"/>
@@ -228,7 +224,6 @@
                                                                                 <nil key="highlightedColor"/>
                                                                             </label>
                                                                         </subviews>
-                                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <constraints>
                                                                             <constraint firstItem="bfI-M1-9Et" firstAttribute="centerX" secondItem="DzP-iZ-Yw4" secondAttribute="centerX" id="4cb-16-5jp"/>
                                                                             <constraint firstItem="bfI-M1-9Et" firstAttribute="leading" secondItem="DzP-iZ-Yw4" secondAttribute="leading" constant="16" id="6Je-qE-ei2"/>
@@ -266,7 +261,6 @@
                                                                                 <nil key="highlightedColor"/>
                                                                             </label>
                                                                         </subviews>
-                                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="bottom" secondItem="kRa-Rx-XNz" secondAttribute="bottom" constant="16" id="4ic-a1-8gn"/>
                                                                             <constraint firstItem="4Xk-uz-zdq" firstAttribute="top" secondItem="zJT-qC-kaF" secondAttribute="bottom" constant="10" id="5x5-7G-hsx"/>
@@ -304,7 +298,6 @@
                                                                                 <nil key="highlightedColor"/>
                                                                             </label>
                                                                         </subviews>
-                                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <constraints>
                                                                             <constraint firstItem="dj8-Jr-mfX" firstAttribute="centerX" secondItem="6Qv-wR-TyZ" secondAttribute="centerX" id="5rZ-KH-jAI"/>
                                                                             <constraint firstItem="dj8-Jr-mfX" firstAttribute="top" secondItem="6Qv-wR-TyZ" secondAttribute="top" constant="16" id="Hrl-Z2-9nS"/>
@@ -427,7 +420,7 @@
                                                 </label>
                                                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="dgt-kk-OUW" customClass="MyCommunityTable" customModule="kostzy" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="48" width="414" height="127"/>
-                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                     <prototypes>
                                                         <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MyCommunityCell" rowHeight="80" id="wTX-0W-4df" customClass="MyCommunityCell" customModule="kostzy" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="28" width="414" height="80"/>
@@ -508,8 +501,5 @@
         <image name="Badge-500 Likes" width="39" height="42"/>
         <image name="Photo Profile (Dummy Data)" width="83" height="83"/>
         <image name="person.fill" catalog="system" width="128" height="120"/>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
     </resources>
 </document>

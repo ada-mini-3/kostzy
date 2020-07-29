@@ -47,7 +47,7 @@ class NewDiscussionTableVC: UITableViewController {
         dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func addPhotoButtonAction(_ sender: Any) {
+    @IBAction func addPhotoButtonAction(_ sender: UIButton) {
         let imagePickerController = UIImagePickerController()
         imagePickerController.delegate = self as UIImagePickerControllerDelegate & UINavigationControllerDelegate
         
@@ -60,6 +60,18 @@ class NewDiscussionTableVC: UITableViewController {
         }))
         
         actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel , handler: nil))
+        
+        /*If you want work actionsheet on ipad
+        then you have to use popoverPresentationController to present the actionsheet,
+        otherwise app will crash on iPad */
+        switch UIDevice.current.userInterfaceIdiom {
+        case .pad:
+            actionSheet.popoverPresentationController?.sourceView = sender
+            actionSheet.popoverPresentationController?.sourceRect = sender.bounds
+            actionSheet.popoverPresentationController?.permittedArrowDirections = .up
+        default:
+            break
+        }
         
         self.present(actionSheet, animated: true, completion: nil)
     }
@@ -109,6 +121,11 @@ class NewDiscussionTableVC: UITableViewController {
         
         tableView.keyboardDismissMode = .interactive
         setupTextView()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
         setupDiscussionImagePicker()
     }
 
