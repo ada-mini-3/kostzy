@@ -57,12 +57,12 @@ class CommunityDetailContainerVC: UIViewController {
         return viewController
     }()
     
-    private lazy var CommunityDiscussionVC: DetailDiscussionVC = {
+    private lazy var CommunityDiscussionVC: CommunityDiscussionVC = {
         // Load Storyboard
         let storyboard = UIStoryboard(name: "Community", bundle: Bundle.main)
         
         // Instantiate View Controller
-        var viewController = storyboard.instantiateViewController(withIdentifier: "DetailDiscussionVC") as! DetailDiscussionVC
+        var viewController = storyboard.instantiateViewController(withIdentifier: "DetailDiscussionVC") as! CommunityDiscussionVC
         containerViewheight = viewController.height
         
         // Add View Controller as Child View Controller
