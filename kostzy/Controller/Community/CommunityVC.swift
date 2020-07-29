@@ -86,12 +86,7 @@ class CommunityVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
 
         // Configure the cell...
         if isDarkMode == true {
-            cell.contentView.backgroundColor = #colorLiteral(red: 0.9803921569, green: 0.9803921569, blue: 0.9921568627, alpha: 1)
-            cell.communityView.backgroundColor = #colorLiteral(red: 0.9803921569, green: 0.9803921569, blue: 0.9921568627, alpha: 1)
-            cell.communityView.shadowColor = .black
-            cell.communityView.shadowOffset = CGSize(width: 0, height: 0)
-            cell.communityView.shadowRadius = 4
-            cell.communityView.shadowOpacity = 0.2
+            cell.communityView.backgroundColor = .systemGray5
         }
         else {
             cell.contentView.backgroundColor = #colorLiteral(red: 0.9803921569, green: 0.9803921569, blue: 0.9921568627, alpha: 1)
@@ -117,6 +112,7 @@ class CommunityVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         performSegue(withIdentifier: "CommunityDetailSegue", sender: indexPath.row)
     }
     
