@@ -11,7 +11,7 @@
         <scene sceneID="AIg-4Z-8uB">
             <objects>
                 <navigationController title="Profile" automaticallyAdjustsScrollViewInsets="NO" id="Ic2-hJ-im9" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Profile" image="person.fill" catalog="system" selectedImage="person.fill" id="i0w-ho-i6P"/>
+                    <tabBarItem key="tabBarItem" title="Profile" image="Profile Page Unselected" selectedImage="Profile Page Selected" id="i0w-ho-i6P"/>
                     <toolbarItems/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="Pwj-D9-c0E">
@@ -500,6 +500,7 @@
         <image name="Badge-400 Likes" width="39" height="42"/>
         <image name="Badge-500 Likes" width="39" height="42"/>
         <image name="Photo Profile (Dummy Data)" width="83" height="83"/>
-        <image name="person.fill" catalog="system" width="128" height="120"/>
+        <image name="Profile Page Selected" width="21" height="26"/>
+        <image name="Profile Page Unselected" width="22" height="26"/>
     </resources>
 </document>

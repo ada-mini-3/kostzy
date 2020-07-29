@@ -2,175 +2,115 @@
 //  DetailDiscussionVC.swift
 //  kostzy
 //
-//  Created by Rais on 14/07/20.
+//  Created by Rais on 29/07/20.
 //  Copyright © 2020 Apple Developer Academy. All rights reserved.
 //
 
 import UIKit
 
 class DetailDiscussionVC: UIViewController {
-
-    //----------------------------------------------------------------
-    // MARK:- Outlets
-    //----------------------------------------------------------------
     
-    @IBOutlet weak var discussionTableView: UITableView!
+    @IBOutlet weak var userImage: UIImageView!
     
+    @IBOutlet weak var userName: UILabel!
     
-    //----------------------------------------------------------------
-    // MARK:- Constraints Outlets
-    //----------------------------------------------------------------
+    @IBOutlet weak var discussionText: UILabel!
     
-    /*
-    @IBOutlet var discussionTableHeightConstraint: NSLayoutConstraint!
-    */
+    @IBOutlet weak var commentTV: UITableView!
     
+    @IBOutlet weak var commentFormImage: UIImageView!
     
-    //----------------------------------------------------------------
-    // MARK:- Variables
-    //----------------------------------------------------------------
-    var height: CGFloat!
-    var discussionTableHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var commentForm: UIView!
     
+    @IBOutlet weak var commentField: UITextField!
     
-    //----------------------------------------------------------------
-    // MARK:- Memory Management Methods
-    //----------------------------------------------------------------
+    var uImage: UIImage?
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
+    var uName: String?
     
+    var discussion: String?
     
-    //----------------------------------------------------------------
-    // MARK:- Action Methods
-    //----------------------------------------------------------------
-    @IBAction func newDiscussionButtonAction(_ sender: Any) {
-        performSegue(withIdentifier: "newDiscussionSegue", sender: self)
-    }
+    var comments = FeedComment.initData()
     
-    
-    //----------------------------------------------------------------
-    // MARK:- Custom Methods
-    //----------------------------------------------------------------
-    
-    @objc func adjustHeightOfTableview() {
-        height = discussionTableView.contentSize.height
-        print("Discussion Table Height: \(String(describing: height))")
-        //CGFloat maxHeight = self.tableView.superview.frame.size.height - self.tableView.frame.origin.y;
-
-        /*
-            Here you have to take care of two things, if there is only    tableView on the screen then you have to see is your tableView going below screen using maxHeight and your screen height,
-         Or you can add your tableView inside scrollView so that your tableView can increase its height as much it requires based on the number of cell (with different height based on content) it has to display.
-           */
-
-        // now set the height constraint accordingly
-        discussionTableHeightConstraint = discussionTableView.heightAnchor.constraint(equalToConstant: height)
-        NSLayoutConstraint.activate([
-            discussionTableHeightConstraint
-        ])
-        print("Discussion Table Height Constraint: \(String(describing: discussionTableHeightConstraint))")
-
-        // Preferred Content Size
-        preferredContentSize.height = discussionTableView.contentSize.height
+    var bottomConstraint: NSLayoutConstraint?
         
-        //If you want to increase tableView height with animation you can do that as below.
-
-        UIView.animate(withDuration: 0.5, animations: {
-            self.view.layoutIfNeeded()
-        })
-    }
-    
-    
-    //----------------------------------------------------------------
-    // MARK:- View Life Cycle Methods
-    //----------------------------------------------------------------
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        setupView()
+        setupUserImage()
+        setupKeyboardConstraint()
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-    //----------------------------------------------------------------
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    private func setupKeyboardConstraint() {
+        bottomConstraint = NSLayoutConstraint(item: commentForm!, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0)
+        view.addConstraint(bottomConstraint!)
     }
     
-    //----------------------------------------------------------------
+    @objc private func handleKeyboardNotification(notification: Notification) {
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardRect = keyboardFrame.cgRectValue
+            
+            let isKeyboardShowing = notification.name == UIResponder.keyboardWillShowNotification
+            bottomConstraint?.constant = isKeyboardShowing ? -keyboardRect.height : 0
+            UIView.animate(withDuration: 0, delay: 0, options: UIView.AnimationOptions.curveEaseOut, animations: {
+                self.view.layoutIfNeeded()
+            }) { (completed) in
+                
+            }
+        }
+    }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    private func setupView() {
+        userImage.image = uImage
+        userName.text = uName
+        discussionText.text = discussion
         
-        DispatchQueue.main.async(execute: {
-            self.discussionTableView.reloadData()
-
-            //In my case i had to call this method after some delay, because (i think) it will allow tableView to reload completely and then calculate the height required for itself. (This might be a workaround, but it worked for me)
-            self.perform(#selector(self.adjustHeightOfTableview), with: nil)
-        })
+        commentTV.tableFooterView = UIView()
+        commentTV.delegate = self
+        commentTV.dataSource = self
     }
     
-    override func viewDidLayoutSubviews() {
-        /* perform(#selector(self.adjustHeightOfTableview), with: nil) */
+    private func setupUserImage() {
+        userImage.layer.cornerRadius = userImage.frame.height / 2
+        commentFormImage.layer.cornerRadius = commentFormImage.frame.height / 2
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    
+    @IBAction func replyButtonClicked(_ sender: UIButton) {
+        let newComment = FeedComment(user: User.initUser(), time: Date(), comment: commentField.text ?? "Oi")
+        comments.insert(newComment, at: 0)
+        view.endEditing(true)
+        commentTV.reloadData()
     }
-    */
-
+    
 }
 
-
-//----------------------------------------------------------------
-// MARK:- Table View Data Source
-//----------------------------------------------------------------
-
 extension DetailDiscussionVC: UITableViewDataSource, UITableViewDelegate {
+    
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 228
+        return 90
     }
-
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return discussion.count
+        return comments.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CommunityDiscussionCell", for: indexPath) as! CommunityDiscussionCell
-
-        // Configure the cell...
-        if isDarkMode == true {
-            cell.discussionView.backgroundColor = .systemGray5
-        }
-        else {
-            cell.contentView.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-            cell.discussionView.backgroundColor = #colorLiteral(red: 0.9803921569, green: 0.9803921569, blue: 0.9921568627, alpha: 1)
-            cell.discussionView.shadowColor = .black
-            cell.discussionView.shadowOffset = CGSize(width: 0, height: 0)
-            cell.discussionView.shadowRadius = 2
-            cell.discussionView.shadowOpacity = 0.3
-        }
-        cell.discussionView.cornerRadius = 10
-        
-        cell.memberImageView.image = UIImage(named: memberImage[indexPath.row])
-        cell.memberNameLabel.text = memberName[indexPath.row]
-        cell.discussionLabel.text = discussion[indexPath.row]
-        cell.commentCountLabel.text = "\(commentCount[indexPath.row]) Comments"
-        cell.likeCountLabel.text = "\(likeCount[indexPath.row]) Likes"
-
+        let cell = tableView.dequeueReusableCell(withIdentifier: "dissCommentCell", for: indexPath) as! DiscussionCommentCell
+        let comment = comments[indexPath.row]
+        cell.userImage.image = comment.user.image
+        cell.userName.text = comment.user.name
+        cell.comment.text = comment.comment
         return cell
     }
+    
+    
     
     
 }

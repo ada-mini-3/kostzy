@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="vwu-VM-iDe">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="vwu-VM-iDe">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -36,7 +36,7 @@
         <scene sceneID="uJO-VM-fap">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="vwu-VM-iDe" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Notification" image="bell.fill" catalog="system" landscapeImage="bell.fill" id="QDZ-HU-WdG"/>
+                    <tabBarItem key="tabBarItem" title="Notification" image="Notif Page Unselected" selectedImage="Notification Page Selected" id="QDZ-HU-WdG"/>
                     <toolbarItems/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="FVO-ot-axv">
@@ -54,6 +54,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="bell.fill" catalog="system" width="128" height="124"/>
+        <image name="Notif Page Unselected" width="26" height="31"/>
+        <image name="Notification Page Selected" width="23" height="30"/>
     </resources>
 </document>

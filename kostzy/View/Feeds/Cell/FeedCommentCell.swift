@@ -22,4 +22,5 @@ class FeedCommentCell: UITableViewCell {
         userimage.layer.cornerRadius = userimage.frame.height / 2
     }
     
+    
 }

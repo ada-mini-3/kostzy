@@ -45,21 +45,25 @@ class FeedsDetailVC: UIViewController {
         setupView()
         setupNavigationBar()
         setupCommentTableView()
-        bottomConstraint = NSLayoutConstraint(item: commentFormView!, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0)
-        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotifiation), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotifiation), name: UIResponder.keyboardWillHideNotification, object: nil)
+        setupKeyboardConstraint()
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification), name: UIResponder.keyboardWillHideNotification, object: nil)
         
-        view.addConstraint(bottomConstraint!)
+      
         
         tagsCollectionView.dataSource = self
     }
     
-    @objc private func handleKeyboardNotifiation(notification: Notification) {
+    private func setupKeyboardConstraint() {
+        bottomConstraint = NSLayoutConstraint(item: commentFormView!, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0)
+        view.addConstraint(bottomConstraint!)
+    }
+    
+    @objc private func handleKeyboardNotification(notification: Notification) {
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             let keyboardRect = keyboardFrame.cgRectValue
             
             let isKeyboardShowing = notification.name == UIResponder.keyboardWillShowNotification
-            print("Test")
             bottomConstraint?.constant = isKeyboardShowing ? -keyboardRect.height : 0
             UIView.animate(withDuration: 0, delay: 0, options: UIView.AnimationOptions.curveEaseOut, animations: {
                 self.view.layoutIfNeeded()
