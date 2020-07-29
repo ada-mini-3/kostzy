@@ -76,7 +76,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="82" id="Svi-cq-tUc"/>
                                 </constraints>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="12" minimumInteritemSpacing="10" id="vgF-oH-GcT">
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="12" minimumInteritemSpacing="11" id="vgF-oH-GcT">
                                     <size key="itemSize" width="103" height="29"/>
                                     <size key="estimatedItemSize" width="103" height="29"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -241,6 +241,9 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="tintColor" red="0.99607843139999996" green="0.054901960780000002" blue="0.45098039220000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" title="guidelines"/>
+                                        <connections>
+                                            <segue destination="K33-HL-qKf" kind="show" id="Ucc-82-wPA"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -271,6 +274,8 @@
                         <outlet property="categoryName" destination="0jI-bv-YlP" id="70E-88-xK9"/>
                         <outlet property="categoryView" destination="2w6-fE-h1K" id="msP-0W-FdN"/>
                         <outlet property="feedTextView" destination="oxy-N0-sOo" id="SQi-al-Gpn"/>
+                        <outlet property="guidelinesButton" destination="IFA-OT-Fhe" id="KdV-h7-rs6"/>
+                        <outlet property="kostNameField" destination="HU9-4K-m3F" id="yfX-g3-2H8"/>
                         <outlet property="profilePhoto" destination="MxB-Vd-hTk" id="aGV-Zr-5Ia"/>
                         <outlet property="tagCollectionView" destination="L5Y-GO-L9E" id="FF5-cx-OYx"/>
                         <segue destination="A9j-Pc-qca" kind="show" identifier="dummySeg" id="bzf-7Q-RN7"/>
@@ -291,6 +296,16 @@
                 <exit id="evX-ru-9Gu" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="1989" y="-85"/>
+        </scene>
+        <!--Guidelines-->
+        <scene sceneID="b0g-hc-fUo">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Guidelines" id="K33-HL-qKf" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="9Ja-eU-OoO"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Lxy-tL-kP5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1968" y="86"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="wI9-pD-L9P">
