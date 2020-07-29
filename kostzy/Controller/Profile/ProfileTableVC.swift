@@ -12,7 +12,6 @@ import UIKit
 // MARK: - DataSource
 class DataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
     
-    
     // MARK: - Arrays
     var image = ["My Community Dummy Data 2",
                  "My Community Dummy Data 2 2",
@@ -57,8 +56,8 @@ class DataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
 // MARK: - ProfileTableVC
 class ProfileTableVC: UITableViewController {
     
-    
     // MARK: - Variables
+    let defaults = UserDefaults.standard
     let notificationCenter = NotificationCenter.default
     
     let profileImagePlaceholderImage = "Photo Profile (Dummy Data)"
@@ -118,15 +117,22 @@ class ProfileTableVC: UITableViewController {
     
     // MARK: - Function
     func loadProfileData() {
-        if userImage == nil && userFullName == nil && userTitle == nil && userLike == nil && userAboutMe == nil {
+        let savedUserDataDict = defaults.dictionary(forKey: "userDataDict") as? [String: String] ?? [String: String]()
+        let userIsLoggedIn = defaults.bool(forKey: "userIsLoggedIn")
+        
+        if userIsLoggedIn == true {
             profileImage.image = UIImage(named: profileImagePlaceholderImage)
-            profileNameLabel.text = profileNamePlaceholderText
+            profileNameLabel.text = savedUserDataDict["userName"]
             profileTitleLabel.text = profileTitlePlaceholderText
             userLike = userLikePlaceholderNumber
             profileAboutMeLabel.text = profileAboutMePlaceholderText
         }
         else {
-            profileNameLabel.text = userFullName
+            profileImage.image = UIImage(named: profileImagePlaceholderImage)
+            profileNameLabel.text = profileNamePlaceholderText
+            profileTitleLabel.text = profileTitlePlaceholderText
+            userLike = userLikePlaceholderNumber
+            profileAboutMeLabel.text = profileAboutMePlaceholderText
         }
     }
     
