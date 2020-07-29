@@ -97,7 +97,7 @@ class FeedsVC: UIViewController, MKMapViewDelegate {
     
     private func setupNavigationBarItem() {
         let icon = UIImage(systemName: "plus.circle.fill")
-        let iconSize = CGRect(origin: CGPoint.zero, size: CGSize(width: 40, height: 40))
+        let iconSize = CGRect(origin: CGPoint.zero, size: CGSize(width: 44, height: 44))
         let iconButton = UIButton(frame: iconSize)
         iconButton.setBackgroundImage(icon, for: .normal)
         let barButton = UIBarButtonItem(customView: iconButton)
