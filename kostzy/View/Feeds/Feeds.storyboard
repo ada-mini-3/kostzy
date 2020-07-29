@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17140" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="GZ9-oK-JMv">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="GZ9-oK-JMv">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17115"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -114,18 +112,18 @@
                                                 </imageView>
                                                 <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ppF-55-Xw5">
                                                     <rect key="frame" x="13" y="80" width="319" height="98"/>
-                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="319" id="ZWb-ej-cdK"/>
                                                     </constraints>
                                                     <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </string>
-                                                    <color key="textColor" systemColor="labelColor"/>
+                                                    <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 </textView>
                                                 <collectionView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Aom-Z5-pZh">
                                                     <rect key="frame" x="16" y="186" width="314" height="30"/>
-                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="ZbX-At-MK6"/>
                                                     </constraints>
@@ -283,8 +281,7 @@
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
                         </subviews>
-                        <viewLayoutGuide key="safeArea" id="gSa-wz-eSn"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="oyD-rP-R8l" firstAttribute="centerX" secondItem="MAE-s1-1h0" secondAttribute="centerX" id="1rp-vL-oUa"/>
                             <constraint firstItem="gSa-wz-eSn" firstAttribute="trailing" secondItem="3uW-Wd-Ror" secondAttribute="trailing" constant="20" id="36Z-6v-w4L"/>
@@ -305,6 +302,7 @@
                             <constraint firstItem="QUx-SY-D7g" firstAttribute="leading" secondItem="Kka-NS-Bx2" secondAttribute="trailing" constant="5" id="vZ9-mN-DBe"/>
                             <constraint firstItem="c0l-ss-4XP" firstAttribute="top" secondItem="oyD-rP-R8l" secondAttribute="bottom" constant="5" id="yDL-SJ-rPc"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="gSa-wz-eSn"/>
                     </view>
                     <navigationItem key="navigationItem" title="Feeds" largeTitleDisplayMode="always" id="2nq-gM-rzP"/>
                     <connections>
@@ -381,18 +379,11 @@
         <image name="circle.fill" catalog="system" width="128" height="121"/>
         <image name="ellipses.bubble" catalog="system" width="128" height="110"/>
         <image name="exclamationmark.bubble.fill" catalog="system" width="128" height="110"/>
-        <image name="flag" catalog="system" width="128" height="124"/>
         <image name="hand.thumbsup" catalog="system" width="128" height="128"/>
         <image name="info-selected" width="92" height="16"/>
         <image name="location-icon " width="12" height="19"/>
         <image name="sc-culinary" width="66" height="19"/>
         <image name="sc-experience" width="82" height="20"/>
         <image name="sc-hangouts" width="82" height="17"/>
-        <systemColor name="labelColor">
-            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
     </resources>
 </document>
