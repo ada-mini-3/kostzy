@@ -1161,7 +1161,7 @@
             <objects>
                 <tableViewController id="9AK-B5-J1r" customClass="NewDiscussionTableVC" customModule="kostzy" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="ES9-ns-NsO">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <sections>
@@ -1389,7 +1389,7 @@
             <objects>
                 <tableViewController id="at3-Xr-KQo" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="8IP-Gj-XoL">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <sections>
@@ -1488,7 +1488,7 @@ We want our users to freely communicate on Koszy, but we have to impose restrict
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WyB-Ab-9Yr">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="1679.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bnk-kh-wTS">
                                                 <rect key="frame" x="0.0" y="0.0" width="414" height="300"/>
@@ -1541,10 +1541,7 @@ We want our users to freely communicate on Koszy, but we have to impose restrict
                                                 </constraints>
                                             </view>
                                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DwW-4H-eat">
-                                                <rect key="frame" x="0.0" y="459.5" width="414" height="1220"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" priority="250" constant="1220" placeholder="YES" id="rhk-hG-rY4"/>
-                                                </constraints>
+                                                <rect key="frame" x="0.0" y="459.5" width="414" height="436.5"/>
                                             </containerView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s2Y-gC-3al">
                                                 <rect key="frame" x="20" y="479.5" width="128" height="28"/>
@@ -1553,7 +1550,7 @@ We want our users to freely communicate on Koszy, but we have to impose restrict
                                                     <color key="titleColor" red="1" green="0.74117647060000003" blue="0.086274509799999996" alpha="1" colorSpace="calibratedRGB"/>
                                                 </state>
                                                 <connections>
-                                                    <segue destination="owH-LN-xhv" kind="presentation" modalPresentationStyle="fullScreen" id="S2f-uL-bmF"/>
+                                                    <segue destination="owH-LN-xhv" kind="presentation" id="S2f-uL-bmF"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5LM-yu-lYd">
@@ -1597,6 +1594,7 @@ We want our users to freely communicate on Koszy, but we have to impose restrict
                                     </view>
                                 </subviews>
                                 <constraints>
+                                    <constraint firstItem="WyB-Ab-9Yr" firstAttribute="height" secondItem="Xix-b0-SDE" secondAttribute="height" priority="250" id="BvA-8y-Ml6"/>
                                     <constraint firstAttribute="trailing" secondItem="WyB-Ab-9Yr" secondAttribute="trailing" id="FjU-CA-yMX"/>
                                     <constraint firstItem="WyB-Ab-9Yr" firstAttribute="width" secondItem="Xix-b0-SDE" secondAttribute="width" id="YOz-9n-dUl"/>
                                     <constraint firstAttribute="bottom" secondItem="WyB-Ab-9Yr" secondAttribute="bottom" id="hpX-F2-ulZ"/>
@@ -2157,11 +2155,12 @@ We want our users to freely communicate on Koszy, but we have to impose restrict
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="owH-LN-xhv" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="FaV-9B-YZR">
-                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="108"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="xOp-lM-pQ0">
+                        <rect key="frame" x="0.0" y="-54" width="0.0" height="0.0"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </toolbar>
                     <connections>
