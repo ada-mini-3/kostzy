@@ -42,10 +42,10 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.layoutIfNeeded()
-        UserDefaults.standard.bool(forKey: "FirstLaunch")
+       // UserDefaults.standard.bool(forKey: "FirstLaunch")
+        print(UserDefaults.standard.bool(forKey: "FirstLaunch"))
         setupScrollView()
     }
-    
     private func setupScrollView() {
         self.scrollView.delegate = self
         scrollView.isPagingEnabled = true
@@ -82,32 +82,30 @@ class ViewController: UIViewController, UIScrollViewDelegate {
             slide.addSubview(txt2)
             scrollView.addSubview(slide)
             btnStart.isHidden = true
+            btnBack.isHidden = true
         }
         scrollView.contentSize = CGSize(width: scrollWidth * CGFloat(titles.count), height: scrollHeight)
         self.scrollView.contentSize.height = 1.0
         pageControl.numberOfPages = titles.count
         pageControl.currentPage = 0
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        if UserDefaults.standard.bool(forKey: "First Launch") == true {
-            DispatchQueue.main.async {
-                self.performSegue(withIdentifier: "skipSegue", sender: self)
-                print("Segue performed - user defaults returned true!")
-            }
-        }
-        if pageCount == 0 {
-            btnBack.isHidden = true
-        }
-    }
+//    override func viewDidAppear(_ animated: Bool) {
+//        if UserDefaults.standard.bool(forKey: "FirstLaunch") == true {
+//                self.performSegue(withIdentifier: "skipSegue", sender: self)
+//                print("Segue performed - user defaults returned true!")
+//        }
+////        if pageCount == 0 {
+////            btnBack.isHidden = true
+////        }
+//    }
         
     @IBAction func pageChanged(_ sender: Any) {
          scrollView!.scrollRectToVisible(CGRect(x: scrollWidth * CGFloat ((pageControl?.currentPage)!), y: 0, width: scrollWidth, height: scrollHeight), animated: true)
     }
 
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        setIndicatorForCurrentPage()
-    }
+//    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+//        setIndicatorForCurrentPage()
+//    }
 
     private func setIndicatorForCurrentPage()  {
         let page = (scrollView?.contentOffset.x)!/scrollWidth
@@ -161,8 +159,50 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     @IBAction func skipButtonPressed(_ sender: Any) {
         self.scrollToPage(page: 2, animated: true)
         btnSkip.isHidden = true
+        btnBack.isHidden=true
         btnStart.isHidden = false
         btnNext.isHidden = true
+        pageCount = 2
+        pageControl.currentPage = pageCount
+        
+    }
+    
+    @IBAction func startButtonClicked(_ sender: Any) {
+        UserDefaults.standard.set(true, forKey: "FirstLaunch")
+    }
+    
+
+}
+extension ViewController{
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if scrollView.panGestureRecognizer.translation(in: scrollView.superview).x > 0 {
+            pageCount -= 1
+        } else {
+            pageCount += 1
+        }
+        
+        if pageCount == 0 {
+            btnSkip.isHidden=false
+            btnBack.isHidden=true
+            btnStart.isHidden=true
+            btnNext.isHidden = false
+        }
+        else if pageCount == 1{
+            btnSkip.isHidden=false
+            btnBack.isHidden=false
+            btnStart.isHidden=true
+            btnNext.isHidden = false
+        }
+        else{
+            btnSkip.isHidden=true
+            btnNext.isHidden=true
+            btnBack.isHidden=true
+            btnStart.isHidden=false
+        }
+    }
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        setIndicatorForCurrentPage()
     }
     
 }
