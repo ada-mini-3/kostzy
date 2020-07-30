@@ -495,7 +495,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1150;
-				LastUpgradeCheck = 1150;
+				LastUpgradeCheck = 1160;
 				ORGANIZATIONNAME = "Apple Developer Academy";
 				TargetAttributes = {
 					881D35F824BD4A7800521220 = {
@@ -602,7 +602,6 @@
 				2CE981B924CA6B1E007B2FF4 /* CommunityDraftVC.swift in Sources */,
 				2C625BCB24CA8681005EF2EF /* Expandable.swift in Sources */,
 				88E028F424C86FF0005EF2AE /* FeedTagsCell.swift in Sources */,
-				881D365924BD565200521220 /* OffLimitVC.swift in Sources */,
 				88DF73C224C724840081B8B0 /* FeedCell.swift in Sources */,
 				2C66A7F424CFE6690039A167 /* OffLimitsTableVC.swift in Sources */,
 				2C6BA97024CF01C5004C39ED /* CommunityDiscussionCell.swift in Sources */,
