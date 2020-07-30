@@ -61,9 +61,9 @@ class ProfileTableVC: UITableViewController {
     let notificationCenter = NotificationCenter.default
     
     let profileImagePlaceholderImage = "Photo Profile (Dummy Data)"
-    let profileNamePlaceholderText = "Desti"
-    let profileTitlePlaceholderText = "Experienced Boarder"
-    let userLikePlaceholderNumber = 100
+    let profileNamePlaceholderText = "User"
+    let profileTitlePlaceholderText = "Kostzy Beginner"
+    let userLikePlaceholderNumber = 0
     let profileAboutMePlaceholderText = "There's no description."
     
     var dataSource = DataSource()
@@ -236,8 +236,8 @@ extension ProfileTableVC: UICollectionViewDataSource, UICollectionViewDelegate, 
         let floatXP = Float(userLike ?? 0)
     
         // Configure the cell
-        cell.likeProgressView.setProgress(floatXP / 500, animated: true)
-        print(floatXP / 500)
+        cell.likeProgressView.setProgress(floatXP / 600, animated: true)
+        print(floatXP / 600)
         
         if userLike ?? 0 >= 100 {
             cell.like100DotView.backgroundColor = #colorLiteral(red: 0.3333333333, green: 0.3098039216, blue: 0.7882352941, alpha: 1)

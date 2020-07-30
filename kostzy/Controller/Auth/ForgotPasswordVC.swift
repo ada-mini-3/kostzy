@@ -1,22 +1,21 @@
 //
-//  LoginVC.swift
+//  ForgotPasswordVC.swift
 //  kostzy
 //
-//  Created by Rais on 14/07/20.
+//  Created by Rayhan Martiza Faluda on 30/07/20.
 //  Copyright © 2020 Apple Developer Academy. All rights reserved.
 //
 
 import UIKit
 
-class LoginVC: UIViewController, UITextFieldDelegate {
-    
+class ForgotPasswordVC: UIViewController, UITextFieldDelegate {
+
     //----------------------------------------------------------------
     // MARK:- Outlets
     //----------------------------------------------------------------
     @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var closeButtonOutlet: UIButton!
     @IBOutlet weak var emailTextField: UITextField!
-    @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var errorLabel: UILabel!
     
     
     //----------------------------------------------------------------
@@ -28,20 +27,34 @@ class LoginVC: UIViewController, UITextFieldDelegate {
     //----------------------------------------------------------------
     // MARK:- Action Methods
     //----------------------------------------------------------------
-    @IBAction func closeButtonAction(_ sender: UIButton) {
-        dismiss(animated: true, completion: nil)
+    @IBAction func backButtonAction(_ sender: UIButton) {
+        _ = navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func signInButtonAction(_ sender: UIButton) {
+    @IBAction func sendButtonAction(_ sender: UIButton) {
         let savedUserDataDict = defaults.dictionary(forKey: "userDataDict") as? [String: String] ?? [String: String]()
         
-        if emailTextField.text == savedUserDataDict["userEmail"] && passwordTextField.text == savedUserDataDict["userPassword"] {
+        if emailTextField.text == "" {
+            errorLabel.text = "Fill in your email!"
+            errorLabel.isHidden = false
+        }
+        else if emailTextField.text != savedUserDataDict["userEmail"] {
+            errorLabel.text = "Email doesn't exist! Make sure you input the right email."
+            errorLabel.isHidden = false
+        }
+        else if emailTextField.text == savedUserDataDict["userEmail"] {
             defaults.set(true, forKey: "userIsLoggedIn")
             
-            dismiss(animated: true, completion: nil)
-        } else {
-            let alert = UIAlertController(title: "Wrong email and/or password", message: "Make sure you input the right email and password", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+            // Uncomment for updating userPassword in User Defaluts' userDataDict
+            /*
+            savedUserDataDict["userPassword"] = savedUserDataDict["userName"]
+            defaults.set(savedUserDataDict, forKey: "userDataDict")
+            */
+            
+            let alert = UIAlertController(title: "Forgot Password", message: "Link has been sent, please check your email", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { action in
+                _ = self.navigationController?.popViewController(animated: true)
+            }))
             
             self.present(alert, animated: true)
         }
@@ -52,14 +65,11 @@ class LoginVC: UIViewController, UITextFieldDelegate {
     // MARK:- Custom Methods
     //----------------------------------------------------------------
     func setupTextField() {
+        errorLabel.isHidden = true
+        
         emailTextField.delegate = self
-        passwordTextField.delegate = self
-        
         emailTextField.keyboardType = .emailAddress
-        passwordTextField.keyboardType = .default
-        
         emailTextField.underlined()
-        passwordTextField.underlined()
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapView(gesture:)))
         let notificationCenter = NotificationCenter.default
@@ -72,10 +82,7 @@ class LoginVC: UIViewController, UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == emailTextField {
-            passwordTextField.becomeFirstResponder()
-        }
-        if textField == passwordTextField {
-            passwordTextField.resignFirstResponder()
+            emailTextField.resignFirstResponder()
         }
         return true
     }
@@ -107,10 +114,6 @@ class LoginVC: UIViewController, UITextFieldDelegate {
 
         // Do any additional setup after loading the view.
         setupTextField()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
     }
     
     override func viewWillLayoutSubviews() {
