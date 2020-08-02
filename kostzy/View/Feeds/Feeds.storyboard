@@ -22,7 +22,7 @@
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="36" id="eLY-Wc-mbx"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
-                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="Slipi">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
@@ -112,7 +112,7 @@
                                                 </imageView>
                                                 <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ppF-55-Xw5">
                                                     <rect key="frame" x="13" y="80" width="319" height="98"/>
-                                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="319" id="ZWb-ej-cdK"/>
                                                     </constraints>
@@ -123,7 +123,7 @@
                                                 </textView>
                                                 <collectionView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Aom-Z5-pZh">
                                                     <rect key="frame" x="16" y="186" width="314" height="30"/>
-                                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="ZbX-At-MK6"/>
                                                     </constraints>
@@ -308,6 +308,7 @@
                     <connections>
                         <outlet property="actityIndicator" destination="UbT-jV-h7e" id="UrL-ZE-gxv"/>
                         <outlet property="btnLocation" destination="Kka-NS-Bx2" id="Yor-Ei-K8K"/>
+                        <outlet property="chevron" destination="QUx-SY-D7g" id="6km-0L-qfN"/>
                         <outlet property="feedsCollectionView" destination="c0l-ss-4XP" id="ck7-tE-cHQ"/>
                         <outlet property="segmentedCategory" destination="oyD-rP-R8l" id="wei-rg-0ar"/>
                         <segue destination="f8F-FQ-EJk" kind="show" identifier="detailFeedSegue" id="G31-wR-wyJ"/>

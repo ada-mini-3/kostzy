@@ -117,7 +117,11 @@ class FeedsCreateVC: UIViewController {
     private func setupPickerView() {
         categoryPicker = UIPickerView.init()
         categoryPicker.autoresizingMask = .flexibleWidth
-        categoryPicker.backgroundColor = UIColor.white
+        if isDarkMode == true {
+            categoryPicker.backgroundColor = UIColor.black
+        } else {
+            categoryPicker.backgroundColor = UIColor.white
+        }
         categoryPicker.contentMode = .center
         categoryPicker.frame = CGRect.init(x: 0.0, y: UIScreen.main.bounds.size.height - 350, width: UIScreen.main.bounds.size.width, height: 300)
         categoryPicker.selectedRow(inComponent: 0)
