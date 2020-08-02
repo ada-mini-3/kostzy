@@ -22,6 +22,12 @@ class FeedsVC: UIViewController, MKMapViewDelegate {
     
     @IBOutlet weak var actityIndicator: UIActivityIndicatorView!
     
+    //----------------------------------------------------------------
+    // MARK:- Variables
+    //----------------------------------------------------------------
+    let defaults = UserDefaults.standard
+    
+    
     var location : Location?
     
     var feedsInfo = Feeds.initData()
@@ -106,7 +112,17 @@ class FeedsVC: UIViewController, MKMapViewDelegate {
     }
     
     @objc private func segueToCreateFeeds() {
-        performSegue(withIdentifier: "createFeedSegue", sender: self)
+        let userIsLoggedIn = defaults.bool(forKey: "userIsLoggedIn")
+        
+        if userIsLoggedIn == false {
+            let storyboard = UIStoryboard(name: "Login", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "NavigationController") as! UINavigationController
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: true, completion: nil)
+        }
+        else {
+            performSegue(withIdentifier: "createFeedSegue", sender: self)
+        }
     }
     
     private func setupSegmentedControl() {

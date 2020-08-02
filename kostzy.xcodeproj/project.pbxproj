@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C3BC4C924D2762C000C2100 /* ForgotPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3BC4C824D2762C000C2100 /* ForgotPasswordVC.swift */; };
+		2C3BC4CB24D27B3F000C2100 /* ForgotPassword.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C3BC4CA24D27B3F000C2100 /* ForgotPassword.storyboard */; };
 		2C518EAB24C7DDD800B0B383 /* HelperExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C518EAA24C7DDD800B0B383 /* HelperExtension.swift */; };
 		2C518EB624C84DB000B0B383 /* ProfileTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C518EB424C84DB000B0B383 /* ProfileTableVC.swift */; };
 		2C518EC324C85AB500B0B383 /* MyCommunityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C518EC224C85AB500B0B383 /* MyCommunityCell.swift */; };
@@ -78,6 +80,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2C3BC4C824D2762C000C2100 /* ForgotPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordVC.swift; sourceTree = "<group>"; };
+		2C3BC4CA24D27B3F000C2100 /* ForgotPassword.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ForgotPassword.storyboard; sourceTree = "<group>"; };
 		2C518EAA24C7DDD800B0B383 /* HelperExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelperExtension.swift; sourceTree = "<group>"; };
 		2C518EB424C84DB000B0B383 /* ProfileTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableVC.swift; sourceTree = "<group>"; };
 		2C518EC224C85AB500B0B383 /* MyCommunityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCommunityCell.swift; sourceTree = "<group>"; };
@@ -270,6 +274,7 @@
 			children = (
 				881D361424BD4B4700521220 /* Login.storyboard */,
 				881D361624BD4B5600521220 /* Register.storyboard */,
+				2C3BC4CA24D27B3F000C2100 /* ForgotPassword.storyboard */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -385,6 +390,7 @@
 			children = (
 				881D364E24BD54E400521220 /* RegisterVC.swift */,
 				881D365024BD54F600521220 /* LoginVC.swift */,
+				2C3BC4C824D2762C000C2100 /* ForgotPasswordVC.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -492,7 +498,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1150;
-				LastUpgradeCheck = 1150;
+				LastUpgradeCheck = 1160;
 				ORGANIZATIONNAME = "Apple Developer Academy";
 				TargetAttributes = {
 					881D35F824BD4A7800521220 = {
@@ -542,6 +548,7 @@
 				881D362F24BD4EC100521220 /* OffLimit.storyboard in Resources */,
 				881D361D24BD4BEB00521220 /* Profile.storyboard in Resources */,
 				881D362924BD4E1600521220 /* Community.storyboard in Resources */,
+				2C3BC4CB24D27B3F000C2100 /* ForgotPassword.storyboard in Resources */,
 				881D361A24BD4BD400521220 /* Notification.storyboard in Resources */,
 				881D363324BD4FD700521220 /* DiscussionDetail.storyboard in Resources */,
 			);
@@ -577,6 +584,7 @@
 				2C518EC324C85AB500B0B383 /* MyCommunityCell.swift in Sources */,
 				2C69C68524C938820050C751 /* MyCommunityTable.swift in Sources */,
 				2C518EAB24C7DDD800B0B383 /* HelperExtension.swift in Sources */,
+				2C3BC4C924D2762C000C2100 /* ForgotPasswordVC.swift in Sources */,
 				2CE981B024C9E246007B2FF4 /* CommunityCell.swift in Sources */,
 				881D365B24BD566800521220 /* MapVC.swift in Sources */,
 				886800C524D12814008E7AAE /* DetailDiscussionVC.swift in Sources */,
@@ -598,7 +606,6 @@
 				2CE981B924CA6B1E007B2FF4 /* CommunityDraftVC.swift in Sources */,
 				2C625BCB24CA8681005EF2EF /* Expandable.swift in Sources */,
 				88E028F424C86FF0005EF2AE /* FeedTagsCell.swift in Sources */,
-				881D365924BD565200521220 /* OffLimitVC.swift in Sources */,
 				88DF73C224C724840081B8B0 /* FeedCell.swift in Sources */,
 				2C66A7F424CFE6690039A167 /* OffLimitsTableVC.swift in Sources */,
 				2C6BA97024CF01C5004C39ED /* CommunityDiscussionCell.swift in Sources */,
@@ -671,7 +678,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.3;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -725,7 +732,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -744,12 +751,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = QWVAEMBXMM;
 				INFOPLIST_FILE = kostzy/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1;
+				MARKETING_VERSION = 0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ada.kostzy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -767,12 +774,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = QWVAEMBXMM;
 				INFOPLIST_FILE = kostzy/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1;
+				MARKETING_VERSION = 0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ada.kostzy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

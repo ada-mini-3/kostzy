@@ -12,7 +12,6 @@ import UIKit
 // MARK: - DataSource
 class DataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
     
-    
     // MARK: - Arrays
     var image = ["My Community Dummy Data 2",
                  "My Community Dummy Data 2 2",
@@ -57,14 +56,14 @@ class DataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
 // MARK: - ProfileTableVC
 class ProfileTableVC: UITableViewController {
     
-    
     // MARK: - Variables
+    let defaults = UserDefaults.standard
     let notificationCenter = NotificationCenter.default
     
     let profileImagePlaceholderImage = "Photo Profile (Dummy Data)"
-    let profileNamePlaceholderText = "Desti"
-    let profileTitlePlaceholderText = "Experienced Boarder"
-    let userLikePlaceholderNumber = 100
+    let profileNamePlaceholderText = "User"
+    let profileTitlePlaceholderText = "Kostzy Beginner"
+    let userLikePlaceholderNumber = 0
     let profileAboutMePlaceholderText = "There's no description."
     
     var dataSource = DataSource()
@@ -118,15 +117,22 @@ class ProfileTableVC: UITableViewController {
     
     // MARK: - Function
     func loadProfileData() {
-        if userImage == nil && userFullName == nil && userTitle == nil && userLike == nil && userAboutMe == nil {
+        let savedUserDataDict = defaults.dictionary(forKey: "userDataDict") as? [String: String] ?? [String: String]()
+        let userIsLoggedIn = defaults.bool(forKey: "userIsLoggedIn")
+        
+        if userIsLoggedIn == true {
             profileImage.image = UIImage(named: profileImagePlaceholderImage)
-            profileNameLabel.text = profileNamePlaceholderText
+            profileNameLabel.text = savedUserDataDict["userName"]
             profileTitleLabel.text = profileTitlePlaceholderText
             userLike = userLikePlaceholderNumber
             profileAboutMeLabel.text = profileAboutMePlaceholderText
         }
         else {
-            profileNameLabel.text = userFullName
+            profileImage.image = UIImage(named: profileImagePlaceholderImage)
+            profileNameLabel.text = profileNamePlaceholderText
+            profileTitleLabel.text = profileTitlePlaceholderText
+            userLike = userLikePlaceholderNumber
+            profileAboutMeLabel.text = profileAboutMePlaceholderText
         }
     }
     
@@ -230,8 +236,8 @@ extension ProfileTableVC: UICollectionViewDataSource, UICollectionViewDelegate, 
         let floatXP = Float(userLike ?? 0)
     
         // Configure the cell
-        cell.likeProgressView.setProgress(floatXP / 500, animated: true)
-        print(floatXP / 500)
+        cell.likeProgressView.setProgress(floatXP / 600, animated: true)
+        print(floatXP / 600)
         
         if userLike ?? 0 >= 100 {
             cell.like100DotView.backgroundColor = #colorLiteral(red: 0.3333333333, green: 0.3098039216, blue: 0.7882352941, alpha: 1)
