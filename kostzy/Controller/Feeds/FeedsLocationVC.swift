@@ -16,6 +16,8 @@ class FeedsLocationVC: UIViewController {
     
     var selectedLocation : Location?
     
+    @IBOutlet weak var buttonCurrentLocation: UIButton!
+    
     fileprivate let locations : [Location] = Location.initData()
     
     fileprivate var filteredLocation = [Location]()
@@ -23,9 +25,20 @@ class FeedsLocationVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCancelButtonAttrs()
+        setupButtonLocation()
         filteredLocation = locations.filter { $0.type == .university }
         setupSegmentedControl()
         setupTableView()
+    }
+    
+    private func setupButtonLocation() {
+        if isDarkMode == true {
+            buttonCurrentLocation.setTitleColor(UIColor.white, for: .normal)
+            buttonCurrentLocation.setImage(UIImage(named: "current-dark"), for: .normal)
+        } else {
+            buttonCurrentLocation.setTitleColor(UIColor.black, for: .normal)
+            buttonCurrentLocation.setImage(UIImage(named: "current-loc-light"), for: .normal)
+        }
     }
     
     private func setupTableView() {
@@ -44,6 +57,9 @@ class FeedsLocationVC: UIViewController {
          let attrs = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 14)]
         segmentedLocation.selectedSegmentTintColor = UIColor(red: 255.0/255, green: 184.0/255, blue: 0.0/255, alpha: 1)
         segmentedLocation.setTitleTextAttributes(attrs, for: .selected)
+        if isDarkMode == true {
+            segmentedLocation.backgroundColor = UIColor(red: 44/255, green: 45/255, blue: 47/255, alpha: 1)
+        }
     }
     
     @objc private func dismissViewController() {
