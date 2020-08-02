@@ -126,7 +126,7 @@ extension FeedsDetailVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = tagsCollectionView.dequeueReusableCell(withReuseIdentifier: "tagCell", for: indexPath) as! FeedTagsCell
         cell.tagName.text = feeds?.tags[indexPath.row].name
-        cell.configureTagColor(index: indexPath.row)
+        cell.contentView.backgroundColor = feeds?.tags[indexPath.row].color
         return cell
     }
     
