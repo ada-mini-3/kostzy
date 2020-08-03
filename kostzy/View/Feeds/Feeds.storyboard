@@ -349,7 +349,9 @@
         <scene sceneID="0Be-Fx-kbL">
             <objects>
                 <navigationController title="Feeds" automaticallyAdjustsScrollViewInsets="NO" id="GZ9-oK-JMv" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Feeds" image="Feeds Page Unselected" selectedImage="tab bar feeds-filled" id="mGb-1C-fbh"/>
+                    <tabBarItem key="tabBarItem" title="Feeds" image="Feeds Page Unselected" selectedImage="tab bar feeds-filled" id="mGb-1C-fbh">
+                        <inset key="imageInsets" minX="0.0" minY="5" maxX="0.0" maxY="0.0"/>
+                    </tabBarItem>
                     <toolbarItems/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="sBZ-92-kq6">
