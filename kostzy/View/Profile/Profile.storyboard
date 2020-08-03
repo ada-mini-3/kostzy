@@ -30,7 +30,7 @@
         <!--Profile-->
         <scene sceneID="Tc4-QF-gUG">
             <objects>
-                <tableViewController id="zux-8A-GGn" customClass="ProfileTableVC" customModule="kostzy" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="ProfileTableVC" id="zux-8A-GGn" customClass="ProfileTableVC" customModule="kostzy" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="ZRH-KJ-S0s">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -38,7 +38,7 @@
                         <sections>
                             <tableViewSection id="qn0-EJ-G5s">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="204" id="qeM-n9-bXj">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="ProfileTableVC" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="204" id="qeM-n9-bXj">
                                         <rect key="frame" x="0.0" y="28" width="414" height="204"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="qeM-n9-bXj" id="eSR-gR-nZI">
@@ -65,6 +65,9 @@
                                                         <constraint firstAttribute="height" constant="25" id="Kry-vc-rSJ"/>
                                                     </constraints>
                                                     <state key="normal" title="Edit Profile"/>
+                                                    <connections>
+                                                        <segue destination="LzT-cx-Ack" kind="show" identifier="data" id="XDM-i2-0D8"/>
+                                                    </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="User Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WWe-oB-Fvo">
                                                     <rect key="frame" x="16" y="139" width="382" height="22"/>
@@ -490,7 +493,17 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BZW-wQ-OQ4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1028.985507246377" y="44.866071428571423"/>
+            <point key="canvasLocation" x="1214" y="45"/>
+        </scene>
+        <!--EditProfile-->
+        <scene sceneID="uWe-jv-Ku2">
+            <objects>
+                <viewControllerPlaceholder storyboardName="EditProfile" id="LzT-cx-Ack" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="fBG-Wr-eRO"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iAl-jC-obd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1692" y="-30"/>
         </scene>
     </scenes>
     <resources>
