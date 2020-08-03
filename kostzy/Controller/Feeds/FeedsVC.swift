@@ -31,7 +31,6 @@ class FeedsVC: UIViewController, MKMapViewDelegate {
     
     
     var location : Location?
-    
     var feedsInfo = Feeds.initData()
     var feedsFood = Feeds.initFeedCatData()
     var feedsExp = Feeds.initFeedExpData()
