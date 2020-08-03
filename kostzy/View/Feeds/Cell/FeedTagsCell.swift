@@ -9,9 +9,7 @@
 import UIKit
 
 class FeedTagsCell: UICollectionViewCell {
-    
-    var colorArr : [UIColor] = Tag.colorArr
-    
+        
     @IBOutlet weak var tagName: UILabel!
     
     @IBOutlet weak var tagCreateName: UILabel!
@@ -19,9 +17,6 @@ class FeedTagsCell: UICollectionViewCell {
     override func awakeFromNib() {
         self.contentView.layer.cornerRadius = 10
     }
-    
-    func configureTagColor(index: Int) {
-        self.contentView.backgroundColor = colorArr[index]
-    }
+
     
 }

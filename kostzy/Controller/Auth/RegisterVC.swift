@@ -52,6 +52,10 @@ class RegisterVC: UIViewController, UITextFieldDelegate {
         }
     }
     
+    @IBAction func signInHereButtonAction(_ sender: UIButton) {
+        _ = navigationController?.popViewController(animated: true)
+    }
+    
     
     //----------------------------------------------------------------
     // MARK:- Custom Methods

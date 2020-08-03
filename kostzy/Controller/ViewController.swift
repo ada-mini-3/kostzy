@@ -28,7 +28,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     
     var pageCount:Int = 0
     
-    var titles = ["Find Information","Sharing Experiences","Join Community"]
+    var titles = ["Find Information","Share Experience","Join Community"]
     
     var descs = ["Find the most relatable kost information, experience, culinary and hangout places that could be filtered based on your location.","Share your extraordinary kost experiences to help the new anak kost to know better about the real kost life.","We provide you the Community based on your kost location. Join, socialize, and discuss anything around kost there! "]
     

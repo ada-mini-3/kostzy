@@ -22,6 +22,8 @@ class FeedsVC: UIViewController, MKMapViewDelegate {
     
     @IBOutlet weak var actityIndicator: UIActivityIndicatorView!
     
+    @IBOutlet weak var chevron: UIImageView!
+    
     //----------------------------------------------------------------
     // MARK:- Variables
     //----------------------------------------------------------------
@@ -45,6 +47,15 @@ class FeedsVC: UIViewController, MKMapViewDelegate {
         setupRefreshControl()
         setupIndicator()
         setupLocationManager()
+        setupCollectionViewBg()
+    }
+    
+    private func setupCollectionViewBg() {
+        if isDarkMode == true {
+            feedsCollectionView.backgroundColor = UIColor(red: 10/255, green: 10/255, blue: 10/255, alpha: 1)
+        } else {
+            feedsCollectionView.backgroundColor = UIColor(red: 228/255, green: 233/255, blue: 235/255, alpha: 1)
+        }
     }
     
     private func setupLocationManager() {
@@ -128,7 +139,13 @@ class FeedsVC: UIViewController, MKMapViewDelegate {
         segmentedCategory.selectedSegmentTintColor = UIColor(red: 255.0/255, green: 184.0/255, blue: 0.0/255, alpha: 1)
         let attrs = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 12)]
         segmentedCategory.setTitleTextAttributes(attrs, for: .selected)
-        segmentedCategory.backgroundColor = UIColor.white
+
+        if isDarkMode == true {
+            segmentedCategory.backgroundColor = UIColor.black
+        } else {
+            segmentedCategory.backgroundColor = UIColor.white
+            chevron.tintColor = UIColor.black
+        }
         fixBackgroundSegmentControl(segmentedCategory)
     }
     
@@ -149,6 +166,15 @@ class FeedsVC: UIViewController, MKMapViewDelegate {
         if location != nil {
              btnLocation.setTitle(location?.name, for: .normal)
         }
+        
+        if isDarkMode == true {
+            btnLocation.setTitleColor(UIColor.white, for: .normal)
+            chevron.tintColor = UIColor.white
+        } else {
+            btnLocation.setTitleColor(UIColor.black, for: .normal)
+            chevron.tintColor = UIColor.black
+        }
+        
     }
     
     @IBAction func unwindToFeeds(_ sender: UIStoryboardSegue) {
@@ -240,6 +266,18 @@ extension FeedsVC : UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "feedCell", for: indexPath) as! FeedCell
         var feed = feedsToDisplay[indexPath.row]
+        
+        if isDarkMode == true {
+            cell.contentView.backgroundColor = UIColor(red: 29/255, green: 29/255, blue: 29/255, alpha: 1)
+            cell.feedLocation.setTitleColor(UIColor.white, for: .normal)
+            cell.commentButton.tintColor = UIColor.white
+            cell.likeButton.tintColor = UIColor.white
+        } else {
+            cell.contentView.backgroundColor = UIColor.white
+            cell.feedLocation.setTitleColor(UIColor.black, for: .normal)
+            cell.commentButton.tintColor = UIColor.black
+        }
+        
         cell.userName.text = feed.user.name
         cell.userImage.image = feed.user.image
         if feed.location == nil {
@@ -270,7 +308,6 @@ extension FeedsVC : UICollectionViewDelegate, UICollectionViewDataSource {
             cell.likeButton.tintColor = UIColor.red
         } else {
             cell.likeButton.setImage(UIImage(systemName: "hand.thumbsup"), for: .normal)
-            cell.likeButton.tintColor = UIColor.darkGray
         }
         
         cell.configure()

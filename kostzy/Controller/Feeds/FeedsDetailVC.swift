@@ -20,6 +20,8 @@ class FeedsDetailVC: UIViewController {
     
     @IBOutlet weak var tagsCollectionView: UICollectionView!
     
+    @IBOutlet weak var commentButton: UIButton!
+    
     @IBOutlet weak var likeButton: UIButton!
     
     @IBOutlet weak var commentCount: UILabel!
@@ -34,6 +36,8 @@ class FeedsDetailVC: UIViewController {
     
     @IBOutlet weak var commentField: UITextField!
     
+    @IBOutlet weak var buttonLocation: UIButton!
+    
     var feeds : Feeds?
        
     var comments = FeedComment.initData()
@@ -46,12 +50,30 @@ class FeedsDetailVC: UIViewController {
         setupNavigationBar()
         setupCommentTableView()
         setupKeyboardConstraint()
+        setupDarkMode()
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification), name: UIResponder.keyboardWillHideNotification, object: nil)
-        
-      
-        
         tagsCollectionView.dataSource = self
+    }
+    
+    private func setupLocationButton() {
+        feedLocation.contentHorizontalAlignment = .left
+        feedLocation.imageEdgeInsets = UIEdgeInsets(top: 2, left: 5, bottom: 2, right: 5)
+        
+        if isDarkMode == true {
+            feedLocation.setTitleColor(UIColor.white, for: .normal)
+        } else {
+            feedLocation.setTitleColor(UIColor.black, for: .normal)
+        }
+    }
+    
+    private func setupDarkMode() {
+        if isDarkMode == true {
+            likeButton.tintColor = UIColor.white
+            commentButton.tintColor = UIColor.white
+            feedLocation.tintColor = UIColor.white
+            feedLocation.setTitleColor(UIColor.white, for: .normal)
+        }
     }
     
     private func setupKeyboardConstraint() {
@@ -89,8 +111,6 @@ class FeedsDetailVC: UIViewController {
         commentCount.text = "\(feeds?.commentCount ?? 0) Comments"
         likeCount.text = "\(feeds?.likeCount ?? 0) Likes"
         
-        feedLocation.contentHorizontalAlignment = .left
-        feedLocation.imageEdgeInsets = UIEdgeInsets(top: 2, left: 5, bottom: 2, right: 5)
         userImage.layer.cornerRadius = userImage.frame.height / 2
         userImage.clipsToBounds = true
         
@@ -126,13 +146,21 @@ extension FeedsDetailVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = tagsCollectionView.dequeueReusableCell(withReuseIdentifier: "tagCell", for: indexPath) as! FeedTagsCell
         cell.tagName.text = feeds?.tags[indexPath.row].name
-        cell.configureTagColor(index: indexPath.row)
+        cell.contentView.backgroundColor = feeds?.tags[indexPath.row].color
         return cell
     }
     
 }
 
 extension FeedsDetailVC: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 90
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         comments.count
@@ -141,14 +169,16 @@ extension FeedsDetailVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = commentTableView.dequeueReusableCell(withIdentifier: "commentCell", for: indexPath) as! FeedCommentCell
         
+        if isDarkMode == true {
+            cell.commentText.backgroundColor = UIColor(red: 31/255, green: 31/255, blue: 31/255, alpha: 1)
+        } else {
+            cell.commentText.backgroundColor = UIColor(red: 234/255, green: 234/255, blue: 234/255, alpha: 1)
+        }
+        
         cell.userimage.image = comments[indexPath.row].user.image
         cell.userName.text = comments[indexPath.row].user.name
-        cell.comment.text = comments[indexPath.row].comment
+        cell.commentText.text = comments[indexPath.row].comment
         
         return cell
     }
-    
-    
-    
-    
 }
