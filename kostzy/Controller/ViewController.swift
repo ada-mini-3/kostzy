@@ -5,7 +5,7 @@
 //  Created by Rais on 14/07/20.
 //  Copyright © 2020 Apple Developer Academy. All rights reserved.
 //
-
+import Foundation
 import UIKit
 
 class ViewController: UIViewController, UIScrollViewDelegate {
@@ -30,8 +30,12 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     
     var titles = ["Find Information","Sharing Experiences","Join Community"]
     
-    var descs = ["Find the most relatable kost information, experience, culinary and hangout places that could be filtered based on your location.","Share your extraordinary kost experiences to help the new anak kost to know better about the real kost life.","We provide you the Community based on your kost location. Join, socialize, and discuss anything around kost there! "]
+//    var italicsFont1 = NSAttributedString(string: "kost", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)])
+//    var italicsFont2 = NSAttributedString(string: "anak kost", attributes: [NSAttributedString.Key.font: UIFont.italicSystemFont(ofSize: 14.0)])
     
+    lazy var descs = ["Find the most relatable 'kost' information, experience, culinary and hangout places that could be filtered based on your location.","Share your extraordinary 'kost' experiences to help the new 'anak kost' to know better about the real 'kost' life.", "We provide you the Community based on your 'kost' location. Join, socialize, and, discuss anything about your 'kost' life there! "]
+
+
     var imgs = ["onboarding1","onboarding2","onboarding3"]
 
     override func viewDidLayoutSubviews() {
@@ -42,10 +46,17 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.layoutIfNeeded()
-       // UserDefaults.standard.bool(forKey: "FirstLaunch")
         print(UserDefaults.standard.bool(forKey: "FirstLaunch"))
         setupScrollView()
     }
+    
+//    private func setupItalicFont() -> String {
+//        let italicAttrs = [NSAttributedString.Key.font: UIFont.italicSystemFont(ofSize: 20)]
+//        let kost = "kost"
+//        _ = NSAttributedString(string: kost, attributes: italicAttrs)
+//        return kost
+//    }
+    
     private func setupScrollView() {
         self.scrollView.delegate = self
         scrollView.isPagingEnabled = true
@@ -69,6 +80,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
             txt1.textAlignment = .center
             txt1.font = UIFont.boldSystemFont(ofSize: 24.0)
             txt1.text = titles[index]
+        
 
             let txt2 = UILabel.init(frame: CGRect(x:32,y:txt1.frame.maxY - 20,width:scrollWidth-70
                 ,height:100))
@@ -89,23 +101,10 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         pageControl.numberOfPages = titles.count
         pageControl.currentPage = 0
     }
-//    override func viewDidAppear(_ animated: Bool) {
-//        if UserDefaults.standard.bool(forKey: "FirstLaunch") == true {
-//                self.performSegue(withIdentifier: "skipSegue", sender: self)
-//                print("Segue performed - user defaults returned true!")
-//        }
-////        if pageCount == 0 {
-////            btnBack.isHidden = true
-////        }
-//    }
-        
+    
     @IBAction func pageChanged(_ sender: Any) {
          scrollView!.scrollRectToVisible(CGRect(x: scrollWidth * CGFloat ((pageControl?.currentPage)!), y: 0, width: scrollWidth, height: scrollHeight), animated: true)
     }
-
-//    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-//        setIndicatorForCurrentPage()
-//    }
 
     private func setIndicatorForCurrentPage()  {
         let page = (scrollView?.contentOffset.x)!/scrollWidth
@@ -125,15 +124,12 @@ class ViewController: UIViewController, UIScrollViewDelegate {
                   pageCount += 1
                   self.scrollToPage(page: pageCount, animated: true)
                   pageControl.currentPage = pageCount
-                  
+             
                   if pageCount == 2 {
                     btnStart.isHidden = false
                     btnNext.isHidden = true
                     btnBack.isHidden = true
                     btnSkip.isHidden = true
-                  }
-                  else {
-                      btnNext.setTitle("", for: UIControl.State.normal)
                   }
               }
     }
@@ -148,6 +144,10 @@ class ViewController: UIViewController, UIScrollViewDelegate {
                  pageCount -= 1
                  self.scrollToPage(page: pageCount, animated: true)
                  pageControl.currentPage = pageCount
+                
+                if pageCount == 0 {
+                    btnBack.isHidden = true
+                }
              }
              else {
                  pageControl.currentPage = pageCount
@@ -171,8 +171,8 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         UserDefaults.standard.set(true, forKey: "FirstLaunch")
     }
     
-
 }
+
 extension ViewController{
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
