@@ -280,7 +280,11 @@ extension FeedsVC : UICollectionViewDelegate, UICollectionViewDataSource {
             }
         else {
             button.setImage(UIImage(systemName: "hand.thumbsup"), for: .normal)
-            button.tintColor = UIColor.white
+            if isDarkMode == true {
+                button.tintColor = UIColor.white
+            } else {
+                button.tintColor = UIColor.black
+            }
         }
     }
     
