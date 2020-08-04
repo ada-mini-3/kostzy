@@ -121,7 +121,6 @@ class FeedsLocationVC: UIViewController {
         }
         locationTableView.reloadData()
     }
-    
 }
 
 extension FeedsLocationVC: CLLocationManagerDelegate {

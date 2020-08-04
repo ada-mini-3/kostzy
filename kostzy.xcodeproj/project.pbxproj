@@ -77,6 +77,7 @@
 		88DF73C224C724840081B8B0 /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88DF73C124C724840081B8B0 /* FeedCell.swift */; };
 		88E028EF24C7F071005EF2AE /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E028EE24C7F071005EF2AE /* Location.swift */; };
 		88E028F424C86FF0005EF2AE /* FeedTagsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E028F324C86FF0005EF2AE /* FeedTagsCell.swift */; };
+		F686E9E024D855C4001AA4CF /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 881D360A24BD4A7900521220 /* Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -551,6 +552,7 @@
 				2C3BC4CB24D27B3F000C2100 /* ForgotPassword.storyboard in Resources */,
 				881D361A24BD4BD400521220 /* Notification.storyboard in Resources */,
 				881D363324BD4FD700521220 /* DiscussionDetail.storyboard in Resources */,
+				F686E9E024D855C4001AA4CF /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -749,7 +751,7 @@
 				CODE_SIGN_ENTITLEMENTS = kostzy/kostzy.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = RTU67JB7DC;
+				DEVELOPMENT_TEAM = 928NUAMW33;
 				INFOPLIST_FILE = kostzy/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.3;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -772,7 +774,7 @@
 				CODE_SIGN_ENTITLEMENTS = kostzy/kostzy.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = RTU67JB7DC;
+				DEVELOPMENT_TEAM = 928NUAMW33;
 				INFOPLIST_FILE = kostzy/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.3;
 				LD_RUNPATH_SEARCH_PATHS = (

@@ -36,7 +36,9 @@
         <scene sceneID="uJO-VM-fap">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="vwu-VM-iDe" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Notification" image="Notif Page Unselected" selectedImage="Notification Page Selected" id="QDZ-HU-WdG"/>
+                    <tabBarItem key="tabBarItem" title="Notification" image="Notif Page Unselected" selectedImage="Notification Page Selected" id="QDZ-HU-WdG">
+                        <inset key="imageInsets" minX="0.0" minY="5" maxX="0.0" maxY="0.0"/>
+                    </tabBarItem>
                     <toolbarItems/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="FVO-ot-axv">

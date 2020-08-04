@@ -276,15 +276,26 @@
                         <outlet property="feedTextView" destination="oxy-N0-sOo" id="SQi-al-Gpn"/>
                         <outlet property="guidelinesButton" destination="IFA-OT-Fhe" id="KdV-h7-rs6"/>
                         <outlet property="kostNameField" destination="HU9-4K-m3F" id="yfX-g3-2H8"/>
+                        <outlet property="locationName" destination="mNt-pH-Pry" id="8kk-0u-asd"/>
+                        <outlet property="mapView" destination="hZk-9T-PcM" id="R35-LY-arz"/>
                         <outlet property="profilePhoto" destination="MxB-Vd-hTk" id="aGV-Zr-5Ia"/>
                         <outlet property="tagCollectionView" destination="L5Y-GO-L9E" id="FF5-cx-OYx"/>
                         <segue destination="A9j-Pc-qca" kind="show" identifier="dummySeg" id="bzf-7Q-RN7"/>
                         <segue destination="evX-ru-9Gu" kind="unwind" identifier="unwindFeeds" unwindAction="unwindToFeeds:" id="P2G-aT-Av1"/>
+                        <segue destination="Ft2-gN-UNI" kind="showDetail" identifier="mapSegue" id="Klq-gj-UFC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nng-ro-2Od" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1262.3188405797102" y="-52.232142857142854"/>
+            <point key="canvasLocation" x="1165" y="-136"/>
+        </scene>
+        <!--Map-->
+        <scene sceneID="7ij-3C-n05">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Map" id="Ft2-gN-UNI" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7FW-z1-sRC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1885" y="-207"/>
         </scene>
         <!--Feeds-->
         <scene sceneID="MKM-Vb-QRJ">

@@ -11,7 +11,9 @@
         <scene sceneID="AIg-4Z-8uB">
             <objects>
                 <navigationController title="Profile" automaticallyAdjustsScrollViewInsets="NO" id="Ic2-hJ-im9" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Profile" image="Profile Page Unselected" selectedImage="Profile Page Selected" id="i0w-ho-i6P"/>
+                    <tabBarItem key="tabBarItem" title="Profile" image="Profile Page Unselected" selectedImage="Profile Page Selected" id="i0w-ho-i6P">
+                        <inset key="imageInsets" minX="0.0" minY="5" maxX="0.0" maxY="0.0"/>
+                    </tabBarItem>
                     <toolbarItems/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="Pwj-D9-c0E">
