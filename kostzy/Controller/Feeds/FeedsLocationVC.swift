@@ -105,7 +105,7 @@ class FeedsLocationVC: UIViewController {
         }
         locationTableView.reloadData()
     }
-
+    
     
 }
 

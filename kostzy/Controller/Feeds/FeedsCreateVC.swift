@@ -12,6 +12,9 @@ class FeedsCreateVC: UIViewController {
     
     @IBOutlet weak var addPhoto: UIView!
     
+
+    @IBOutlet weak var mapView: UIView!
+    
     @IBOutlet weak var profilePhoto: UIImageView!
     
     @IBOutlet weak var feedTextView: UITextView!
@@ -25,6 +28,8 @@ class FeedsCreateVC: UIViewController {
     @IBOutlet weak var kostNameField: UITextField!
     
     @IBOutlet weak var guidelinesButton: UIButton!
+    
+    @IBOutlet weak var locationName: UILabel!
     
     let infoTags = Tag.initData()
     
@@ -48,6 +53,9 @@ class FeedsCreateVC: UIViewController {
     
     var newTag = [Tag]()
     
+    var locationString :String?
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,6 +66,7 @@ class FeedsCreateVC: UIViewController {
         setupTextView()
         setupCategory()
         setupGuidelines()
+        setupMapView()
         navigationItem.rightBarButtonItem?.isEnabled = false
         tagCollectionView.delegate = self
         tagCollectionView.dataSource = self
@@ -65,6 +74,8 @@ class FeedsCreateVC: UIViewController {
         feedTextView.delegate = self
         kostNameField.delegate = self
     }
+    
+    
     
     fileprivate func setupCollectionViewData() {
         switch catId {
@@ -113,6 +124,17 @@ class FeedsCreateVC: UIViewController {
         setupPostButton()
         self.view.endEditing(true)
     }
+    
+    private func setupMapView() {
+        let mapGesture = UITapGestureRecognizer(target: self, action: #selector(mapClicked))
+        mapView.addGestureRecognizer(mapGesture)
+    }
+    
+    @objc private func mapClicked() {
+        performSegue(withIdentifier: "mapSegue" , sender: self)
+    }
+    
+        
     
     private func setupPickerView() {
         categoryPicker = UIPickerView.init()
@@ -184,7 +206,7 @@ class FeedsCreateVC: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "unwindFeeds" {
             if let dest = segue.destination as? FeedsVC {
-                let newFeeds = Feeds(user: User.initUser(), time: Date(), location: nil, feed: feedTextView.text, tags: newTag, likeCount: 0, commentCount: 0, category: catId!, likeStatus: false)
+                let newFeeds = Feeds(user: User.initUser(), time: Date(), location: locationString, feed: feedTextView.text, tags: newTag, likeCount: 0, commentCount: 0, category: catId!, likeStatus: false)
             switch catId {
                 case 1:
                     dest.feedsInfo.insert(newFeeds, at: 0)
@@ -193,6 +215,10 @@ class FeedsCreateVC: UIViewController {
                 }
             }
         }
+    }
+    
+    @IBAction func unwindToCreate(_ sender:UIStoryboardSegue) {
+        locationName.text = locationString
     }
 
 }
