@@ -14,7 +14,7 @@ class LoginVC: UIViewController, UITextFieldDelegate {
     // MARK:- Outlets
     //----------------------------------------------------------------
     @IBOutlet weak var scrollView: UIScrollView!
-    
+    @IBOutlet weak var closeButtonOutlet: UIButton!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     
@@ -107,6 +107,10 @@ class LoginVC: UIViewController, UITextFieldDelegate {
 
         // Do any additional setup after loading the view.
         setupTextField()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
     }
     
     override func viewWillLayoutSubviews() {

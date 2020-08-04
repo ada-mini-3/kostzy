@@ -28,7 +28,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     
     var pageCount:Int = 0
     
-    var titles = ["Find Information","Sharing Experiences","Join Community"]
+    var titles = ["Find Information","Share Experience","Join Community"]
     
 //    var italicsFont1 = NSAttributedString(string: "kost", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)])
 //    var italicsFont2 = NSAttributedString(string: "anak kost", attributes: [NSAttributedString.Key.font: UIFont.italicSystemFont(ofSize: 14.0)])

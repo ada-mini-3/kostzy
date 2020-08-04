@@ -14,6 +14,9 @@ class CommunityDetailContainerVC: UIViewController {
     // MARK:- Outlets
     //----------------------------------------------------------------
     
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var topView: UIView!
+    @IBOutlet weak var topLabel: UILabel!
     @IBOutlet weak var communityDetailImageView: UIImageView!
     @IBOutlet weak var communityNameLabel: UILabel!
     @IBOutlet weak var communityLocationLabel: UILabel!
@@ -42,6 +45,9 @@ class CommunityDetailContainerVC: UIViewController {
     
     var selectedRow: Int?
     var containerViewheight: CGFloat!
+    
+    // variable to save the last position visited, default to zero
+    private var lastContentOffset: CGFloat = 0
     
     private lazy var CommunityAboutVC: CommunityDetailVC = {
         // Load Storyboard
@@ -176,6 +182,14 @@ class CommunityDetailContainerVC: UIViewController {
         updateView()
     }
     
+    func setupTopView() {
+        scrollView.delegate = self
+        
+        topView.backgroundColor = UIColor.clear
+        topLabel.text = communityName[selectedRow!]
+        topLabel.alpha = 0.0
+    }
+    
     // Delete or comment this function when user testing is finished
     func debugCustomization() {
         if communityIsRequested[selectedRow!] == false {
@@ -233,6 +247,7 @@ class CommunityDetailContainerVC: UIViewController {
         
         debugCustomization()
         setupView()
+        setupTopView()
     }
     
     //----------------------------------------------------------------
@@ -265,4 +280,51 @@ class CommunityDetailContainerVC: UIViewController {
     }
     */
 
+}
+
+
+//----------------------------------------------------------------
+// MARK: - UIScrollViewDelegate
+//----------------------------------------------------------------
+extension CommunityDetailContainerVC: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let maximumVerticalOffset = CGFloat(250)
+        let currentVerticalOffset = scrollView.contentOffset.y
+        let percentageVerticalOffset = currentVerticalOffset / maximumVerticalOffset
+        print(percentageVerticalOffset)
+
+        let color = UIColor.init(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: percentageVerticalOffset)
+        topView.backgroundColor = color
+        
+        if deviceSize == .i5_8Inch && deviceSize == .i6_1Inch && deviceSize == .i6_5Inch {
+            if lastContentOffset > scrollView.contentOffset.y && lastContentOffset < scrollView.contentSize.height - scrollView.frame.height && lastContentOffset < 255 {
+                // move up
+                UIView.animate(withDuration: 0.3) {
+                    self.topLabel.alpha = 0
+                }
+            } else if lastContentOffset < scrollView.contentOffset.y && scrollView.contentOffset.y > 0 && lastContentOffset >= 255 {
+                // move down
+                UIView.animate(withDuration: 0.3) {
+                    self.topLabel.alpha = 1
+                }
+            }
+        }
+        else {
+            if lastContentOffset > scrollView.contentOffset.y && lastContentOffset < scrollView.contentSize.height - scrollView.frame.height && lastContentOffset < 279 {
+                // move up
+                UIView.animate(withDuration: 0.3) {
+                    self.topLabel.alpha = 0
+                }
+            } else if lastContentOffset < scrollView.contentOffset.y && scrollView.contentOffset.y > 0 && lastContentOffset >= 279 {
+                // move down
+                UIView.animate(withDuration: 0.3) {
+                    self.topLabel.alpha = 1
+                }
+            }
+        }
+
+        // update the new position acquired
+        lastContentOffset = scrollView.contentOffset.y
+        print(lastContentOffset)
+    }
 }

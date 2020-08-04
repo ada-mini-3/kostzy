@@ -61,13 +61,14 @@ class ProfileTableVC: UITableViewController {
     let notificationCenter = NotificationCenter.default
     
     let profileImagePlaceholderImage = "Photo Profile (Dummy Data)"
-    let profileNamePlaceholderText = "Desti"
-    let profileTitlePlaceholderText = "Experienced Boarder"
-    let userLikePlaceholderNumber = 100
+    let profileNamePlaceholderText = "User"
+    let profileTitlePlaceholderText = "Kostzy Beginner"
+    let userLikePlaceholderNumber = 0
     let profileAboutMePlaceholderText = "There's no description."
     
     var dataSource = DataSource()
     
+    var finalname = ""
     
     // MARK: - IBOutlets
     @IBOutlet weak var badgeCollectionView: UICollectionView!
@@ -81,13 +82,14 @@ class ProfileTableVC: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
         
+
         myCommunityTableView.delegate = dataSource
         myCommunityTableView.dataSource = dataSource
         
@@ -98,6 +100,8 @@ class ProfileTableVC: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        self.loadProfileData()
+        self.tableView.reloadData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -118,8 +122,14 @@ class ProfileTableVC: UITableViewController {
     // MARK: - Function
     func loadProfileData() {
         let savedUserDataDict = defaults.dictionary(forKey: "userDataDict") as? [String: String] ?? [String: String]()
+        
         let userIsLoggedIn = defaults.bool(forKey: "userIsLoggedIn")
         
+        if finalname != ""{
+            profileNameLabel.text = finalname
+        }
+            
+            
         if userIsLoggedIn == true {
             profileImage.image = UIImage(named: profileImagePlaceholderImage)
             profileNameLabel.text = savedUserDataDict["userName"]
@@ -127,13 +137,20 @@ class ProfileTableVC: UITableViewController {
             userLike = userLikePlaceholderNumber
             profileAboutMeLabel.text = profileAboutMePlaceholderText
         }
-        else {
+        else if userIsLoggedIn == false && finalname == "" {
             profileImage.image = UIImage(named: profileImagePlaceholderImage)
             profileNameLabel.text = profileNamePlaceholderText
             profileTitleLabel.text = profileTitlePlaceholderText
             userLike = userLikePlaceholderNumber
             profileAboutMeLabel.text = profileAboutMePlaceholderText
         }
+        
+        if savedUserDataDict["userDesc"] != "" {
+            profileAboutMeLabel.text = savedUserDataDict["userDesc"]
+        } else {
+            profileAboutMeLabel.text = profileAboutMePlaceholderText
+        }
+
     }
     
 
@@ -236,8 +253,8 @@ extension ProfileTableVC: UICollectionViewDataSource, UICollectionViewDelegate, 
         let floatXP = Float(userLike ?? 0)
     
         // Configure the cell
-        cell.likeProgressView.setProgress(floatXP / 500, animated: true)
-        print(floatXP / 500)
+        cell.likeProgressView.setProgress(floatXP / 600, animated: true)
+        print(floatXP / 600)
         
         if userLike ?? 0 >= 100 {
             cell.like100DotView.backgroundColor = #colorLiteral(red: 0.3333333333, green: 0.3098039216, blue: 0.7882352941, alpha: 1)
@@ -292,4 +309,10 @@ extension ProfileTableVC: UICollectionViewDataSource, UICollectionViewDelegate, 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 600, height: 128)
     }
+    
+  @IBAction func unwindToProfile (_ sender: UIStoryboardSegue) {
+        loadProfileData()
+        tableView.reloadData()
+    }
+    
 }
