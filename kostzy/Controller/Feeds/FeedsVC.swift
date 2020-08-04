@@ -276,7 +276,7 @@ extension FeedsVC : UICollectionViewDelegate, UICollectionViewDataSource {
     private func setLikeButtonState(button: UIButton, feed: Feeds) {
         if feed.likeStatus == true {
             button.setImage(UIImage(systemName: "hand.thumbsup.fill"), for: .normal)
-            button.tintColor = UIColor.red
+            button.tintColor = UIColor(red: 255/255, green: 183/255, blue: 0/255, alpha: 1)
             }
         else {
             button.setImage(UIImage(systemName: "hand.thumbsup"), for: .normal)
