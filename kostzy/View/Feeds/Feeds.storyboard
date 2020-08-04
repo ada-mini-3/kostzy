@@ -17,11 +17,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kka-NS-Bx2">
-                                <rect key="frame" x="40" y="173" width="36" height="34"/>
+                                <rect key="frame" x="40" y="169" width="36" height="33"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="36" id="eLY-Wc-mbx"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                 <color key="tintColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="Slipi">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -37,14 +37,14 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3uW-Wd-Ror">
-                                <rect key="frame" x="370" y="178" width="24" height="18"/>
+                                <rect key="frame" x="370" y="173" width="24" height="18"/>
                                 <color key="tintColor" red="1" green="0.71764705882352942" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" backgroundImage="arrow.up.arrow.down" catalog="system">
                                     <color key="titleColor" red="1" green="0.74117647060000003" blue="0.086274509799999996" alpha="0.84705882349999995" colorSpace="calibratedRGB"/>
                                 </state>
                             </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" restorationIdentifier="feedSB" pagingEnabled="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="c0l-ss-4XP">
-                                <rect key="frame" x="0.0" y="268" width="414" height="628"/>
+                                <rect key="frame" x="0.0" y="263" width="414" height="633"/>
                                 <color key="backgroundColor" red="0.89411764705882346" green="0.9137254901960784" blue="0.92156862745098034" alpha="1" colorSpace="calibratedRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="RUu-5x-d24">
                                     <size key="itemSize" width="382" height="302"/>
@@ -54,7 +54,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="30" maxX="0.0" maxY="15"/>
                                 </collectionViewFlowLayout>
                                 <activityIndicatorView key="backgroundView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" id="UbT-jV-h7e" userLabel="activityIndicator">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="628"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="633"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 </activityIndicatorView>
                                 <cells>
@@ -198,7 +198,7 @@
                                                         <constraint firstAttribute="height" constant="25" id="ePN-uc-Aso"/>
                                                         <constraint firstAttribute="width" constant="25" id="jnc-Bt-aZc"/>
                                                     </constraints>
-                                                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <state key="normal" image="Report"/>
                                                 </button>
                                             </subviews>
@@ -256,7 +256,7 @@
                                 </cells>
                             </collectionView>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="oyD-rP-R8l">
-                                <rect key="frame" x="0.0" y="228" width="414" height="36"/>
+                                <rect key="frame" x="0.0" y="223" width="414" height="36"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="fb3-3C-KkO"/>
@@ -273,11 +273,11 @@
                                 </connections>
                             </segmentedControl>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="location-icon " translatesAutoresizingMaskIntoConstraints="NO" id="eyQ-Sp-Ixt">
-                                <rect key="frame" x="20" y="181" width="12" height="19"/>
+                                <rect key="frame" x="20" y="176" width="12" height="19"/>
                                 <color key="tintColor" red="0.74901960779999999" green="0.36934624799999999" blue="0.51204397719999994" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chevron.right" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="QUx-SY-D7g">
-                                <rect key="frame" x="81" y="182" width="13" height="16.5"/>
+                                <rect key="frame" x="81" y="177" width="13" height="16.5"/>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
                         </subviews>
@@ -287,13 +287,13 @@
                             <constraint firstItem="gSa-wz-eSn" firstAttribute="trailing" secondItem="3uW-Wd-Ror" secondAttribute="trailing" constant="20" id="36Z-6v-w4L"/>
                             <constraint firstItem="c0l-ss-4XP" firstAttribute="trailing" secondItem="gSa-wz-eSn" secondAttribute="trailing" id="4bf-YV-MVK"/>
                             <constraint firstItem="oyD-rP-R8l" firstAttribute="top" secondItem="3uW-Wd-Ror" secondAttribute="bottom" constant="31" id="4et-ub-iWu"/>
-                            <constraint firstItem="eyQ-Sp-Ixt" firstAttribute="top" secondItem="0bo-A0-aXh" secondAttribute="bottom" constant="12" id="B1F-bn-m6x"/>
+                            <constraint firstItem="eyQ-Sp-Ixt" firstAttribute="top" secondItem="0bo-A0-aXh" secondAttribute="bottom" constant="7" id="B1F-bn-m6x"/>
                             <constraint firstItem="0bo-A0-aXh" firstAttribute="leading" secondItem="gSa-wz-eSn" secondAttribute="leading" constant="20" id="IGB-l3-Xhi"/>
                             <constraint firstItem="oyD-rP-R8l" firstAttribute="top" secondItem="Kka-NS-Bx2" secondAttribute="bottom" constant="21" id="MTo-5d-sOk"/>
                             <constraint firstItem="oyD-rP-R8l" firstAttribute="top" secondItem="QUx-SY-D7g" secondAttribute="bottom" constant="28" id="Ni4-O9-kh3"/>
                             <constraint firstItem="eyQ-Sp-Ixt" firstAttribute="leading" secondItem="gSa-wz-eSn" secondAttribute="leading" constant="20" id="PHq-MZ-YNQ"/>
                             <constraint firstItem="oyD-rP-R8l" firstAttribute="trailing" secondItem="gSa-wz-eSn" secondAttribute="trailing" id="TgB-Jd-ojq"/>
-                            <constraint firstItem="Kka-NS-Bx2" firstAttribute="top" secondItem="0bo-A0-aXh" secondAttribute="bottom" constant="4" id="Vru-gW-Y0b"/>
+                            <constraint firstItem="Kka-NS-Bx2" firstAttribute="top" secondItem="0bo-A0-aXh" secondAttribute="bottom" id="Vru-gW-Y0b"/>
                             <constraint firstItem="c0l-ss-4XP" firstAttribute="leading" secondItem="gSa-wz-eSn" secondAttribute="leading" id="axh-VZ-Sz5"/>
                             <constraint firstItem="0bo-A0-aXh" firstAttribute="top" secondItem="gSa-wz-eSn" secondAttribute="top" constant="8" id="im3-s5-fv8"/>
                             <constraint firstItem="Kka-NS-Bx2" firstAttribute="leading" secondItem="eyQ-Sp-Ixt" secondAttribute="trailing" constant="8" id="nTg-KP-72f"/>
@@ -349,13 +349,15 @@
         <scene sceneID="0Be-Fx-kbL">
             <objects>
                 <navigationController title="Feeds" automaticallyAdjustsScrollViewInsets="NO" id="GZ9-oK-JMv" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Feeds" image="Feeds Page Unselected" selectedImage="tab bar feeds-filled" id="mGb-1C-fbh"/>
+                    <tabBarItem key="tabBarItem" title="Feeds" image="Feeds Page Unselected" selectedImage="tab bar feeds-filled" id="mGb-1C-fbh">
+                        <inset key="imageInsets" minX="0.0" minY="5" maxX="0.0" maxY="0.0"/>
+                    </tabBarItem>
                     <toolbarItems/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="sBZ-92-kq6">
                         <rect key="frame" x="0.0" y="44" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="tintColor" red="1" green="0.71764705882352942" blue="0.0" alpha="0.84705882349999995" colorSpace="calibratedRGB"/>
+                        <color key="tintColor" red="1" green="0.71764705882352942" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                             <color key="textColor" red="1" green="0.71764705880000002" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>

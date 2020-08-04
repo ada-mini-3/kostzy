@@ -263,6 +263,30 @@ extension FeedsVC : UICollectionViewDelegate, UICollectionViewDataSource {
         feedsToDisplay.count
     }
     
+    private func setupReportAlert() {
+        let alert = UIAlertController(title: "Are you sure you want to report this post?", message: "Once you send the report, we will check whether this post violates our rules. Please make report only if you are sure this is a violation", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "No", style: .destructive, handler: nil))
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
+        
+        self.present(alert, animated: true)
+    }
+    
+    private func setLikeButtonState(button: UIButton, feed: Feeds) {
+        if feed.likeStatus == true {
+            button.setImage(UIImage(systemName: "hand.thumbsup.fill"), for: .normal)
+            button.tintColor = UIColor(red: 255/255, green: 183/255, blue: 0/255, alpha: 1)
+            }
+        else {
+            button.setImage(UIImage(systemName: "hand.thumbsup"), for: .normal)
+            if isDarkMode == true {
+                button.tintColor = UIColor.white
+            } else {
+                button.tintColor = UIColor.black
+            }
+        }
+    }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "feedCell", for: indexPath) as! FeedCell
         var feed = feedsToDisplay[indexPath.row]
@@ -272,6 +296,7 @@ extension FeedsVC : UICollectionViewDelegate, UICollectionViewDataSource {
             cell.feedLocation.setTitleColor(UIColor.white, for: .normal)
             cell.commentButton.tintColor = UIColor.white
             cell.likeButton.tintColor = UIColor.white
+            cell.reportButton.setImage(UIImage(named: "Report-dark"), for: .normal)
         } else {
             cell.contentView.backgroundColor = UIColor.white
             cell.feedLocation.setTitleColor(UIColor.black, for: .normal)
@@ -280,6 +305,7 @@ extension FeedsVC : UICollectionViewDelegate, UICollectionViewDataSource {
         
         cell.userName.text = feed.user.name
         cell.userImage.image = feed.user.image
+        
         if feed.location == nil {
             cell.feedLocation.isHidden = true
         } else {
@@ -297,22 +323,23 @@ extension FeedsVC : UICollectionViewDelegate, UICollectionViewDataSource {
             self.openMapForPlace()
             
         }
-        cell.likeTapAction = {() in
-            feed.likeStatus = true
-            cell.likeButton.setImage(UIImage(systemName: "hand.thumbsup.fill"), for: .normal)
-            cell.likeButton.tintColor = UIColor.red
+        
+        cell.reportTapAction = {() in
+            self.setupReportAlert()
         }
         
-        if feed.likeStatus == true {
-            cell.likeButton.setImage(UIImage(systemName: "hand.thumbsup.fill"), for: .normal)
-            cell.likeButton.tintColor = UIColor.red
-        } else {
-            cell.likeButton.setImage(UIImage(systemName: "hand.thumbsup"), for: .normal)
+        cell.likeTapAction = {() in
+            if feed.likeStatus == false {
+                feed.likeStatus = true
+            } else {
+                feed.likeStatus = false
+            }
+            self.setLikeButtonState(button: cell.likeButton, feed: feed)
         }
+        
+        setLikeButtonState(button: cell.likeButton, feed: feed)
         
         cell.configure()
         return cell
     }
-    
- 
 }

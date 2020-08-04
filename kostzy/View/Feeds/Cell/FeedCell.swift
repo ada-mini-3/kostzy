@@ -40,10 +40,11 @@ class FeedCell: UICollectionViewCell, UICollectionViewDataSource {
     
     var likeTapAction : (()->())?
     
+    var reportTapAction: (()->())?
+    
     override func awakeFromNib() {
         self.layer.cornerRadius = 10
         self.layer.masksToBounds = true
-        reportButton.image(for: .normal)?.withHorizontallyFlippedOrientation()
     }
     
     func configure() {
@@ -57,6 +58,11 @@ class FeedCell: UICollectionViewCell, UICollectionViewDataSource {
         commentButton.addTarget(self, action: #selector(commentButtonClicked), for: .touchUpInside)
         feedLocation.addTarget(self, action: #selector(locationButtonClicked), for: .touchUpInside)
         likeButton.addTarget(self, action: #selector(likeButtonClicked), for: .touchUpInside)
+        reportButton.addTarget(self, action: #selector(reportButtonClicked), for: .touchUpInside)
+    }
+    
+    @objc func reportButtonClicked() {
+        reportTapAction?()
     }
     
     @objc func likeButtonClicked() {
