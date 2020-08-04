@@ -160,10 +160,19 @@ class CommunityVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
+        
+        // Uncomment to pass data through navigation controller
+        /*
+        let selectedRow = sender as? Int
+        let navigationVC = segue.destination as? UINavigationController
+        let communityDetailContainerVC = navigationVC?.viewControllers.first as! CommunityDetailContainerVC
+        communityDetailContainerVC.selectedRow = selectedRow
+        */
+        
         if segue.identifier == "CommunityDetailSegue"{
             if let destination = segue.destination as? CommunityDetailContainerVC {
                 let selectedRow = sender as? Int
-                
+
                 destination.selectedRow = selectedRow
             }
         }
