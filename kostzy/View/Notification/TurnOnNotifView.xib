@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17140" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17115"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="TurnOnNotifView" customModule="kostzy" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="200"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uAH-Qd-Hil">
+                    <rect key="frame" x="0.0" y="44" width="414" height="156"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="WVr-in-8Na">
+                            <rect key="frame" x="20" y="20" width="374" height="116"/>
+                            <subviews>
+                                <stackView opaque="NO" contentMode="scaleToFill" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="GUJ-oF-7QY">
+                                    <rect key="frame" x="0.0" y="0.0" width="374" height="116"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Stay up to date icon" translatesAutoresizingMaskIntoConstraints="NO" id="73U-jD-vWS">
+                                            <rect key="frame" x="0.0" y="0.0" width="45" height="45"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="45" id="Lq8-Bc-ClU"/>
+                                                <constraint firstAttribute="height" constant="45" id="Pt2-Wm-aEs"/>
+                                            </constraints>
+                                        </imageView>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WXZ-Y0-j6Q">
+                                            <rect key="frame" x="45" y="0.0" width="8" height="116"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="8" id="3Lp-rW-CqE"/>
+                                            </constraints>
+                                        </view>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="6dh-Gb-3eP">
+                                            <rect key="frame" x="53" y="0.0" width="294" height="108.5"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h8m-Qg-u1i">
+                                                    <rect key="frame" x="0.0" y="0.0" width="294" height="8"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="8" id="aFT-sC-ggm"/>
+                                                    </constraints>
+                                                </view>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Stay up to date" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QiZ-v8-MsE">
+                                                    <rect key="frame" x="0.0" y="8" width="294" height="19.5"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Turn on push notifications in Settings so you’ll never miss a notification" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z7W-zg-F4D">
+                                                    <rect key="frame" x="0.0" y="27.5" width="294" height="30"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="30" id="FQ9-1L-x13"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3jt-9L-b9G">
+                                                    <rect key="frame" x="0.0" y="57.5" width="294" height="20"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="20" id="cvK-1G-YHQ"/>
+                                                    </constraints>
+                                                </view>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oeS-Rm-R9w" customClass="DesignableButton" customModule="kostzy" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="77.5" width="294" height="31"/>
+                                                    <color key="backgroundColor" red="1" green="0.74117647060000003" blue="0.086274509799999996" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="31" id="KZp-vg-5qo"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
+                                                    <state key="normal" title="TURN ON NOTIFICATIONS">
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </state>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                            <real key="value" value="12"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                    <connections>
+                                                        <action selector="turnOnNotifButtonAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="PFr-k9-ek8"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                        </stackView>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SUc-Wf-JfP">
+                                            <rect key="frame" x="347" y="0.0" width="8" height="116"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="8" id="XCj-bR-nDs"/>
+                                            </constraints>
+                                        </view>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CFW-6w-zmb">
+                                            <rect key="frame" x="355" y="0.0" width="19" height="19"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="19" id="0n0-mU-tcR"/>
+                                                <constraint firstAttribute="width" constant="19" id="UqW-U5-EYZ"/>
+                                            </constraints>
+                                            <color key="tintColor" systemColor="darkTextColor"/>
+                                            <state key="normal" image="xmark" catalog="system">
+                                                <color key="titleColor" systemColor="darkTextColor"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="closeButtonAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="3hj-Mu-lHV"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                </stackView>
+                            </subviews>
+                            <constraints>
+                                <constraint firstAttribute="bottom" secondItem="GUJ-oF-7QY" secondAttribute="bottom" id="cVG-x3-be2"/>
+                                <constraint firstItem="GUJ-oF-7QY" firstAttribute="top" secondItem="WVr-in-8Na" secondAttribute="top" id="f2c-VL-KiD"/>
+                                <constraint firstAttribute="trailing" secondItem="GUJ-oF-7QY" secondAttribute="trailing" id="jG6-8f-Un3"/>
+                                <constraint firstItem="GUJ-oF-7QY" firstAttribute="leading" secondItem="WVr-in-8Na" secondAttribute="leading" id="sgp-ez-rGJ"/>
+                            </constraints>
+                        </stackView>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstItem="WVr-in-8Na" firstAttribute="leading" secondItem="uAH-Qd-Hil" secondAttribute="leading" constant="20" id="5SZ-M2-Zus"/>
+                        <constraint firstAttribute="trailing" secondItem="WVr-in-8Na" secondAttribute="trailing" constant="20" id="eD2-I2-iRn"/>
+                        <constraint firstAttribute="bottom" secondItem="WVr-in-8Na" secondAttribute="bottom" constant="20" id="kg8-7A-nCN"/>
+                        <constraint firstItem="WVr-in-8Na" firstAttribute="top" secondItem="uAH-Qd-Hil" secondAttribute="top" constant="20" id="pOX-vQ-BLp"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <constraints>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="uAH-Qd-Hil" secondAttribute="bottom" id="Fl7-Ze-1gu"/>
+                <constraint firstItem="uAH-Qd-Hil" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="JQH-mM-bj8"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="uAH-Qd-Hil" secondAttribute="trailing" id="mHq-vt-Mdn"/>
+                <constraint firstItem="uAH-Qd-Hil" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="o9H-NE-Po1"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="closeButtonOutlet" destination="CFW-6w-zmb" id="coO-MV-IBl"/>
+            </connections>
+            <point key="canvasLocation" x="86.956521739130437" y="147.32142857142856"/>
+        </view>
+    </objects>
+    <designables>
+        <designable name="oeS-Rm-R9w">
+            <size key="intrinsicContentSize" width="165" height="28"/>
+        </designable>
+    </designables>
+    <resources>
+        <image name="Stay up to date icon" width="48" height="49"/>
+        <image name="xmark" catalog="system" width="128" height="113"/>
+        <systemColor name="darkTextColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="darkTextColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

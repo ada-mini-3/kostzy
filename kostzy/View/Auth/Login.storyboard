@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="26Z-7Z-g67">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17140" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="26Z-7Z-g67">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17115"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -34,7 +36,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AUt-fk-KWt">
-                                                <rect key="frame" x="20" y="358" width="44" height="21"/>
+                                                <rect key="frame" x="20" y="358" width="43" height="21"/>
                                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -61,8 +63,8 @@
                                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
                                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                             </textField>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5ds-bO-P5V">
-                                                <rect key="frame" x="257" y="526" width="137" height="21"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5ds-bO-P5V">
+                                                <rect key="frame" x="258" y="526" width="136" height="21"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="21" id="gVj-iS-ikE"/>
                                                 </constraints>
@@ -74,7 +76,7 @@
                                                     <segue destination="WsG-vu-5XG" kind="show" id="gx4-W7-wkZ"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gTX-Pk-64v" customClass="DesignableButton" customModule="kostzy" customModuleProvider="target">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gTX-Pk-64v" customClass="DesignableButton" customModule="kostzy" customModuleProvider="target">
                                                 <rect key="frame" x="20" y="587" width="374" height="40"/>
                                                 <color key="backgroundColor" red="1" green="0.74117647058823533" blue="0.086274509803921567" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
@@ -99,8 +101,8 @@
                                                 <color key="textColor" red="0.70196078431372544" green="0.70196078431372544" blue="0.70196078431372544" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jdj-kD-3kC">
-                                                <rect key="frame" x="259.5" y="635" width="97" height="21"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jdj-kD-3kC">
+                                                <rect key="frame" x="259.5" y="635" width="96" height="21"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="21" id="1Pa-0A-dvd"/>
                                                 </constraints>
@@ -113,7 +115,7 @@
                                                 </connections>
                                             </button>
                                         </subviews>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstItem="f3Q-U8-sRp" firstAttribute="centerX" secondItem="gTX-Pk-64v" secondAttribute="centerX" constant="-50" id="1jG-j0-Nsf"/>
                                             <constraint firstItem="gTX-Pk-64v" firstAttribute="top" secondItem="5ds-bO-P5V" secondAttribute="bottom" constant="40" id="2el-LC-Lhq"/>
@@ -164,7 +166,8 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="s1p-uo-6yH"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="FCK-vS-rMt" firstAttribute="top" secondItem="s1p-uo-6yH" secondAttribute="top" constant="20" id="6bE-rk-Qzc"/>
                             <constraint firstItem="31W-bd-Tbh" firstAttribute="top" secondItem="gq0-kW-gm1" secondAttribute="top" id="GZ9-Q7-Qx3"/>
@@ -173,7 +176,6 @@
                             <constraint firstItem="31W-bd-Tbh" firstAttribute="leading" secondItem="s1p-uo-6yH" secondAttribute="leading" id="Qtx-xb-f1D"/>
                             <constraint firstAttribute="bottom" secondItem="31W-bd-Tbh" secondAttribute="bottom" id="q2c-lt-wfc"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="s1p-uo-6yH"/>
                     </view>
                     <navigationItem key="navigationItem" id="x76-SG-o2w"/>
                     <connections>
@@ -226,8 +228,16 @@
             <point key="canvasLocation" x="1543" y="-240"/>
         </scene>
     </scenes>
+    <designables>
+        <designable name="gTX-Pk-64v">
+            <size key="intrinsicContentSize" width="64" height="36"/>
+        </designable>
+    </designables>
     <resources>
         <image name="Close Button Dark" width="62" height="62"/>
         <image name="Sign In Background Pattern" width="423" height="415"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

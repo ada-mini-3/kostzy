@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="vwu-VM-iDe">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17140" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="vwu-VM-iDe">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17115"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -15,22 +17,53 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Notification" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1lT-Ju-ZJ8">
-                                <rect key="frame" x="163" y="438" width="88" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="weX-9c-atY">
+                                <rect key="frame" x="0.0" y="148" width="414" height="665"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" id="gv7-P2-ZHB">
+                                        <rect key="frame" x="0.0" y="55.5" width="414" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="gv7-P2-ZHB" id="EnJ-Ui-gR6">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="tjU-2D-mC5" id="xH2-pT-fru"/>
+                                    <outlet property="delegate" destination="tjU-2D-mC5" id="piS-8d-cIJ"/>
+                                </connections>
+                            </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="G5B-uw-qfo">
+                                <rect key="frame" x="0.0" y="88" width="414" height="60"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" priority="250" constant="60" id="FAr-WG-hzs"/>
+                                </constraints>
+                            </view>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="EJ1-wm-gOW"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="weX-9c-atY" firstAttribute="leading" secondItem="EJ1-wm-gOW" secondAttribute="leading" id="4Zt-Pj-NkY"/>
+                            <constraint firstItem="EJ1-wm-gOW" firstAttribute="trailing" secondItem="weX-9c-atY" secondAttribute="trailing" id="7pt-ev-RId"/>
+                            <constraint firstItem="G5B-uw-qfo" firstAttribute="top" secondItem="EJ1-wm-gOW" secondAttribute="top" id="AeQ-Jg-9IK"/>
+                            <constraint firstItem="EJ1-wm-gOW" firstAttribute="trailing" secondItem="G5B-uw-qfo" secondAttribute="trailing" id="OOe-26-XyU"/>
+                            <constraint firstItem="G5B-uw-qfo" firstAttribute="leading" secondItem="EJ1-wm-gOW" secondAttribute="leading" id="Xni-4y-9t2"/>
+                            <constraint firstItem="weX-9c-atY" firstAttribute="top" secondItem="G5B-uw-qfo" secondAttribute="bottom" id="ZU9-V1-NmB"/>
+                            <constraint firstItem="EJ1-wm-gOW" firstAttribute="bottom" secondItem="weX-9c-atY" secondAttribute="bottom" id="brS-aQ-YL9"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Notification" id="Wll-T0-u9G"/>
+                    <connections>
+                        <outlet property="notifTableView" destination="weX-9c-atY" id="Km7-5p-1rp"/>
+                        <outlet property="turnOnNotifView" destination="G5B-uw-qfo" id="NSQ-fG-Wkb"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3z1-Rt-5JG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1155.072463768116" y="120.53571428571428"/>
+            <point key="canvasLocation" x="1077" y="121"/>
         </scene>
         <!--Notification-->
         <scene sceneID="uJO-VM-fap">
@@ -47,16 +80,48 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="tjU-2D-mC5" kind="relationship" relationship="rootViewController" id="rEG-Nc-fsJ"/>
+                        <segue destination="tjU-2D-mC5" kind="relationship" relationship="rootViewController" id="PVc-Gs-xyf"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3aQ-Ne-mGU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="244.92753623188409" y="120.53571428571428"/>
         </scene>
+        <!--Notification-->
+        <scene sceneID="gck-bb-JK2">
+            <objects>
+                <tableViewController id="bqM-ge-8Xd" customClass="NotificationTableVC" customModule="kostzy" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="5X1-4r-L1S">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="NotificationCell" id="jxD-og-loo">
+                                <rect key="frame" x="0.0" y="55.5" width="414" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="jxD-og-loo" id="n2q-Y9-Rvw">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="bqM-ge-8Xd" id="yHm-dJ-LpR"/>
+                            <outlet property="delegate" destination="bqM-ge-8Xd" id="xw2-ch-G7T"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Notification" id="UPh-a9-IHo"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ooP-FD-Zec" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3080" y="-1018"/>
+        </scene>
     </scenes>
     <resources>
         <image name="Notif Page Unselected" width="26" height="31"/>
         <image name="Notification Page Selected" width="23" height="30"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>
