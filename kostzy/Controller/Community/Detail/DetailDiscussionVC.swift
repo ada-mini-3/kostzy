@@ -24,6 +24,10 @@ class DetailDiscussionVC: UIViewController {
     
     @IBOutlet weak var commentField: UITextField!
     
+    @IBOutlet weak var commentButton: UIButton!
+    
+    @IBOutlet weak var likeButton: UIButton!
+    
     var uImage: UIImage?
     
     var uName: String?
@@ -39,8 +43,16 @@ class DetailDiscussionVC: UIViewController {
         setupView()
         setupUserImage()
         setupKeyboardConstraint()
+        setupButtonDarkMode()
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    private func setupButtonDarkMode() {
+        if isDarkMode == true {
+            commentButton.tintColor = UIColor.white
+            likeButton.tintColor = UIColor.white
+        }
     }
     
     private func setupKeyboardConstraint() {
@@ -104,6 +116,13 @@ extension DetailDiscussionVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "dissCommentCell", for: indexPath) as! DiscussionCommentCell
         let comment = comments[indexPath.row]
+        
+        if isDarkMode == true {
+            cell.comment.backgroundColor = UIColor(red: 31/255, green: 31/255, blue: 31/255, alpha: 1)
+        } else {
+            cell.comment.backgroundColor = UIColor(red: 234/255, green: 234/255, blue: 234/255, alpha: 1)
+        }
+        
         cell.userImage.image = comment.user.image
         cell.userName.text = comment.user.name
         cell.comment.text = comment.comment

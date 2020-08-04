@@ -12,6 +12,9 @@ class FeedsCreateVC: UIViewController {
     
     @IBOutlet weak var addPhoto: UIView!
     
+
+    @IBOutlet weak var mapView: UIView!
+    
     @IBOutlet weak var profilePhoto: UIImageView!
     
     @IBOutlet weak var feedTextView: UITextView!
@@ -22,7 +25,21 @@ class FeedsCreateVC: UIViewController {
             
     @IBOutlet weak var categoryName: UILabel!
     
-    let tags = Tag.initData()
+    @IBOutlet weak var kostNameField: UITextField!
+    
+    @IBOutlet weak var guidelinesButton: UIButton!
+    
+    @IBOutlet weak var locationName: UILabel!
+    
+    let infoTags = Tag.initData()
+    
+    let culinaryTags = Tag.initCulinaryTag()
+    
+    let hangoutTags = Tag.initHangoutsTag()
+    
+    let expTags = Tag.initExpTag()
+    
+    lazy var displayedTags = infoTags
     
     let categories = FeedCategory.initData()
     
@@ -36,6 +53,10 @@ class FeedsCreateVC: UIViewController {
     
     var newTag = [Tag]()
     
+    var locationString :String?
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupAddPhoto()
@@ -44,11 +65,44 @@ class FeedsCreateVC: UIViewController {
         setupPostButton()
         setupTextView()
         setupCategory()
+        setupGuidelines()
+        setupMapView()
         navigationItem.rightBarButtonItem?.isEnabled = false
         tagCollectionView.delegate = self
         tagCollectionView.dataSource = self
         tagCollectionView.allowsMultipleSelection = true
         feedTextView.delegate = self
+        kostNameField.delegate = self
+    }
+    
+    
+    
+    fileprivate func setupCollectionViewData() {
+        switch catId {
+            case 1:
+                displayedTags = infoTags
+                kostNameField.placeholder = "Kost Name"
+            case 2:
+                displayedTags = culinaryTags
+                kostNameField.placeholder = "Restaurant / Place"
+            case 3:
+                displayedTags = expTags
+                kostNameField.placeholder = "Kost Name"
+            default:
+                displayedTags = hangoutTags
+                kostNameField.placeholder = "Hangout Place"
+        }
+        tagCollectionView.reloadData()
+    }
+    
+    private func setupGuidelines() {
+        let attrs: [NSAttributedString.Key: Any] = [
+            NSAttributedString.Key.font : UIFont.systemFont(ofSize: 17.0),
+            NSAttributedString.Key.foregroundColor : UIColor(red: 254/255, green: 14/255, blue: 115/255, alpha: 1),
+            NSAttributedString.Key.underlineStyle : 1]
+        let attributeString = NSMutableAttributedString(string: "guidelines",
+        attributes: attrs)
+        guidelinesButton.setAttributedTitle(attributeString, for: .normal)
     }
     
     private func setupAddPhoto() {
@@ -68,12 +122,28 @@ class FeedsCreateVC: UIViewController {
         catId = 1
         setupPickerView()
         setupPostButton()
+        self.view.endEditing(true)
     }
+    
+    private func setupMapView() {
+        let mapGesture = UITapGestureRecognizer(target: self, action: #selector(mapClicked))
+        mapView.addGestureRecognizer(mapGesture)
+    }
+    
+    @objc private func mapClicked() {
+        performSegue(withIdentifier: "mapSegue" , sender: self)
+    }
+    
+        
     
     private func setupPickerView() {
         categoryPicker = UIPickerView.init()
         categoryPicker.autoresizingMask = .flexibleWidth
-        categoryPicker.backgroundColor = UIColor.white
+        if isDarkMode == true {
+            categoryPicker.backgroundColor = UIColor.black
+        } else {
+            categoryPicker.backgroundColor = UIColor.white
+        }
         categoryPicker.contentMode = .center
         categoryPicker.frame = CGRect.init(x: 0.0, y: UIScreen.main.bounds.size.height - 350, width: UIScreen.main.bounds.size.width, height: 300)
         categoryPicker.selectedRow(inComponent: 0)
@@ -136,7 +206,7 @@ class FeedsCreateVC: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "unwindFeeds" {
             if let dest = segue.destination as? FeedsVC {
-                let newFeeds = Feeds(user: User.initUser(), time: Date(), location: nil, feed: feedTextView.text, tags: newTag, likeCount: 0, commentCount: 0, category: catId!, likeStatus: false)
+                let newFeeds = Feeds(user: User.initUser(), time: Date(), location: locationString, feed: feedTextView.text, tags: newTag, likeCount: 0, commentCount: 0, category: catId!, likeStatus: false)
             switch catId {
                 case 1:
                     dest.feedsInfo.insert(newFeeds, at: 0)
@@ -145,6 +215,10 @@ class FeedsCreateVC: UIViewController {
                 }
             }
         }
+    }
+    
+    @IBAction func unwindToCreate(_ sender:UIStoryboardSegue) {
+        locationName.text = locationString
     }
 
 }
@@ -168,6 +242,7 @@ extension FeedsCreateVC: UIPickerViewDelegate, UIPickerViewDataSource {
         catId = categories[row].id
         categoryName.text = categories[row].name
         postButtonState()
+        setupCollectionViewData()
     }
     
     
@@ -175,14 +250,13 @@ extension FeedsCreateVC: UIPickerViewDelegate, UIPickerViewDataSource {
 
 extension FeedsCreateVC: UICollectionViewDelegate, UICollectionViewDataSource {
     
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        tags.count
+        displayedTags.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = tagCollectionView.dequeueReusableCell(withReuseIdentifier: "tagCreateCell", for: indexPath) as! FeedTagsCell
-        cell.tagCreateName.text = tags[indexPath.row].name
+        cell.tagCreateName.text = displayedTags[indexPath.row].name
         return cell
     }
     
@@ -190,18 +264,26 @@ extension FeedsCreateVC: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = tagCollectionView.cellForItem(at: indexPath)
         if cell?.isSelected == true {
-            Tag.colorArr.shuffle()
-            cell?.backgroundColor = Tag.colorArr[indexPath.row]
-            newTag.append(tags[indexPath.row])
+            cell?.backgroundColor = displayedTags[indexPath.row].color
+            newTag.append(displayedTags[indexPath.row])
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         let cell = tagCollectionView.cellForItem(at: indexPath)
         cell?.backgroundColor = UIColor.lightGray
-        if let idx = newTag.firstIndex(where: {$0.name == tags[indexPath.row].name}) {
+        if let idx = newTag.firstIndex(where: {$0.name == infoTags[indexPath.row].name}) {
             newTag.remove(at: idx)
         }
+    }
+    
+}
+
+extension FeedsCreateVC: UITextFieldDelegate{
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
     }
     
 }
@@ -211,7 +293,11 @@ extension FeedsCreateVC: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.textColor == UIColor.lightGray {
             textView.text = nil
-            textView.textColor = UIColor.black
+            if isDarkMode == true {
+                feedTextView.textColor = UIColor.white
+            } else {
+                feedTextView.textColor = UIColor.black
+            }
         }
     }
     
