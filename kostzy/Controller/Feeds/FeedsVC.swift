@@ -273,6 +273,17 @@ extension FeedsVC : UICollectionViewDelegate, UICollectionViewDataSource {
         self.present(alert, animated: true)
     }
     
+    private func setLikeButtonState(button: UIButton, feed: Feeds) {
+        if feed.likeStatus == true {
+            button.setImage(UIImage(systemName: "hand.thumbsup.fill"), for: .normal)
+            button.tintColor = UIColor.red
+            }
+        else {
+            button.setImage(UIImage(systemName: "hand.thumbsup"), for: .normal)
+            button.tintColor = UIColor.white
+        }
+    }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "feedCell", for: indexPath) as! FeedCell
         var feed = feedsToDisplay[indexPath.row]
@@ -291,6 +302,7 @@ extension FeedsVC : UICollectionViewDelegate, UICollectionViewDataSource {
         
         cell.userName.text = feed.user.name
         cell.userImage.image = feed.user.image
+        
         if feed.location == nil {
             cell.feedLocation.isHidden = true
         } else {
@@ -314,21 +326,17 @@ extension FeedsVC : UICollectionViewDelegate, UICollectionViewDataSource {
         }
         
         cell.likeTapAction = {() in
-            feed.likeStatus = true
-            cell.likeButton.setImage(UIImage(systemName: "hand.thumbsup.fill"), for: .normal)
-            cell.likeButton.tintColor = UIColor.red
+            if feed.likeStatus == false {
+                feed.likeStatus = true
+            } else {
+                feed.likeStatus = false
+            }
+            self.setLikeButtonState(button: cell.likeButton, feed: feed)
         }
         
-        if feed.likeStatus == true {
-            cell.likeButton.setImage(UIImage(systemName: "hand.thumbsup.fill"), for: .normal)
-            cell.likeButton.tintColor = UIColor.red
-        } else {
-            cell.likeButton.setImage(UIImage(systemName: "hand.thumbsup"), for: .normal)
-        }
+        setLikeButtonState(button: cell.likeButton, feed: feed)
         
         cell.configure()
         return cell
     }
-    
- 
 }
