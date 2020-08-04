@@ -70,11 +70,11 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0D1-oD-XRS">
-                                <rect key="frame" x="37" y="773" width="118" height="22"/>
+                                <rect key="frame" x="37" y="779" width="78" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="22" id="iGg-LD-xnI"/>
                                 </constraints>
-                                <state key="normal" title="Back" image="Previous button"/>
+                                <state key="normal" image="Previous button"/>
                                 <connections>
                                     <action selector="backButtonPressed:" destination="0aK-z1-uTr" eventType="touchUpInside" id="528-pU-IfX"/>
                                 </connections>
