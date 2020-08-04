@@ -267,7 +267,11 @@ extension FeedsCreateVC: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.textColor == UIColor.lightGray {
             textView.text = nil
-            textView.textColor = UIColor.black
+            if isDarkMode == true {
+                feedTextView.textColor = UIColor.white
+            } else {
+                feedTextView.textColor = UIColor.black
+            }
         }
     }
     
