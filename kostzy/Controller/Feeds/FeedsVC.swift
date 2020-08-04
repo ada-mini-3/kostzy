@@ -264,6 +264,15 @@ extension FeedsVC : UICollectionViewDelegate, UICollectionViewDataSource {
         feedsToDisplay.count
     }
     
+    private func setupReportAlert() {
+        let alert = UIAlertController(title: "Are you sure you want to report this post?", message: "Once you send the report, we will check whether this post violates our rules. Please make report only if you are sure this is a violation", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "No", style: .destructive, handler: nil))
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
+        
+        self.present(alert, animated: true)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "feedCell", for: indexPath) as! FeedCell
         var feed = feedsToDisplay[indexPath.row]
@@ -273,6 +282,7 @@ extension FeedsVC : UICollectionViewDelegate, UICollectionViewDataSource {
             cell.feedLocation.setTitleColor(UIColor.white, for: .normal)
             cell.commentButton.tintColor = UIColor.white
             cell.likeButton.tintColor = UIColor.white
+            cell.reportButton.setImage(UIImage(named: "Report-dark"), for: .normal)
         } else {
             cell.contentView.backgroundColor = UIColor.white
             cell.feedLocation.setTitleColor(UIColor.black, for: .normal)
@@ -298,6 +308,11 @@ extension FeedsVC : UICollectionViewDelegate, UICollectionViewDataSource {
             self.openMapForPlace()
             
         }
+        
+        cell.reportTapAction = {() in
+            self.setupReportAlert()
+        }
+        
         cell.likeTapAction = {() in
             feed.likeStatus = true
             cell.likeButton.setImage(UIImage(systemName: "hand.thumbsup.fill"), for: .normal)
