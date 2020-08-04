@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="GZ9-oK-JMv">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="GZ9-oK-JMv">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -348,7 +348,7 @@
         <scene sceneID="0Be-Fx-kbL">
             <objects>
                 <navigationController title="Feeds" automaticallyAdjustsScrollViewInsets="NO" id="GZ9-oK-JMv" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Feeds" image="exclamationmark.bubble.fill" catalog="system" id="mGb-1C-fbh"/>
+                    <tabBarItem key="tabBarItem" title="Feeds" image="Feeds Page Unselected" selectedImage="tab bar feeds-filled" id="mGb-1C-fbh"/>
                     <toolbarItems/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="sBZ-92-kq6">
@@ -372,18 +372,19 @@
     </scenes>
     <resources>
         <image name="Badge-100 Likes" width="39" height="42"/>
+        <image name="Feeds Page Unselected" width="29" height="27"/>
         <image name="Report" width="13" height="14"/>
         <image name="arrow.up.arrow.down" catalog="system" width="128" height="96"/>
         <image name="chevron.left" catalog="system" width="96" height="128"/>
         <image name="chevron.right" catalog="system" width="96" height="128"/>
         <image name="circle.fill" catalog="system" width="128" height="121"/>
         <image name="ellipses.bubble" catalog="system" width="128" height="110"/>
-        <image name="exclamationmark.bubble.fill" catalog="system" width="128" height="110"/>
         <image name="hand.thumbsup" catalog="system" width="128" height="128"/>
         <image name="info-selected" width="92" height="16"/>
         <image name="location-icon " width="12" height="19"/>
         <image name="sc-culinary" width="66" height="19"/>
         <image name="sc-experience" width="82" height="20"/>
         <image name="sc-hangouts" width="82" height="17"/>
+        <image name="tab bar feeds-filled" width="29" height="27"/>
     </resources>
 </document>

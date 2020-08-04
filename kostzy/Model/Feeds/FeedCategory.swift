@@ -22,7 +22,7 @@ struct FeedCategory {
         var categories = [FeedCategory]()
         
         categories.append(FeedCategory(id: 1, name: "Information"))
-        categories.append(FeedCategory(id: 2, name: "Food"))
+        categories.append(FeedCategory(id: 2, name: "Culinary"))
         categories.append(FeedCategory(id: 3, name: "Experience"))
         categories.append(FeedCategory(id: 4, name: "Hangouts"))
         
