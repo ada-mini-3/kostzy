@@ -9,18 +9,23 @@
 import Foundation
 import UIKit
 
-struct User {
+struct User: Codable {
     
     var name: String
-    var image: UIImage
+    var image: String
     
-    init(name: String, image: UIImage) {
+    init(name: String, image: String) {
         self.name = name
         self.image = image
     }
     
+    enum CodingKeys: String, CodingKey {
+        case name = "name"
+        case image = "image"
+    }
+    
     static func initUser() -> User {
-        return User(name: "Desti", image: #imageLiteral(resourceName: "destong"))
+        return User(name: "Desti", image: "destong")
     }
     
 }

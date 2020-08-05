@@ -84,7 +84,7 @@ class FeedCell: UICollectionViewCell, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "tagCell", for: indexPath) as! FeedTagsCell
         cell.tagName.text = tags[indexPath.row].name
-        cell.contentView.backgroundColor = tags[indexPath.row].color
+        cell.contentView.backgroundColor = UIColor.hexStringToUIColor(hex: tags[indexPath.row].color)
         return cell
     }
     

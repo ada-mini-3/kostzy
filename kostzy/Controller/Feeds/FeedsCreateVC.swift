@@ -264,7 +264,7 @@ extension FeedsCreateVC: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = tagCollectionView.cellForItem(at: indexPath)
         if cell?.isSelected == true {
-            cell?.backgroundColor = displayedTags[indexPath.row].color
+            cell?.backgroundColor = UIColor.hexStringToUIColor(hex: displayedTags[indexPath.row].color)
             newTag.append(displayedTags[indexPath.row])
         }
     }

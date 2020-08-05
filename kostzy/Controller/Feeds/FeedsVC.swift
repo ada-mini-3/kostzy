@@ -29,7 +29,7 @@ class FeedsVC: UIViewController, MKMapViewDelegate {
     //----------------------------------------------------------------
     let defaults = UserDefaults.standard
     
-    
+    var apiManager = BaseAPIManager()
     var location : Location?
     var feedsInfo = Feeds.initData()
     var feedsFood = Feeds.initFeedCatData()
@@ -48,6 +48,7 @@ class FeedsVC: UIViewController, MKMapViewDelegate {
         setupIndicator()
         setupLocationManager()
         setupCollectionViewBg()
+        apiManager.initSession(url: "feeds")
     }
     
     private func setupCollectionViewBg() {
@@ -304,7 +305,7 @@ extension FeedsVC : UICollectionViewDelegate, UICollectionViewDataSource {
         }
         
         cell.userName.text = feed.user.name
-        cell.userImage.image = feed.user.image
+        cell.userImage.image = UIImage(named: feed.user.image)
         
         if feed.location == nil {
             cell.feedLocation.isHidden = true

@@ -103,7 +103,7 @@ class FeedsDetailVC: UIViewController {
     }
     
     private func setupView() {
-        userImage.image = feeds?.user.image
+        userImage.image = UIImage(named: (feeds?.user.image)!)
         userName.text = feeds?.user.name
         feedLocation.setTitle(feeds?.location, for: .normal)
         feedLocation.contentHorizontalAlignment = .left
@@ -146,7 +146,7 @@ extension FeedsDetailVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = tagsCollectionView.dequeueReusableCell(withReuseIdentifier: "tagCell", for: indexPath) as! FeedTagsCell
         cell.tagName.text = feeds?.tags[indexPath.row].name
-        cell.contentView.backgroundColor = feeds?.tags[indexPath.row].color
+        cell.contentView.backgroundColor = UIColor.hexStringToUIColor(hex: (feeds?.tags[indexPath.row].color)!)
         return cell
     }
     
@@ -175,7 +175,7 @@ extension FeedsDetailVC: UITableViewDelegate, UITableViewDataSource {
             cell.commentText.backgroundColor = UIColor(red: 234/255, green: 234/255, blue: 234/255, alpha: 1)
         }
         
-        cell.userimage.image = comments[indexPath.row].user.image
+        cell.userimage.image = UIImage(named: comments[indexPath.row].user.image)
         cell.userName.text = comments[indexPath.row].user.name
         cell.commentText.text = comments[indexPath.row].comment
         
