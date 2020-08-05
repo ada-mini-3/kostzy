@@ -75,6 +75,15 @@ class NotificationVC: UIViewController {
             customView.topAnchor.constraint(equalTo: turnOnNotifView.topAnchor).isActive = true
             customView.bottomAnchor.constraint(equalTo: turnOnNotifView.bottomAnchor).isActive = true
         }
+        
+        if isDarkMode {
+            customView.turnOnNotifDescriptionLabel.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.6)
+            customView.closeButtonOutlet.tintColor = .white
+        }
+        else {
+            customView.turnOnNotifDescriptionLabel.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.6)
+            customView.closeButtonOutlet.tintColor = .black
+        }
     }
     
     /*deinit {
@@ -171,7 +180,14 @@ extension NotificationVC: UITableViewDataSource, UITableViewDelegate {
         
         let label = UILabel(frame: CGRect(x: 20, y: 10, width: tableView.frame.size.width, height: 20))
         label.text = dateString
-        label.textColor = UIColor.black
+        
+        if isDarkMode {
+            label.textColor = UIColor.white
+        }
+        else {
+            label.textColor = UIColor.black
+        }
+        
         label.font = .boldSystemFont(ofSize: 18)
 
         view.addSubview(label)

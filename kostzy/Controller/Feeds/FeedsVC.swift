@@ -296,7 +296,7 @@ extension FeedsVC : UICollectionViewDelegate, UICollectionViewDataSource {
             cell.feedLocation.setTitleColor(UIColor.white, for: .normal)
             cell.commentButton.tintColor = UIColor.white
             cell.likeButton.tintColor = UIColor.white
-            cell.reportButton.setImage(UIImage(named: "Report-dark"), for: .normal)
+            cell.reportButton.setImage(UIImage(named: "Report"), for: .normal)
         } else {
             cell.contentView.backgroundColor = UIColor.white
             cell.feedLocation.setTitleColor(UIColor.black, for: .normal)

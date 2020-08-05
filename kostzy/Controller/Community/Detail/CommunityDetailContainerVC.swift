@@ -293,8 +293,14 @@ extension CommunityDetailContainerVC: UIScrollViewDelegate {
         let percentageVerticalOffset = currentVerticalOffset / maximumVerticalOffset
         print(percentageVerticalOffset)
 
-        let color = UIColor.init(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: percentageVerticalOffset)
-        topView.backgroundColor = color
+        if isDarkMode {
+            let white = UIColor.init(red: 0/255.0, green: 0/255.0, blue: 0/255.0, alpha: percentageVerticalOffset)
+            topView.backgroundColor = white
+        }
+        else {
+            let black = UIColor.init(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: percentageVerticalOffset)
+            topView.backgroundColor = black
+        }
         
         if deviceSize == .i5_8Inch && deviceSize == .i6_1Inch && deviceSize == .i6_5Inch {
             if lastContentOffset > scrollView.contentOffset.y && lastContentOffset < scrollView.contentSize.height - scrollView.frame.height && lastContentOffset < 255 {

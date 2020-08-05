@@ -33,9 +33,9 @@ class LoginVC: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func signInButtonAction(_ sender: UIButton) {
-        let savedUserDataDict = defaults.dictionary(forKey: "userDataDict") as? [String: String] ?? [String: String]()
+        let savedUserDataDict = defaults.dictionary(forKey: "userDataDict") ?? [String: Any]()
         
-        if emailTextField.text == savedUserDataDict["userEmail"] && passwordTextField.text == savedUserDataDict["userPassword"] {
+        if emailTextField.text == savedUserDataDict["userEmail"] as? String && passwordTextField.text == savedUserDataDict["userPassword"] as? String {
             defaults.set(true, forKey: "userIsLoggedIn")
             
             dismiss(animated: true, completion: nil)

@@ -21,6 +21,7 @@ class TurnOnNotifView: UIView {
     //----------------------------------------------------------------
     // MARK:- Outlets
     //----------------------------------------------------------------
+    @IBOutlet weak var turnOnNotifDescriptionLabel: UILabel!
     @IBOutlet weak var closeButtonOutlet: UIButton!
     
     

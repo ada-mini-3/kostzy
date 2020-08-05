@@ -100,10 +100,7 @@
                                                 <constraint firstAttribute="height" constant="19" id="0n0-mU-tcR"/>
                                                 <constraint firstAttribute="width" constant="19" id="UqW-U5-EYZ"/>
                                             </constraints>
-                                            <color key="tintColor" systemColor="darkTextColor"/>
-                                            <state key="normal" image="xmark" catalog="system">
-                                                <color key="titleColor" systemColor="darkTextColor"/>
-                                            </state>
+                                            <state key="normal" image="xmark" catalog="system"/>
                                             <connections>
                                                 <action selector="closeButtonAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="3hj-Mu-lHV"/>
                                             </connections>
@@ -138,6 +135,7 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="closeButtonOutlet" destination="CFW-6w-zmb" id="coO-MV-IBl"/>
+                <outlet property="turnOnNotifDescriptionLabel" destination="Z7W-zg-F4D" id="FuA-js-WKv"/>
             </connections>
             <point key="canvasLocation" x="86.956521739130437" y="147.32142857142856"/>
         </view>
@@ -150,12 +148,6 @@
     <resources>
         <image name="Stay up to date icon" width="48" height="49"/>
         <image name="xmark" catalog="system" width="128" height="113"/>
-        <systemColor name="darkTextColor">
-            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="darkTextColor">
-            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

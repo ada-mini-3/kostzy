@@ -13,7 +13,7 @@ import UIKit
 class DataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
     
     // MARK: - Arrays
-    var image = ["My Community Dummy Data 2",
+    /*var image = ["My Community Dummy Data 2",
                  "My Community Dummy Data 2 2",
                  "My Community Dummy Data 2",
                  "My Community Dummy Data 2 2",
@@ -32,7 +32,7 @@ class DataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
                      "Kost Area Anggrek Cakra",
                      "Kost Area Binus Syahdan",
                      "Kost Area Anggrek Cakra",
-                     "Kost Area Binus Syahdan"]
+                     "Kost Area Binus Syahdan"]*/
 
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
 
@@ -40,13 +40,13 @@ class DataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return community.count
+        return Community.myCommunity.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyCommunityCell", for: indexPath) as! MyCommunityCell
-        cell.myCommunityImage.image = UIImage(named: image[indexPath.row])
-        cell.myCommunityLabel.text = community[indexPath.row]
+        cell.myCommunityImage.image = UIImage(named: Community.myCommunity[indexPath.row].communityImage!)
+        cell.myCommunityLabel.text = Community.myCommunity[indexPath.row].communityName
         
         return cell
     }
@@ -78,8 +78,10 @@ class ProfileTableVC: UITableViewController {
     @IBOutlet weak var profileNameLabel: UILabel!
     @IBOutlet weak var profileTitleLabel: UILabel!
     @IBOutlet weak var profileAboutMeLabel: UILabel!
+    @IBOutlet weak var editProfileButtonOutlet: UIButton!
     
     
+    // MARK:- View Life Cycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -93,21 +95,26 @@ class ProfileTableVC: UITableViewController {
         myCommunityTableView.delegate = dataSource
         myCommunityTableView.dataSource = dataSource
         
-        myCommunityTableView.rowHeight = 80
-        myCommunityTableView.estimatedRowHeight = 848
+        myCommunityTableView.rowHeight = 60
+        myCommunityTableView.estimatedRowHeight = 600
+        
+        setupView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.loadProfileData()
-        self.tableView.reloadData()
+        loadProfileData()
+        setupView()
+        
+        tableView.reloadData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         loadProfileData()
+        setupView()
         
         tableView.reloadData()
         badgeCollectionView.reloadData()
@@ -119,25 +126,23 @@ class ProfileTableVC: UITableViewController {
     }
     
     
-    // MARK: - Function
+    // MARK: - Custom Methods
     func loadProfileData() {
-        let savedUserDataDict = defaults.dictionary(forKey: "userDataDict") as? [String: String] ?? [String: String]()
-        
+        let savedUserDataDict = defaults.dictionary(forKey: "userDataDict") ?? [String: Any]()
         let userIsLoggedIn = defaults.bool(forKey: "userIsLoggedIn")
         
         if finalname != ""{
             profileNameLabel.text = finalname
         }
             
-            
         if userIsLoggedIn == true {
-            profileImage.image = UIImage(named: profileImagePlaceholderImage)
-            profileNameLabel.text = savedUserDataDict["userName"]
+            setupImageView()
+            profileNameLabel.text = savedUserDataDict["userName"] as? String
             profileTitleLabel.text = profileTitlePlaceholderText
             userLike = userLikePlaceholderNumber
             profileAboutMeLabel.text = profileAboutMePlaceholderText
         }
-        else if userIsLoggedIn == false && finalname == "" {
+        else if userIsLoggedIn == false {
             profileImage.image = UIImage(named: profileImagePlaceholderImage)
             profileNameLabel.text = profileNamePlaceholderText
             profileTitleLabel.text = profileTitlePlaceholderText
@@ -145,12 +150,70 @@ class ProfileTableVC: UITableViewController {
             profileAboutMeLabel.text = profileAboutMePlaceholderText
         }
         
-        if savedUserDataDict["userDesc"] != "" {
-            profileAboutMeLabel.text = savedUserDataDict["userDesc"]
+        if savedUserDataDict["userDesc"] != nil {
+            profileAboutMeLabel.text = savedUserDataDict["userDesc"] as? String
         } else {
             profileAboutMeLabel.text = profileAboutMePlaceholderText
         }
+    }
+    
+    func setupView() {
+        let userIsLoggedIn = defaults.bool(forKey: "userIsLoggedIn")
+        
+        if userIsLoggedIn == false {
+            editProfileButtonOutlet.isHidden = true
+        }
+        else {
+            editProfileButtonOutlet.isHidden = false
+        }
+    }
+    
+    func setupImageView() {
+        profileImage.image = loadImageFromDiskWith(fileName: "profileImage")
+        profileImage.layer.borderWidth = 1
+        profileImage.layer.masksToBounds = false
+        profileImage.layer.borderColor = UIColor.lightGray.cgColor
+        profileImage.layer.cornerRadius = profileImage.frame.height/2
+        profileImage.clipsToBounds = true
+    }
+    
+    func saveImage(imageName: String, image: UIImage) {
+     guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
+        let fileName = imageName
+        let fileURL = documentsDirectory.appendingPathComponent(fileName)
+        guard let data = image.jpegData(compressionQuality: 1) else { return }
 
+        //Checks if file exists, removes it if so.
+        if FileManager.default.fileExists(atPath: fileURL.path) {
+            do {
+                try FileManager.default.removeItem(atPath: fileURL.path)
+                print("Removed old image")
+            } catch let removeError {
+                print("couldn't remove file at path", removeError)
+            }
+
+        }
+
+        do {
+            try data.write(to: fileURL)
+        } catch let error {
+            print("error saving file with error", error)
+        }
+    }
+    
+    func loadImageFromDiskWith(fileName: String) -> UIImage? {
+        let documentDirectory = FileManager.SearchPathDirectory.documentDirectory
+        let userDomainMask = FileManager.SearchPathDomainMask.userDomainMask
+        let paths = NSSearchPathForDirectoriesInDomains(documentDirectory, userDomainMask, true)
+
+        if let dirPath = paths.first {
+            let imageUrl = URL(fileURLWithPath: dirPath).appendingPathComponent(fileName)
+            let image = UIImage(contentsOfFile: imageUrl.path)
+            return image
+
+        }
+        
+        return nil
     }
     
 
@@ -158,11 +221,15 @@ class ProfileTableVC: UITableViewController {
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.row == 0 && indexPath.section == 3 {
             let height: CGFloat = myCommunityTableView.estimatedRowHeight
-            
+                        
             return height
         }
 
-        return super.tableView(tableView, heightForRowAt: indexPath)
+        return UITableView.automaticDimension
+    }
+    
+    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return UITableView.automaticDimension
     }
 
     /*
