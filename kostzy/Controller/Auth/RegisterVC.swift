@@ -41,9 +41,9 @@ class RegisterVC: UIViewController, UITextFieldDelegate {
             passwordNotMatchLabel.isHidden = false
         }
         else {
-            let userDataDict = ["userName": nameTextField.text,
-                                "userEmail": emailTextField.text,
-                                "userPassword": passwordTextField.text]
+            let userDataDict: [String: Any] = ["userName": nameTextField.text!,
+                                               "userEmail": emailTextField.text!,
+                                               "userPassword": passwordTextField.text!]
             
             defaults.set(userDataDict, forKey: "userDataDict")
             defaults.set(true, forKey: "userIsLoggedIn")

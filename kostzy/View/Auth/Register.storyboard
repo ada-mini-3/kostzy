@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ppT-fu-oQY">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17140" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ppT-fu-oQY">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17115"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -31,7 +33,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Tl-sG-UjY">
-                                                <rect key="frame" x="20" y="335" width="44" height="21"/>
+                                                <rect key="frame" x="20" y="335" width="43" height="21"/>
                                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -72,7 +74,7 @@
                                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
                                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                             </textField>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Jb-Ms-yCC" customClass="DesignableButton" customModule="kostzy" customModuleProvider="target">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Jb-Ms-yCC" customClass="DesignableButton" customModule="kostzy" customModuleProvider="target">
                                                 <rect key="frame" x="20" y="568" width="374" height="40"/>
                                                 <color key="backgroundColor" red="1" green="0.74117647060000003" blue="0.086274509799999996" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
@@ -92,13 +94,13 @@
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Already have an account?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D6E-py-NXu">
-                                                <rect key="frame" x="65" y="616" width="196" height="21"/>
+                                                <rect key="frame" x="65.5" y="616" width="195" height="21"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" red="0.70196078429999997" green="0.70196078429999997" blue="0.70196078429999997" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OTG-CO-dNU">
-                                                <rect key="frame" x="265" y="616" width="91" height="21"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OTG-CO-dNU">
+                                                <rect key="frame" x="264.5" y="616" width="90" height="21"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="21" id="Tmn-Hh-tKd"/>
                                                 </constraints>
@@ -127,11 +129,11 @@
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Password doesn't match!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pqg-7C-Nbe">
                                                 <rect key="frame" x="20" y="536" width="374" height="15"/>
                                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="12"/>
-                                                <color key="textColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="textColor" systemColor="systemRedColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="LC8-dd-Tfj" secondAttribute="trailing" constant="20" id="1As-0s-KVH"/>
                                             <constraint firstItem="aN5-Yc-uze" firstAttribute="leading" secondItem="aFh-VJ-B4f" secondAttribute="leading" constant="20" id="1br-Iq-Udx"/>
@@ -187,13 +189,14 @@
                                     <constraint firstAttribute="width" constant="44" id="OND-wm-BPt"/>
                                     <constraint firstAttribute="height" constant="44" id="hSL-AZ-0Bn"/>
                                 </constraints>
-                                <state key="normal" title="Button" image="Back Button Custom"/>
+                                <state key="normal" title="Button" image="Back Button"/>
                                 <connections>
                                     <action selector="backButtonAction:" destination="ppT-fu-oQY" eventType="touchUpInside" id="a5F-jh-8Wl"/>
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="HW7-Yt-JgJ"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="vZQ-av-Dcs" secondAttribute="bottom" id="6cL-kX-aay"/>
                             <constraint firstItem="Yri-0C-tGl" firstAttribute="leading" secondItem="HW7-Yt-JgJ" secondAttribute="leading" constant="20" id="Jfm-QB-beQ"/>
@@ -202,7 +205,6 @@
                             <constraint firstItem="vZQ-av-Dcs" firstAttribute="leading" secondItem="HW7-Yt-JgJ" secondAttribute="leading" id="fcc-dg-OOy"/>
                             <constraint firstItem="HW7-Yt-JgJ" firstAttribute="trailing" secondItem="vZQ-av-Dcs" secondAttribute="trailing" id="qxZ-f0-ThY"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="HW7-Yt-JgJ"/>
                     </view>
                     <connections>
                         <outlet property="confirmPasswordTextField" destination="lxR-DQ-8Kv" id="AtB-P6-2yD"/>
@@ -218,8 +220,19 @@
             <point key="canvasLocation" x="-36" y="-223"/>
         </scene>
     </scenes>
+    <designables>
+        <designable name="1Jb-Ms-yCC">
+            <size key="intrinsicContentSize" width="74" height="36"/>
+        </designable>
+    </designables>
     <resources>
-        <image name="Back Button Custom" width="44" height="44"/>
+        <image name="Back Button" width="44" height="44"/>
         <image name="Sign Up Background Pattern" width="498" height="960"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
     </resources>
 </document>

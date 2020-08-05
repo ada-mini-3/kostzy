@@ -25,9 +25,9 @@ struct Community {
     
     var isRequested: Bool?
     var isJoined: Bool?
+    
+    static var myCommunity: [Community] = []
 }
-
-var communities = [Community]()
 
 
 // MARK: - Array
@@ -68,8 +68,11 @@ var communityDescription = ["Khusus untuk kamu yang nge-kost di daerah Anggrek C
                             "Khusus untuk kamu yang nge-kost di daerah Syahdan! Community ini bertujuan untuk saling membantu, memberikan informasi, menemani, memahami, melayani, dan menyayangi sesama anak kost yang tinggal di area Syahdan. Jadiiiiii bagi anak kost yang tinggal di area ini langsung aja gabuuuunng dan rasakan manfaatnya :)",
                             "Khusus untuk kamu yang nge-kost di daerah Anggrek Cakra! Community ini bertujuan untuk saling membantu, memberikan informasi, menemani, memahami, melayani, dan menyayangi sesama anak kost yang tinggal di area Syahdan. Jadiiiiii bagi anak kost yang tinggal di area ini langsung aja gabuuuunng dan rasakan manfaatnya :)"]
 var communityAlbumImage = ["Album 1",
-                      "Album 2",
-                      "Album 3"]
+                           "Album 2",
+                           "Album 3",
+                           "Album 1",
+                           "Album 2",
+                           "Album 3"]
 var memberCount = [27,
                    37,
                    47,
@@ -80,13 +83,16 @@ var memberImage = ["Lala",
                    "Dinda",
                    "Fira",
                    "Rayhan",
-                   "Rais"]
+                   "Rais",
+                   "Lala"]
 var memberName = ["Lala",
                   "Dinda",
                   "Fira",
                   "Rayhan",
-                  "Rais"]
-var memberRole = ["Admin",
+                  "Rais",
+                  "Lala"]
+var memberRole = ["",
+                  "",
                   "",
                   "",
                   "",
