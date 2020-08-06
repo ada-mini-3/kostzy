@@ -37,6 +37,11 @@ class CommunityLocationVC: UIViewController {
         setupLocation()
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        setupButtonLocation()
+        setupSegmentedControl()
+    }
+    
     private func setupButtonLocation() {
         if isDarkMode == true {
             buttonCurrentLocation.setTitleColor(UIColor.white, for: .normal)
@@ -65,6 +70,9 @@ class CommunityLocationVC: UIViewController {
         segmentedLocation.setTitleTextAttributes(attrs, for: .selected)
         if isDarkMode == true {
             segmentedLocation.backgroundColor = UIColor(red: 44/255, green: 45/255, blue: 47/255, alpha: 1)
+        }
+        else {
+            segmentedLocation.backgroundColor = .systemBackground
         }
     }
     

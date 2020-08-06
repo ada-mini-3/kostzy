@@ -29,7 +29,6 @@ class FeedsVC: UIViewController, MKMapViewDelegate {
     //----------------------------------------------------------------
     let defaults = UserDefaults.standard
     
-    
     var location : Location?
     var feedsInfo = Feeds.initData()
     var feedsFood = Feeds.initFeedCatData()
@@ -48,6 +47,13 @@ class FeedsVC: UIViewController, MKMapViewDelegate {
         setupIndicator()
         setupLocationManager()
         setupCollectionViewBg()
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        setupButtonToLocation()
+        setupSegmentedControl()
+        setupCollectionViewBg()
+        feedsCollectionView.reloadData()
     }
     
     private func setupCollectionViewBg() {

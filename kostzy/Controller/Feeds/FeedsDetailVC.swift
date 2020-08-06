@@ -56,6 +56,12 @@ class FeedsDetailVC: UIViewController {
         tagsCollectionView.dataSource = self
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        setupLocationButton()
+        setupDarkMode()
+        commentTableView.reloadData()
+    }
+    
     private func setupLocationButton() {
         feedLocation.contentHorizontalAlignment = .left
         feedLocation.imageEdgeInsets = UIEdgeInsets(top: 2, left: 5, bottom: 2, right: 5)
@@ -73,6 +79,12 @@ class FeedsDetailVC: UIViewController {
             commentButton.tintColor = UIColor.white
             feedLocation.tintColor = UIColor.white
             feedLocation.setTitleColor(UIColor.white, for: .normal)
+        }
+        else {
+            likeButton.tintColor = UIColor.black
+            commentButton.tintColor = UIColor.black
+            feedLocation.tintColor = UIColor.black
+            feedLocation.setTitleColor(UIColor.black, for: .normal)
         }
     }
     

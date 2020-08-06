@@ -116,6 +116,10 @@ class CommunityDiscussionVC: UIViewController {
         /* perform(#selector(self.adjustHeightOfTableview), with: nil) */
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        discussionTableView.reloadData()
+    }
+    
 
     /*
     // MARK: - Navigation
@@ -170,10 +174,11 @@ extension CommunityDiscussionVC: UITableViewDataSource, UITableViewDelegate {
 
         // Configure the cell...
         if isDarkMode == true {
+            cell.contentView.backgroundColor = .systemBackground
             cell.discussionView.backgroundColor = .systemGray5
         }
         else {
-            cell.contentView.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+            cell.contentView.backgroundColor = .systemBackground
             cell.discussionView.backgroundColor = #colorLiteral(red: 0.9803921569, green: 0.9803921569, blue: 0.9921568627, alpha: 1)
             cell.discussionView.shadowColor = .black
             cell.discussionView.shadowOffset = CGSize(width: 0, height: 0)

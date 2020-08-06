@@ -75,15 +75,6 @@ class NotificationVC: UIViewController {
             customView.topAnchor.constraint(equalTo: turnOnNotifView.topAnchor).isActive = true
             customView.bottomAnchor.constraint(equalTo: turnOnNotifView.bottomAnchor).isActive = true
         }
-        
-        if isDarkMode {
-            customView.turnOnNotifDescriptionLabel.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.6)
-            customView.closeButtonOutlet.tintColor = .white
-        }
-        else {
-            customView.turnOnNotifDescriptionLabel.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.6)
-            customView.closeButtonOutlet.tintColor = .black
-        }
     }
     
     /*deinit {
@@ -123,6 +114,10 @@ class NotificationVC: UIViewController {
         notifTableView.reloadData()
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        notifTableView.reloadData()
+    }
+    
 
     /*
     // MARK: - Navigation
@@ -158,7 +153,7 @@ extension NotificationVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 20))
-        view.upperlined()
+        view.upperlinedView()
         if isDarkMode {
             view.backgroundColor = .black
         }
