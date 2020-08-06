@@ -19,15 +19,18 @@ class FeedsCreateVC: UIViewController {
     @IBOutlet weak var charCountLabel: UILabel!
     
     @IBOutlet weak var categoryView: UIView!
+    @IBOutlet weak var categoryTextField: UITextField!
     @IBOutlet weak var categoryName: UILabel!
     
     @IBOutlet weak var multipurposeView: UIView!
-    @IBOutlet weak var kostNameField: UITextField!
+    @IBOutlet weak var kostNameTextView: UITextView!
     
     @IBOutlet weak var locationName: UILabel!
     @IBOutlet weak var mapView: UIView!
     
     @IBOutlet weak var addPhoto: UIView!
+    @IBOutlet weak var addPhotoButtonOutlet: UIButton!
+    @IBOutlet weak var photoImageView: UIImageView!
     
     @IBOutlet weak var tagCollectionView: UICollectionView!
     
@@ -37,7 +40,9 @@ class FeedsCreateVC: UIViewController {
     //----------------------------------------------------------------
     // MARK:- Variables
     //----------------------------------------------------------------
+    let profileImagePlaceholderImage = "Empty Profile Picture"
     let feedTextViewPlaceholderText = "Information or Question"
+    let kostNameTextViewPlaceholderText = "Kost Name"
     
     let categories = FeedCategory.initData()
     var categoryPicker = UIPickerView()
@@ -54,11 +59,41 @@ class FeedsCreateVC: UIViewController {
     lazy var displayedTags = infoTags
     
     var toolbar = UIToolbar()
+    var photoImagePicker: UIImagePickerController!
     
     
     //----------------------------------------------------------------
     // MARK:- Action Methods
     //----------------------------------------------------------------
+    @IBAction func addPhotoButtonAction(_ sender: UIButton) {
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self as UIImagePickerControllerDelegate & UINavigationControllerDelegate
+        
+        let actionSheet = UIAlertController(title: "Photo Source", message: "Choose a Source", preferredStyle: .actionSheet)
+        actionSheet.addAction(UIAlertAction(title: "Photo Library", style: .default, handler: { (action:UIAlertAction) in
+            self.openPhotoLibrary()
+        }))
+        actionSheet.addAction(UIAlertAction(title: "Camera", style: .default, handler: { (action:UIAlertAction) in
+            self.openCamera()
+        }))
+        
+        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel , handler: nil))
+        
+        /*If you want work actionsheet on ipad
+        then you have to use popoverPresentationController to present the actionsheet,
+        otherwise app will crash on iPad */
+        switch UIDevice.current.userInterfaceIdiom {
+        case .pad:
+            actionSheet.popoverPresentationController?.sourceView = sender
+            actionSheet.popoverPresentationController?.sourceRect = sender.bounds
+            actionSheet.popoverPresentationController?.permittedArrowDirections = .up
+        default:
+            break
+        }
+        
+        self.present(actionSheet, animated: true, completion: nil)
+    }
+    
     @IBAction func unwindToCreate(_ sender:UIStoryboardSegue) {
         locationName.text = locationString
     }
@@ -108,16 +143,20 @@ class FeedsCreateVC: UIViewController {
         switch catId {
             case 1:
                 displayedTags = infoTags
-                kostNameField.placeholder = "Kost Name"
+                categoryTextField.text = "Information"
+                kostNameTextView.text = "Kost Name"
             case 2:
                 displayedTags = culinaryTags
-                kostNameField.placeholder = "Restaurant / Place"
+                categoryTextField.text = "Culinary"
+                kostNameTextView.text = "Restaurant/Place"
             case 3:
                 displayedTags = expTags
-                kostNameField.placeholder = "Kost Name"
+                categoryTextField.text = "Experience"
+                kostNameTextView.text = "Experience's Topic"
             default:
                 displayedTags = hangoutTags
-                kostNameField.placeholder = "Hangout Place"
+                categoryTextField.text = "Hangout"
+                kostNameTextView.text = "Hangout Place"
         }
         tagCollectionView.reloadData()
     }
@@ -134,22 +173,40 @@ class FeedsCreateVC: UIViewController {
     
     private func setupAddPhoto() {
         addPhoto.layer.borderWidth = 1
-        addPhoto.layer.borderColor = UIColor.lightGray.cgColor
-        addPhoto.layer.cornerRadius = 10
+        addPhoto.layer.cornerRadius = 6
+        
+        if isDarkMode {
+            addPhoto.layer.borderColor = UIColor.separator.cgColor
+        }
+        else {
+            addPhoto.layer.borderColor = UIColor.separator.cgColor
+        }
     }
     
     private func setupCategory() {
-        let categoryGesture = UITapGestureRecognizer(target: self, action: #selector(categoryClicked))
-        categoryView.addGestureRecognizer(categoryGesture)
+        categoryPicker.backgroundColor = .systemBackground
+        categoryTextField.inputView = categoryPicker
+        categoryTextField.delegate = self
+        categoryPicker.delegate = self
+        categoryPicker.dataSource = self
+        
+        let toolBar = UIToolbar()
+        toolBar.barStyle = UIBarStyle.default
+        toolBar.isTranslucent = true
+        toolBar.sizeToFit()
+        
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector (categoryDoneClicked))
+        
+        toolBar.setItems([spaceButton, doneButton], animated: true)
+        toolBar.isUserInteractionEnabled = true
+        
+        categoryTextField.inputAccessoryView = toolBar
         categoryView.underlinedView()
     }
     
-    @objc private func categoryClicked() {
-        category = "Information"
-        categoryName.text = "Information"
-        catId = 1
-        setupPickerView()
-        setupPostButton()
+    @objc func categoryDoneClicked() {
+        categoryTextField.inputView = categoryPicker
         self.view.endEditing(true)
     }
     
@@ -161,38 +218,6 @@ class FeedsCreateVC: UIViewController {
     
     @objc private func mapClicked() {
         performSegue(withIdentifier: "mapSegue" , sender: self)
-    }
-    
-    private func setupPickerView() {
-        categoryPicker = UIPickerView.init()
-        categoryPicker.autoresizingMask = .flexibleWidth
-        if isDarkMode == true {
-            categoryPicker.backgroundColor = UIColor.black
-        } else {
-            categoryPicker.backgroundColor = UIColor.white
-        }
-        categoryPicker.contentMode = .center
-        categoryPicker.frame = CGRect.init(x: 0.0, y: UIScreen.main.bounds.size.height - 350, width: UIScreen.main.bounds.size.width, height: 300)
-        categoryPicker.selectedRow(inComponent: 0)
-        
-        toolbar = UIToolbar.init(frame: CGRect.init(x: 0.0, y: UIScreen.main.bounds.size.height - 350, width: UIScreen.main.bounds.size.width, height: 50))
-        toolbar.barStyle = .default
-        toolbar.setItems([UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(pickerViewDoneButtonClicked))], animated: false)
-        toolbar.tintColor = UIColor(red: 255.0/255, green: 184.0/255, blue: 0.0/255, alpha: 1)
-        categoryPicker.delegate = self
-        categoryPicker.dataSource = self
-        self.view.addSubview(categoryPicker)
-        self.view.addSubview(toolbar)
-    }
-    
-    @objc func pickerViewDoneButtonClicked() {
-        categoryPicker.removeFromSuperview()
-        toolbar.removeFromSuperview()
-    }
-    
-    private func setupProfilePicture() {
-        profilePhoto.layer.cornerRadius = profilePhoto.frame.height / 2
-        profilePhoto.clipsToBounds = true
     }
     
     private func setupCancelButton() {
@@ -231,6 +256,54 @@ class FeedsCreateVC: UIViewController {
         self.present(alert, animated: true)
     }
     
+    func setupDiscussionImagePicker() {
+        photoImagePicker = UIImagePickerController()
+        photoImagePicker.delegate = self
+    }
+    
+    func openCamera() {
+        if(UIImagePickerController .isSourceTypeAvailable(UIImagePickerController.SourceType.camera)) {
+            photoImagePicker.sourceType = UIImagePickerController.SourceType.camera
+            photoImagePicker.allowsEditing = true
+            self.present(photoImagePicker, animated: true, completion: nil)
+        }
+        else {
+            let alert  = UIAlertController(title: "Warning", message: "You don't have camera", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+
+    func openPhotoLibrary() {
+        photoImagePicker.sourceType = UIImagePickerController.SourceType.photoLibrary
+        photoImagePicker.allowsEditing = true
+        self.present(photoImagePicker, animated: true, completion: nil)
+    }
+    
+    func setupImageView() {
+        profilePhoto.image = loadImageFromDiskWith(fileName: "profileImage")
+        profilePhoto.layer.borderWidth = 1
+        profilePhoto.layer.masksToBounds = false
+        profilePhoto.layer.borderColor = UIColor.lightGray.cgColor
+        profilePhoto.layer.cornerRadius = profilePhoto.frame.height/2
+        profilePhoto.clipsToBounds = true
+    }
+    
+    func loadImageFromDiskWith(fileName: String) -> UIImage? {
+        let documentDirectory = FileManager.SearchPathDirectory.documentDirectory
+        let userDomainMask = FileManager.SearchPathDomainMask.userDomainMask
+        let paths = NSSearchPathForDirectoriesInDomains(documentDirectory, userDomainMask, true)
+
+        if let dirPath = paths.first {
+            let imageUrl = URL(fileURLWithPath: dirPath).appendingPathComponent(fileName)
+            let image = UIImage(contentsOfFile: imageUrl.path)
+            
+            return image ?? UIImage(named: profileImagePlaceholderImage)
+        }
+        
+        return nil
+    }
+    
     
     //----------------------------------------------------------------
     // MARK:- View Life Cycle Methods
@@ -240,7 +313,7 @@ class FeedsCreateVC: UIViewController {
         
         setupKeyboardDismissal()
         setupAddPhoto()
-        setupProfilePicture()
+        setupImageView()
         setupCancelButton()
         setupPostButton()
         setupTextView()
@@ -248,22 +321,27 @@ class FeedsCreateVC: UIViewController {
         setupCategory()
         setupGuidelines()
         setupMapView()
-        multipurposeView.underlinedView()
         
         tagCollectionView.delegate = self
         tagCollectionView.dataSource = self
         tagCollectionView.allowsMultipleSelection = true
         feedTextView.delegate = self
-        kostNameField.delegate = self
         
         navigationItem.rightBarButtonItem?.isEnabled = false
         modalPresentationStyle = .formSheet
         isModalInPresentation = true
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        setupDiscussionImagePicker()
+    }
+    
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         setupTextView()
         setupCharCountLabel()
+        setupAddPhoto()
     }
     
     
@@ -306,7 +384,6 @@ extension FeedsCreateVC: UIPickerViewDelegate, UIPickerViewDataSource {
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         category = categories[row].name
         catId = categories[row].id
-        categoryName.text = categories[row].name
         postButtonState()
         setupCollectionViewData()
     }
@@ -349,7 +426,7 @@ extension FeedsCreateVC: UICollectionViewDelegate, UICollectionViewDataSource {
 //----------------------------------------------------------------
 // MARK:- Text Field Delegate
 //----------------------------------------------------------------
-extension FeedsCreateVC: UITextFieldDelegate{
+extension FeedsCreateVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return false
@@ -363,18 +440,29 @@ extension FeedsCreateVC: UITextFieldDelegate{
 extension FeedsCreateVC: UITextViewDelegate {
     func setupTextView() {
         feedTextView.delegate = self
+        kostNameTextView.delegate = self
+        
         feedTextView.tag = 0
+        kostNameTextView.tag = 1
+        catId = 1
+        
         feedTextView.text = feedTextViewPlaceholderText
+        kostNameTextView.text = kostNameTextViewPlaceholderText
         
         if isDarkMode {
             feedTextView.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.5)
+            kostNameTextView.textColor = .placeholderText
         }
         else {
             feedTextView.textColor = #colorLiteral(red: 0.2352941176, green: 0.2352941176, blue: 0.262745098, alpha: 0.5)
+            kostNameTextView.textColor = .placeholderText
         }
         
         feedTextView.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         feedTextView.addDoneButton(title: "Done", target: self, selector: #selector(tapDone(sender:)))
+        
+        kostNameTextView.font = UIFont.systemFont(ofSize: 16, weight: .light)
+        kostNameTextView.addDoneButton(title: "Done", target: self, selector: #selector(tapDone(sender:)))
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {
@@ -402,6 +490,18 @@ extension FeedsCreateVC: UITextViewDelegate {
                 feedTextView.font = UIFont.systemFont(ofSize: 16, weight: .regular)
             }
         }
+        if (textView.tag == 1) {
+            kostNameTextView.text = nil
+            
+            if isDarkMode {
+                kostNameTextView.textColor = .white
+            }
+            else {
+                kostNameTextView.textColor = .black
+            }
+            
+            kostNameTextView.font = UIFont.systemFont(ofSize: 16, weight: .light)
+        }
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
@@ -415,6 +515,26 @@ extension FeedsCreateVC: UITextViewDelegate {
                 feedTextView.textColor = #colorLiteral(red: 0.2352941176, green: 0.2352941176, blue: 0.262745098, alpha: 0.5)
             }
             feedTextView.font = UIFont.systemFont(ofSize: 16, weight: .light)
+        }
+        if kostNameTextView.text.isEmpty {
+            switch catId {
+                case 1:
+                    kostNameTextView.text = "Kost Name"
+                case 2:
+                    kostNameTextView.text = "Restaurant/Place"
+                case 3:
+                    kostNameTextView.text = "Experience's Topic"
+                default:
+                    kostNameTextView.text = "Hangout Place"
+            }
+            
+            if isDarkMode {
+                kostNameTextView.textColor = .placeholderText
+            }
+            else {
+                kostNameTextView.textColor = .placeholderText
+            }
+            kostNameTextView.font = UIFont.systemFont(ofSize: 16, weight: .light)
         }
     }
     
@@ -430,5 +550,24 @@ extension FeedsCreateVC: UITextViewDelegate {
     
     @objc func tapDone(sender: Any) {
         self.view.endEditing(true)
+    }
+}
+
+
+//----------------------------------------------------------------
+// MARK:- Image Picker Delegate
+//----------------------------------------------------------------
+
+extension FeedsCreateVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+
+        picker.dismiss(animated: true, completion: nil)
+        guard let image = info[.editedImage] as? UIImage else { return }
+        self.photoImageView.image = image
     }
 }

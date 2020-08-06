@@ -27,7 +27,7 @@ class EditProfileVC: UIViewController, UIGestureRecognizerDelegate, UITextFieldD
     var profileTableVC: ProfileTableVC!
     var profileImagePicker: UIImagePickerController!
     let defaults = UserDefaults.standard
-    var nameText = ""
+    let profileImagePlaceholderImage = "Empty Profile Picture"
     let aboutMeTextViewPlaceholderText = "Describe about yourself"
     
     
@@ -215,8 +215,8 @@ class EditProfileVC: UIViewController, UIGestureRecognizerDelegate, UITextFieldD
         if let dirPath = paths.first {
             let imageUrl = URL(fileURLWithPath: dirPath).appendingPathComponent(fileName)
             let image = UIImage(contentsOfFile: imageUrl.path)
-            return image
-
+            
+            return image ?? UIImage(named: profileImagePlaceholderImage)
         }
         
         return nil

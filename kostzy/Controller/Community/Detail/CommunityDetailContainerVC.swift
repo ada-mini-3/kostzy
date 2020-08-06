@@ -45,7 +45,7 @@ class CommunityDetailContainerVC: UIViewController {
     
     var selectedRow: Int?
     var containerViewheight: CGFloat!
-    var percentageVerticalOffset: CGFloat!
+    var percentageVerticalOffset: CGFloat = 0
     
     // variable to save the last position visited, default to zero
     private var lastContentOffset: CGFloat = 0
@@ -153,7 +153,7 @@ class CommunityDetailContainerVC: UIViewController {
             newDiscussionButtonOutlet.isHidden = true
             sortByButtonOutlet.isHidden = true
             
-            containerViewheight = 1220
+            containerViewheight = 1240
             DispatchQueue.main.async(execute: {
                 //In my case i had to call this method after some delay, because (i think) it will allow tableView to reload completely and then calculate the height required for itself. (This might be a workaround, but it worked for me)
                 self.perform(#selector(self.adjustHeightOfContainerView), with: nil)
@@ -166,7 +166,7 @@ class CommunityDetailContainerVC: UIViewController {
             newDiscussionButtonOutlet.isHidden = false
             sortByButtonOutlet.isHidden = false
             
-            containerViewheight = 1220
+            containerViewheight = 1240
             DispatchQueue.main.async(execute: {
                 //In my case i had to call this method after some delay, because (i think) it will allow tableView to reload completely and then calculate the height required for itself. (This might be a workaround, but it worked for me)
                 self.perform(#selector(self.adjustHeightOfContainerView), with: nil)
@@ -184,11 +184,21 @@ class CommunityDetailContainerVC: UIViewController {
     }
     
     func setupTopView() {
+        
+        // Uncomment for blur effect
+        /*let blurEffect = UIBlurEffect(style: .light)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = topView.bounds
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]*/
+        
         scrollView.delegate = self
         
         topView.backgroundColor = UIColor.clear
         topLabel.text = communityName[selectedRow!]
         topLabel.alpha = 0.0
+        
+        /*topView.addSubview(blurEffectView)
+        topView.sendSubviewToBack(blurEffectView)*/
     }
     
     // Delete or comment this function when user testing is finished
