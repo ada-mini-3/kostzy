@@ -20,6 +20,7 @@ class CommunityVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
     @IBOutlet weak var locationButtonOutlet: UIButton!
     
     
+    // MARK:- View Life Cycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -34,6 +35,10 @@ class CommunityVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        communityTableView.reloadData()
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         communityTableView.reloadData()
     }
     
@@ -90,10 +95,11 @@ class CommunityVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
 
         // Configure the cell...
         if isDarkMode == true {
+            cell.contentView.backgroundColor = .systemBackground
             cell.communityView.backgroundColor = .systemGray5
         }
         else {
-            cell.contentView.backgroundColor = #colorLiteral(red: 0.9803921569, green: 0.9803921569, blue: 0.9921568627, alpha: 1)
+            cell.contentView.backgroundColor = .systemBackground
             cell.communityView.backgroundColor = #colorLiteral(red: 0.9803921569, green: 0.9803921569, blue: 0.9921568627, alpha: 1)
             cell.communityView.shadowColor = .black
             cell.communityView.shadowOffset = CGSize(width: 0, height: 0)

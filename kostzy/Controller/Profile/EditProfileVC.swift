@@ -100,6 +100,15 @@ class EditProfileVC: UIViewController, UIGestureRecognizerDelegate, UITextFieldD
     //----------------------------------------------------------------
     // MARK:- Custom Methods
     //----------------------------------------------------------------
+    func setupCharCountLabel() {
+        if isDarkMode {
+            lblNumber.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.5)
+        }
+        else {
+            lblNumber.textColor = #colorLiteral(red: 0.2352941176, green: 0.2352941176, blue: 0.262745098, alpha: 0.5)
+        }
+    }
+    
     func setupImageView() {
         profileImageView.image = loadImageFromDiskWith(fileName: "profileImage")
         profileImageView.layer.borderWidth = 1
@@ -239,6 +248,7 @@ class EditProfileVC: UIViewController, UIGestureRecognizerDelegate, UITextFieldD
         setupImageView()
         setupTextView()
         setupTextField()
+        setupCharCountLabel()
         
         self.modalPresentationStyle = .formSheet
         self.isModalInPresentation = true
@@ -248,6 +258,11 @@ class EditProfileVC: UIViewController, UIGestureRecognizerDelegate, UITextFieldD
         super.viewDidAppear(animated)
         
         setupImagePicker()
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        setupTextView()
+        setupCharCountLabel()
     }
 }
 
@@ -331,13 +346,13 @@ extension EditProfileVC: UITextViewDelegate {
     
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        return aboutMeTextView.text.count + (text.count - range.length) <= 200
+        return aboutMeTextView.text.count + (text.count - range.length) <= 255
     }
     
     
     func textViewDidChange(_ textView: UITextView) {
         if textView == aboutMeTextView {
-            lblNumber.text = "\(0 + aboutMeTextView.text.count)/200"
+            lblNumber.text = "\(0 + aboutMeTextView.text.count)/255"
             setSaveButtonState()
         }
     }

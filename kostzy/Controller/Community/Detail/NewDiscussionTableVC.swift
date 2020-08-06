@@ -24,6 +24,7 @@ class NewDiscussionTableVC: UITableViewController {
     
     @IBOutlet weak var discussionImageView: UIImageView!
     @IBOutlet weak var addPhotoButtonOutlet: UIButton!
+    @IBOutlet weak var addPhotoLabel: UILabel!
     @IBOutlet weak var guidelinesButtonOutlet: UIButton!
     
     
@@ -40,7 +41,13 @@ class NewDiscussionTableVC: UITableViewController {
     //----------------------------------------------------------------
     
     @IBAction func cancelButtonAction(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
+        let alert = UIAlertController(title: "Are you sure you want to cancel?", message: "Unsaved changes will be discarded", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { action in
+            self.dismiss(animated: true, completion: nil)
+        }))
+        
+        self.present(alert, animated: true)
     }
     
     @IBAction func postButtonAction(_ sender: Any) {
@@ -80,6 +87,16 @@ class NewDiscussionTableVC: UITableViewController {
     //----------------------------------------------------------------
     // MARK:- Custom Methods
     //----------------------------------------------------------------
+    func setupLabel() {
+        if isDarkMode {
+            charCountLabel.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.5)
+            addPhotoLabel.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.5)
+        }
+        else {
+            charCountLabel.textColor = #colorLiteral(red: 0.2352941176, green: 0.2352941176, blue: 0.262745098, alpha: 0.5)
+            addPhotoLabel.textColor = #colorLiteral(red: 0.2352941176, green: 0.2352941176, blue: 0.262745098, alpha: 0.5)
+        }
+    }
     
     func setupDiscussionImagePicker() {
         discussionImagePicker = UIImagePickerController()
@@ -118,15 +135,23 @@ class NewDiscussionTableVC: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
-        
+        modalPresentationStyle = .formSheet
+        isModalInPresentation = true
         tableView.keyboardDismissMode = .interactive
+        
         setupTextView()
+        setupLabel()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         setupDiscussionImagePicker()
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        setupTextView()
+        setupLabel()
     }
 
     
@@ -211,8 +236,15 @@ extension NewDiscussionTableVC: UITextViewDelegate {
         discussionTextView.delegate = self
         discussionTextView.tag = 0
         discussionTextView.text = discussionTextViewPlaceholderText
-        discussionTextView.textColor = #colorLiteral(red: 0.2352941176, green: 0.2352941176, blue: 0.262745098, alpha: 0.5)
-        discussionTextView.font = UIFont.systemFont(ofSize: 16, weight: .light)
+        
+        if isDarkMode {
+            discussionTextView.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.5)
+        }
+        else {
+            discussionTextView.textColor = #colorLiteral(red: 0.2352941176, green: 0.2352941176, blue: 0.262745098, alpha: 0.5)
+        }
+        
+        discussionTextView.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         discussionTextView.addDoneButton(title: "Done", target: self, selector: #selector(tapDone(sender:)))
     }
     
@@ -220,12 +252,25 @@ extension NewDiscussionTableVC: UITextViewDelegate {
         if (textView.tag == 0) {
             if discussionTextView.text == discussionTextViewPlaceholderText {
                 discussionTextView.text = nil
-                discussionTextView.textColor = .black
-                discussionTextView.font = UIFont.systemFont(ofSize: 16, weight: .light)
+                
+                if isDarkMode {
+                    discussionTextView.textColor = .white
+                }
+                else {
+                    discussionTextView.textColor = .black
+                }
+                
+                discussionTextView.font = UIFont.systemFont(ofSize: 16, weight: .regular)
             }
             else {
-                discussionTextView.textColor = .black
-                discussionTextView.font = UIFont.systemFont(ofSize: 16, weight: .light)
+                if isDarkMode {
+                    discussionTextView.textColor = .white
+                }
+                else {
+                    discussionTextView.textColor = .black
+                }
+                
+                discussionTextView.font = UIFont.systemFont(ofSize: 16, weight: .regular)
             }
         }
     }
@@ -233,25 +278,29 @@ extension NewDiscussionTableVC: UITextViewDelegate {
     func textViewDidEndEditing(_ textView: UITextView) {
         if discussionTextView.text.isEmpty {
             discussionTextView.text = discussionTextViewPlaceholderText
-            discussionTextView.textColor = #colorLiteral(red: 0.2352941176, green: 0.2352941176, blue: 0.262745098, alpha: 0.5)
-            discussionTextView.font = UIFont.systemFont(ofSize: 16, weight: .light)
+            
+            if isDarkMode {
+                discussionTextView.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.5)
+            }
+            else {
+                discussionTextView.textColor = #colorLiteral(red: 0.2352941176, green: 0.2352941176, blue: 0.262745098, alpha: 0.5)
+            }
+            discussionTextView.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         }
     }
     
-    
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        return discussionTextView.text.count + (text.count - range.length) <= 300
+        return discussionTextView.text.count + (text.count - range.length) <= 255
     }
-    
     
     func textViewDidChange(_ textView: UITextView) {
         if textView == discussionTextView {
-            charCountLabel.text = "\(0 + discussionTextView.text.count)/300"
-            setSubmitButtonState()
+            charCountLabel.text = "\(0 + discussionTextView.text.count)/255"
+            setSaveButtonState()
         }
     }
     
-    func setSubmitButtonState() {
+    func setSaveButtonState() {
         if discussionTextView.text != discussionTextViewPlaceholderText &&
             !discussionTextView.text.isEmpty {
                 postButtonOutlet.isEnabled = true

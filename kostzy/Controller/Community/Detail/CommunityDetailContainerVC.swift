@@ -45,6 +45,7 @@ class CommunityDetailContainerVC: UIViewController {
     
     var selectedRow: Int?
     var containerViewheight: CGFloat!
+    var percentageVerticalOffset: CGFloat!
     
     // variable to save the last position visited, default to zero
     private var lastContentOffset: CGFloat = 0
@@ -267,6 +268,17 @@ class CommunityDetailContainerVC: UIViewController {
         })
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        if isDarkMode {
+            let white = UIColor.init(red: 0/255.0, green: 0/255.0, blue: 0/255.0, alpha: percentageVerticalOffset)
+            topView.backgroundColor = white
+        }
+        else {
+            let black = UIColor.init(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: percentageVerticalOffset)
+            topView.backgroundColor = black
+        }
+    }
+    
     
     //----------------------------------------------------------------
     // MARK: - Navigation
@@ -290,7 +302,7 @@ extension CommunityDetailContainerVC: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let maximumVerticalOffset = CGFloat(250)
         let currentVerticalOffset = scrollView.contentOffset.y
-        let percentageVerticalOffset = currentVerticalOffset / maximumVerticalOffset
+        percentageVerticalOffset = currentVerticalOffset / maximumVerticalOffset
         print(percentageVerticalOffset)
 
         if isDarkMode {

@@ -10,72 +10,99 @@ import UIKit
 
 class FeedsCreateVC: UIViewController {
     
-    @IBOutlet weak var addPhoto: UIView!
+    //----------------------------------------------------------------
+    // MARK:- Outlets
+    //----------------------------------------------------------------
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var profilePhoto: UIImageView!
+    @IBOutlet weak var feedTextView: UITextView!
+    @IBOutlet weak var charCountLabel: UILabel!
     
-
+    @IBOutlet weak var categoryView: UIView!
+    @IBOutlet weak var categoryName: UILabel!
+    
+    @IBOutlet weak var multipurposeView: UIView!
+    @IBOutlet weak var kostNameField: UITextField!
+    
+    @IBOutlet weak var locationName: UILabel!
     @IBOutlet weak var mapView: UIView!
     
-    @IBOutlet weak var profilePhoto: UIImageView!
-    
-    @IBOutlet weak var feedTextView: UITextView!
+    @IBOutlet weak var addPhoto: UIView!
     
     @IBOutlet weak var tagCollectionView: UICollectionView!
     
-    @IBOutlet weak var categoryView: UIView!
-            
-    @IBOutlet weak var categoryName: UILabel!
-    
-    @IBOutlet weak var kostNameField: UITextField!
-    
     @IBOutlet weak var guidelinesButton: UIButton!
     
-    @IBOutlet weak var locationName: UILabel!
     
-    let infoTags = Tag.initData()
-    
-    let culinaryTags = Tag.initCulinaryTag()
-    
-    let hangoutTags = Tag.initHangoutsTag()
-    
-    let expTags = Tag.initExpTag()
-    
-    lazy var displayedTags = infoTags
+    //----------------------------------------------------------------
+    // MARK:- Variables
+    //----------------------------------------------------------------
+    let feedTextViewPlaceholderText = "Information or Question"
     
     let categories = FeedCategory.initData()
-    
     var categoryPicker = UIPickerView()
-    
-    var toolbar = UIToolbar()
-    
     var category : String = ""
-    
     var catId : Int?
-    
-    var newTag = [Tag]()
     
     var locationString :String?
     
+    var newTag = [Tag]()
+    let infoTags = Tag.initData()
+    let culinaryTags = Tag.initCulinaryTag()
+    let hangoutTags = Tag.initHangoutsTag()
+    let expTags = Tag.initExpTag()
+    lazy var displayedTags = infoTags
+    
+    var toolbar = UIToolbar()
     
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupAddPhoto()
-        setupProfilePicture()
-        setupCancelButton()
-        setupPostButton()
-        setupTextView()
-        setupCategory()
-        setupGuidelines()
-        setupMapView()
-        navigationItem.rightBarButtonItem?.isEnabled = false
-        tagCollectionView.delegate = self
-        tagCollectionView.dataSource = self
-        tagCollectionView.allowsMultipleSelection = true
-        feedTextView.delegate = self
-        kostNameField.delegate = self
+    //----------------------------------------------------------------
+    // MARK:- Action Methods
+    //----------------------------------------------------------------
+    @IBAction func unwindToCreate(_ sender:UIStoryboardSegue) {
+        locationName.text = locationString
     }
     
     
+    //----------------------------------------------------------------
+    // MARK:- Custom Methods
+    //----------------------------------------------------------------
+    func setupKeyboardDismissal() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapView(gesture:)))
+        let notificationCenter = NotificationCenter.default
+        
+        view.addGestureRecognizer(tapGesture)
+        
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard(notification:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+    }
+    
+    @objc func adjustForKeyboard(notification: Notification) {
+        let userInfo = notification.userInfo!
+        let keyboardScreenEndFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+        let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
+        
+        if notification.name == UIResponder.keyboardWillHideNotification {
+            scrollView.contentInset = UIEdgeInsets.zero
+        } else {
+            scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height, right: 0)
+        }
+        
+        scrollView.scrollIndicatorInsets = scrollView.contentInset
+    }
+    
+    @objc func didTapView(gesture: UITapGestureRecognizer)  {
+        view.endEditing(true)
+    }
+    
+    private func setupCharCountLabel() {
+        if isDarkMode {
+            charCountLabel.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.5)
+        }
+        else {
+            charCountLabel.textColor = #colorLiteral(red: 0.2352941176, green: 0.2352941176, blue: 0.262745098, alpha: 0.5)
+        }
+    }
     
     fileprivate func setupCollectionViewData() {
         switch catId {
@@ -114,6 +141,7 @@ class FeedsCreateVC: UIViewController {
     private func setupCategory() {
         let categoryGesture = UITapGestureRecognizer(target: self, action: #selector(categoryClicked))
         categoryView.addGestureRecognizer(categoryGesture)
+        categoryView.underlinedView()
     }
     
     @objc private func categoryClicked() {
@@ -128,13 +156,12 @@ class FeedsCreateVC: UIViewController {
     private func setupMapView() {
         let mapGesture = UITapGestureRecognizer(target: self, action: #selector(mapClicked))
         mapView.addGestureRecognizer(mapGesture)
+        mapView.underlinedView()
     }
     
     @objc private func mapClicked() {
         performSegue(withIdentifier: "mapSegue" , sender: self)
     }
-    
-        
     
     private func setupPickerView() {
         categoryPicker = UIPickerView.init()
@@ -168,11 +195,6 @@ class FeedsCreateVC: UIViewController {
         profilePhoto.clipsToBounds = true
     }
     
-    private func setupTextView() {
-        feedTextView.text = "Information or Question"
-        feedTextView.textColor = UIColor.lightGray
-    }
-    
     private func setupCancelButton() {
         let attributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17, weight: .medium)]
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain , target: self, action: #selector(cancelClicked))
@@ -200,9 +222,54 @@ class FeedsCreateVC: UIViewController {
     }
     
     @objc private func cancelClicked() {
-        self.dismiss(animated: true, completion: nil)
+        let alert = UIAlertController(title: "Are you sure you want to cancel?", message: "Unsaved changes will be discarded", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { action in
+            self.dismiss(animated: true, completion: nil)
+        }))
+        
+        self.present(alert, animated: true)
     }
     
+    
+    //----------------------------------------------------------------
+    // MARK:- View Life Cycle Methods
+    //----------------------------------------------------------------
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        setupKeyboardDismissal()
+        setupAddPhoto()
+        setupProfilePicture()
+        setupCancelButton()
+        setupPostButton()
+        setupTextView()
+        setupCharCountLabel()
+        setupCategory()
+        setupGuidelines()
+        setupMapView()
+        multipurposeView.underlinedView()
+        
+        tagCollectionView.delegate = self
+        tagCollectionView.dataSource = self
+        tagCollectionView.allowsMultipleSelection = true
+        feedTextView.delegate = self
+        kostNameField.delegate = self
+        
+        navigationItem.rightBarButtonItem?.isEnabled = false
+        modalPresentationStyle = .formSheet
+        isModalInPresentation = true
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        setupTextView()
+        setupCharCountLabel()
+    }
+    
+    
+    //----------------------------------------------------------------
+    // MARK:- Segue Preparation
+    //----------------------------------------------------------------
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "unwindFeeds" {
             if let dest = segue.destination as? FeedsVC {
@@ -216,15 +283,14 @@ class FeedsCreateVC: UIViewController {
             }
         }
     }
-    
-    @IBAction func unwindToCreate(_ sender:UIStoryboardSegue) {
-        locationName.text = locationString
-    }
 
 }
 
+
+//----------------------------------------------------------------
+// MARK:- Picker View Delegate
+//----------------------------------------------------------------
 extension FeedsCreateVC: UIPickerViewDelegate, UIPickerViewDataSource {
-    
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
@@ -244,12 +310,13 @@ extension FeedsCreateVC: UIPickerViewDelegate, UIPickerViewDataSource {
         postButtonState()
         setupCollectionViewData()
     }
-    
-    
 }
 
+
+//----------------------------------------------------------------
+// MARK:- Collection View Delegate
+//----------------------------------------------------------------
 extension FeedsCreateVC: UICollectionViewDelegate, UICollectionViewDataSource {
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         displayedTags.count
     }
@@ -276,44 +343,92 @@ extension FeedsCreateVC: UICollectionViewDelegate, UICollectionViewDataSource {
             newTag.remove(at: idx)
         }
     }
-    
 }
 
+
+//----------------------------------------------------------------
+// MARK:- Text Field Delegate
+//----------------------------------------------------------------
 extension FeedsCreateVC: UITextFieldDelegate{
-    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return false
     }
-    
 }
 
+
+//----------------------------------------------------------------
+// MARK:- Text View Delegate
+//----------------------------------------------------------------
 extension FeedsCreateVC: UITextViewDelegate {
+    func setupTextView() {
+        feedTextView.delegate = self
+        feedTextView.tag = 0
+        feedTextView.text = feedTextViewPlaceholderText
+        
+        if isDarkMode {
+            feedTextView.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.5)
+        }
+        else {
+            feedTextView.textColor = #colorLiteral(red: 0.2352941176, green: 0.2352941176, blue: 0.262745098, alpha: 0.5)
+        }
+        
+        feedTextView.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+        feedTextView.addDoneButton(title: "Done", target: self, selector: #selector(tapDone(sender:)))
+    }
     
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if textView.textColor == UIColor.lightGray {
-            textView.text = nil
-            if isDarkMode == true {
-                feedTextView.textColor = UIColor.white
-            } else {
-                feedTextView.textColor = UIColor.black
+        if (textView.tag == 0) {
+            if feedTextView.text == feedTextViewPlaceholderText {
+                feedTextView.text = nil
+                
+                if isDarkMode {
+                    feedTextView.textColor = .white
+                }
+                else {
+                    feedTextView.textColor = .black
+                }
+                
+                feedTextView.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+            }
+            else {
+                if isDarkMode {
+                    feedTextView.textColor = .white
+                }
+                else {
+                    feedTextView.textColor = .black
+                }
+                
+                feedTextView.font = UIFont.systemFont(ofSize: 16, weight: .regular)
             }
         }
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
-        if textView.text.isEmpty {
-            textView.text = "Information or Question"
-            textView.textColor = UIColor.lightGray
+        if feedTextView.text.isEmpty {
+            feedTextView.text = feedTextViewPlaceholderText
+            
+            if isDarkMode {
+                feedTextView.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.5)
+            }
+            else {
+                feedTextView.textColor = #colorLiteral(red: 0.2352941176, green: 0.2352941176, blue: 0.262745098, alpha: 0.5)
+            }
+            feedTextView.font = UIFont.systemFont(ofSize: 16, weight: .light)
         }
     }
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        if(text == "\n") {
-            textView.resignFirstResponder()
-            return false
-        }
-        return true
+        return feedTextView.text.count + (text.count - range.length) <= 255
     }
     
+    func textViewDidChange(_ textView: UITextView) {
+        if textView == feedTextView {
+            charCountLabel.text = "\(0 + feedTextView.text.count)/255"
+        }
+    }
+    
+    @objc func tapDone(sender: Any) {
+        self.view.endEditing(true)
+    }
 }
