@@ -60,7 +60,7 @@ class ProfileTableVC: UITableViewController {
     let defaults = UserDefaults.standard
     let notificationCenter = NotificationCenter.default
     
-    let profileImagePlaceholderImage = "Photo Profile (Dummy Data)"
+    let profileImagePlaceholderImage = "Empty Profile Picture"
     let profileNamePlaceholderText = "User"
     let profileTitlePlaceholderText = "Kostzy Beginner"
     let userLikePlaceholderNumber = 0
@@ -68,7 +68,6 @@ class ProfileTableVC: UITableViewController {
     
     var dataSource = DataSource()
     
-    var finalname = ""
     
     // MARK: - IBOutlets
     @IBOutlet weak var badgeCollectionView: UICollectionView!
@@ -131,10 +130,6 @@ class ProfileTableVC: UITableViewController {
         let savedUserDataDict = defaults.dictionary(forKey: "userDataDict") ?? [String: Any]()
         let userIsLoggedIn = defaults.bool(forKey: "userIsLoggedIn")
         
-        if finalname != ""{
-            profileNameLabel.text = finalname
-        }
-            
         if userIsLoggedIn == true {
             setupImageView()
             profileNameLabel.text = savedUserDataDict["userName"] as? String
@@ -143,7 +138,7 @@ class ProfileTableVC: UITableViewController {
             profileAboutMeLabel.text = profileAboutMePlaceholderText
         }
         else if userIsLoggedIn == false {
-            profileImage.image = UIImage(named: profileImagePlaceholderImage)
+            setupImageView()
             profileNameLabel.text = profileNamePlaceholderText
             profileTitleLabel.text = profileTitlePlaceholderText
             userLike = userLikePlaceholderNumber
@@ -209,8 +204,8 @@ class ProfileTableVC: UITableViewController {
         if let dirPath = paths.first {
             let imageUrl = URL(fileURLWithPath: dirPath).appendingPathComponent(fileName)
             let image = UIImage(contentsOfFile: imageUrl.path)
-            return image
-
+            
+            return image ?? UIImage(named: profileImagePlaceholderImage)
         }
         
         return nil
