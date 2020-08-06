@@ -45,9 +45,11 @@ class RegisterVC: UIViewController, UITextFieldDelegate {
             let payload = ["name": nameTextField.text,
                            "email": emailTextField.text,
                            "password": passwordTextField.text]
-            
+            //let token = "Token \(defaults.dictionary(forKey: "userToken")!["token"] as! String)"
             apiManager.performPostRequest(payload: payload as [String : Any],
-                                          url: "\(BaseAPIManager.authUrl)register/") { (data, response, error) in
+                                          url: "\(BaseAPIManager.authUrl)register/",
+            token: "")
+            { (data, response, error) in
                 DispatchQueue.main.async {
                     if let response = response as? HTTPURLResponse {
                         switch response.statusCode {

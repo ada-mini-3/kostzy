@@ -33,10 +33,11 @@ class LoginVC: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func signInButtonAction(_ sender: UIButton) {
-        //let savedUserDataDict = defaults.dictionary(forKey: "userDataDict") as? [String: String] ?? [String: String]()
         let payload = ["email": emailTextField.text, "password": passwordTextField.text]
-        
-        apiManager.performPostRequest(payload: payload as [String : Any], url: "\(BaseAPIManager.authUrl)login/") { (data, response, error) in
+        //let token = "Token \(defaults.dictionary(forKey: "userToken")!["token"] as! String)"
+        apiManager.performPostRequest(payload: payload as [String : Any], url: "\(BaseAPIManager.authUrl)login/",
+            token: "")
+        { (data, response, error) in
             DispatchQueue.main.async {
                 if let response = response as? HTTPURLResponse {
                     switch response.statusCode {

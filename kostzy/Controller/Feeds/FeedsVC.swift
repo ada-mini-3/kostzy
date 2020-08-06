@@ -55,9 +55,12 @@ class FeedsVC: UIViewController, MKMapViewDelegate {
     private func setupFeedsData() {
         self.actityIndicator.isHidden = false
         self.actityIndicator.startAnimating()
-        apiManager.performGenericFetchRequest(urlString: "feeds?category=\(category)", errorMsg: {
+        apiManager.performGenericFetchRequest(urlString: "feeds?category=\(category)",
+            token: "",
+            errorMsg: {
             print("Error Bosss")
-        }, completion: { (feeds: [Feeds]) in
+        },
+            completion: { (feeds: [Feeds]) in
             DispatchQueue.main.async {
                 self.actityIndicator.stopAnimating()
                 self.refreshControl.endRefreshing()

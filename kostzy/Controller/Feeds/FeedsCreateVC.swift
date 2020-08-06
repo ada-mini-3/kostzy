@@ -52,7 +52,13 @@ class FeedsCreateVC: UIViewController {
     
     var newTag = [Tag]()
     
+    var tagsId : [Int] = []
+
     var locationString :String?
+    
+    let defaults = UserDefaults.standard
+    
+    let apiManager = BaseAPIManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,6 +70,7 @@ class FeedsCreateVC: UIViewController {
         setupCategory()
         setupGuidelines()
         setupMapView()
+        
         navigationItem.rightBarButtonItem?.isEnabled = false
         tagCollectionView.delegate = self
         tagCollectionView.dataSource = self
@@ -71,7 +78,7 @@ class FeedsCreateVC: UIViewController {
         feedTextView.delegate = self
         kostNameField.delegate = self
     }
-    
+
     fileprivate func setupCollectionViewData() {
         switch catId {
             case 1:
@@ -129,7 +136,6 @@ class FeedsCreateVC: UIViewController {
         performSegue(withIdentifier: "mapSegue" , sender: self)
     }
     
-        
     
     private func setupPickerView() {
         categoryPicker = UIPickerView.init()
@@ -182,8 +188,48 @@ class FeedsCreateVC: UIViewController {
         postButtonState()
     }
     
+    func postFeedApi() {
+        let payload = ["feed": feedTextView.text ?? "", "category": catId ?? 1,
+                       "lat": 0, "long": 0, "location_name": locationString ?? "",
+                       "tags": tagsId] as [String : Any]
+        let token = "Token \(defaults.dictionary(forKey: "userToken")!["token"] as! String)"
+        apiManager.performPostRequest(payload: payload, url: "\(apiManager.baseUrl)feeds/",
+            token: token)
+        { (data, response, error) in
+            DispatchQueue.main.async {
+                if let response =  response as? HTTPURLResponse {
+                    switch response.statusCode {
+                       case 201:
+                            self.performSegue(withIdentifier: "unwindFeeds", sender: self)
+                           break
+                       case 400:
+                           if let feedErr = data?["feed"] as? [String] {
+                               self.setupAlert(msg: "\(feedErr[0]) (Feed)")
+                           } else if let catErr = data?["category"] as? [String] {
+                               self.setupAlert(msg: "\(catErr[0]) (Category)")
+                           }
+                            break
+                       default:
+                            print(response.statusCode)
+                           self.setupAlert(msg: "Something Wrong, Try Again Later")
+                           break
+                    }
+                } else if let error = error {
+                    self.setupAlert(msg: error.localizedDescription)
+                }
+            }
+        }
+    }
+        
+    private func setupAlert(msg: String) {
+        let alert = UIAlertController(title: "Whoops!", message: msg, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alert, animated: true)
+    }
+    
     @objc private func postFeed() {
-        performSegue(withIdentifier: "unwindFeeds", sender: self)
+       print("Post Clicked....")
+       postFeedApi()
     }
     
     private func postButtonState() {
@@ -255,12 +301,13 @@ extension FeedsCreateVC: UICollectionViewDelegate, UICollectionViewDataSource {
         return cell
     }
     
-    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = tagCollectionView.cellForItem(at: indexPath)
         if cell?.isSelected == true {
             cell?.backgroundColor = UIColor.hexStringToUIColor(hex: displayedTags[indexPath.row].color)
             newTag.append(displayedTags[indexPath.row])
+            tagsId.append(displayedTags[indexPath.row].id)
+            print(tagsId)
         }
     }
     
@@ -269,6 +316,8 @@ extension FeedsCreateVC: UICollectionViewDelegate, UICollectionViewDataSource {
         cell?.backgroundColor = UIColor.lightGray
         if let idx = newTag.firstIndex(where: {$0.name == infoTags[indexPath.row].name}) {
             newTag.remove(at: idx)
+            tagsId.remove(at: idx)
+            print(tagsId)
         }
     }
     
