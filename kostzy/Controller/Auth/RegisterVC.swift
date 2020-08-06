@@ -27,6 +27,7 @@ class RegisterVC: UIViewController, UITextFieldDelegate {
     // MARK:- Variables
     //----------------------------------------------------------------
     let defaults = UserDefaults.standard
+    let apiManager = BaseAPIManager()
     
     
     //----------------------------------------------------------------
@@ -40,15 +41,38 @@ class RegisterVC: UIViewController, UITextFieldDelegate {
         if confirmPasswordTextField.text != passwordTextField.text {
             passwordNotMatchLabel.isHidden = false
         }
-        else {
-            let userDataDict = ["userName": nameTextField.text,
-                                "userEmail": emailTextField.text,
-                                "userPassword": passwordTextField.text]
+        else {            
+            let payload = ["name": nameTextField.text,
+                           "email": emailTextField.text,
+                           "password": passwordTextField.text]
             
-            defaults.set(userDataDict, forKey: "userDataDict")
-            defaults.set(true, forKey: "userIsLoggedIn")
-            
-            dismiss(animated: true, completion: nil)
+            apiManager.performPostRequest(payload: payload as [String : Any],
+                                          url: "\(BaseAPIManager.authUrl)register/") { (data, response, error) in
+                DispatchQueue.main.async {
+                    if let response = response as? HTTPURLResponse {
+                        switch response.statusCode {
+                            case 201:
+                                self.defaults.set(true, forKey: "userIsLoggedIn")
+                                self.defaults.set(data, forKey: "userToken")
+                                self.dismiss(animated: true, completion: nil)
+                            
+                            case 400:
+                                if let nameErr = data?["name"] as? [String] {
+                                    self.setupAlert(msg: "\(nameErr[0]) (Name)")
+                                } else if let mailErr = data?["email"] as? [String] {
+                                    self.setupAlert(msg: "\(mailErr[0]) (Email)")
+                                } else if let passErr = data?["password"] as? [String] {
+                                    self.setupAlert(msg: "\(passErr[0]) (Password)")
+                                }
+                            
+                            default:
+                                self.setupAlert(msg: "Something Wrong, Try Again Later")
+                        }
+                    } else if let error = error {
+                        self.setupAlert(msg: error.localizedDescription)
+                    }
+                }
+            }
         }
     }
     
@@ -60,6 +84,13 @@ class RegisterVC: UIViewController, UITextFieldDelegate {
     //----------------------------------------------------------------
     // MARK:- Custom Methods
     //----------------------------------------------------------------
+    
+    private func setupAlert(msg: String) {
+        let alert = UIAlertController(title: "Whoops!", message: msg, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alert, animated: true)
+    }
+    
     func setupTextField() {
         passwordNotMatchLabel.isHidden = true
         

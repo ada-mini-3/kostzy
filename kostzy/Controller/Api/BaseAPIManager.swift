@@ -11,7 +11,7 @@ import Foundation
 struct BaseAPIManager {
     
     let baseUrl = "http://34.101.87.22:8000/api/v1/"
-    let authUrl = "http://34.101.87.22:8000/api/auth/"
+   static let authUrl = "http://34.101.87.22:8000/api/auth/"
     
     func performGenericFetchRequest<T: Decodable>(urlString: String,
                                              errorMsg: @escaping (()-> Void),
@@ -37,38 +37,39 @@ struct BaseAPIManager {
         }
     }
     
-    func performAuthRequest(payload: [String: Any],
+    func performPostRequest(payload: [String: Any],
                             url: String,
-                            completion: @escaping ([String: Any]?, Error?) -> Void) {
+                            completion: @escaping ([String: Any]?, URLResponse?, Error?) -> Void) {
         let session = URLSession.shared
-        var request = URLRequest(url:  URL(string: authUrl + url)!)
+        var request = URLRequest(url:  URL(string: url)!)
         request.httpMethod = "POST"
         
         do {
             request.httpBody = try JSONSerialization.data(withJSONObject: payload,
                                                           options: .prettyPrinted)
         } catch let error {
-            print(error.localizedDescription)
+            print(error.localizedDescription, "JSON ERROR")
         }
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         
         let task = session.dataTask(with: request, completionHandler: { data, response, error in
             if error != nil {
-                completion(nil, error)
+                completion(nil, nil, error)
             }
             
             guard let data = data else { return }
-            
+
             do {
-                guard let res = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String:Any] else {
-                    completion(nil, NSError(domain: "invalidJSONTypeError", code: -100009, userInfo: nil))
+                guard let obj = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] else {
+                    completion(nil, nil,NSError(domain: "invalidJSONTypeError", code: -100009, userInfo: nil))
                     return
                 }
-                completion(res, nil)
+
+                completion(obj, response, nil)
             } catch let error {
-                print(error.localizedDescription)
-                completion(nil, error)
+                print(error.localizedDescription, "Response Error")
+                completion(nil, nil, error)
             }
             
         })

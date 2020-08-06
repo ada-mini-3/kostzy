@@ -99,7 +99,8 @@ class ProfileTableVC: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+//        let token = defaults.dictionary(forKey: "userToken") as? [String: String]
+//        print(token!["token"]! as String)
         self.loadProfileData()
         self.tableView.reloadData()
     }
