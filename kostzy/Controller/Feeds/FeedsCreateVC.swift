@@ -12,7 +12,6 @@ class FeedsCreateVC: UIViewController {
     
     @IBOutlet weak var addPhoto: UIView!
     
-
     @IBOutlet weak var mapView: UIView!
     
     @IBOutlet weak var profilePhoto: UIImageView!
@@ -55,8 +54,6 @@ class FeedsCreateVC: UIViewController {
     
     var locationString :String?
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupAddPhoto()
@@ -74,8 +71,6 @@ class FeedsCreateVC: UIViewController {
         feedTextView.delegate = self
         kostNameField.delegate = self
     }
-    
-    
     
     fileprivate func setupCollectionViewData() {
         switch catId {
@@ -206,7 +201,7 @@ class FeedsCreateVC: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "unwindFeeds" {
             if let dest = segue.destination as? FeedsVC {
-                let newFeeds = Feeds(user: User.initUser(), time: Date(), location: locationString, feed: feedTextView.text, tags: newTag, likeCount: 0, commentCount: 0, category: catId!, likeStatus: false)
+                let newFeeds = Feeds(user: User.initUser(), time: "2019-10-07", location: locationString, feed: feedTextView.text, tags: newTag, likeCount: 0, commentCount: 0, category: catId!, likeStatus: false)
             switch catId {
                 case 1:
                     dest.feedsInfo.insert(newFeeds, at: 0)

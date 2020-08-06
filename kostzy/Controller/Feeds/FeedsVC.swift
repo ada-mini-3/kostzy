@@ -35,6 +35,8 @@ class FeedsVC: UIViewController, MKMapViewDelegate {
     var feedsFood = Feeds.initFeedCatData()
     var feedsExp = Feeds.initFeedExpData()
     var feedsHangouts = Feeds.initFeedHangoutsData()
+    var feedsData: [Feeds] = []
+    var category = 1
     
     lazy var feedsToDisplay = feedsInfo
     var locationManager : CLLocationManager?
@@ -45,11 +47,29 @@ class FeedsVC: UIViewController, MKMapViewDelegate {
         setupSegmentedControl()
         setupButtonToLocation()
         setupRefreshControl()
-        setupIndicator()
+        setupFeedsData()
         setupLocationManager()
         setupCollectionViewBg()
-        apiManager.initSession(url: "feeds")
     }
+    
+    private func setupFeedsData() {
+        self.actityIndicator.isHidden = false
+        self.actityIndicator.startAnimating()
+        apiManager.performGenericFetchRequest(urlString: "feeds?category=\(category)", errorMsg: {
+            print("Error Bosss")
+        }, completion: { (feeds: [Feeds]) in
+            DispatchQueue.main.async {
+                self.actityIndicator.stopAnimating()
+                self.refreshControl.endRefreshing()
+                self.actityIndicator.isHidden = true
+                self.feedsData = feeds
+                self.feedsCollectionView.dataSource = self
+                self.feedsCollectionView.delegate = self
+                self.feedsCollectionView.reloadData()
+            }
+        })
+    }
+    
     
     private func setupCollectionViewBg() {
         if isDarkMode == true {
@@ -84,17 +104,6 @@ class FeedsVC: UIViewController, MKMapViewDelegate {
         mapItem.openInMaps(launchOptions: options)
     }
     
-    private func setupIndicator() {
-        actityIndicator.startAnimating()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            self.actityIndicator.stopAnimating()
-            self.actityIndicator.isHidden = true
-            self.feedsCollectionView.dataSource = self
-            self.feedsCollectionView.delegate = self
-            self.feedsCollectionView.reloadData()
-        }
-    }
-    
     private func setupRefreshControl() {
         if #available(iOS 10.0, *) {
             feedsCollectionView.refreshControl = refreshControl
@@ -108,7 +117,7 @@ class FeedsVC: UIViewController, MKMapViewDelegate {
     
     @objc func refresh(){
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            self.refreshControl.endRefreshing()
+            self.setupFeedsData()
         }
     }
     
@@ -155,7 +164,6 @@ class FeedsVC: UIViewController, MKMapViewDelegate {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 for i in 0...(segmentControl.numberOfSegments-1)  {
                     let backgroundSegmentView = segmentControl.subviews[i]
-                    //it is not enogh changing the background color. It has some kind of shadow layer
                     backgroundSegmentView.isHidden = true
                 }
             }
@@ -189,19 +197,21 @@ class FeedsVC: UIViewController, MKMapViewDelegate {
     @IBAction func changeCategory(_ sender: UISegmentedControl) {
         changeSegmentedImage()
         filterFeedBasedOnCategory()
-        feedsCollectionView.reloadData()
+        self.feedsCollectionView.dataSource = nil
+        self.feedsCollectionView.delegate = nil
+        setupFeedsData()
     }
     
     private func filterFeedBasedOnCategory() {
         switch segmentedCategory.selectedSegmentIndex {
             case 0:
-                feedsToDisplay = feedsInfo
+                category = 1
             case 1:
-                feedsToDisplay = feedsFood
+                category = 2
             case 2:
-                feedsToDisplay = feedsExp
+                category = 3
             default:
-                feedsToDisplay = feedsHangouts
+                category = 4
         }
     }
     
@@ -257,11 +267,11 @@ extension FeedsVC : UICollectionViewDelegate, UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-         performSegue(withIdentifier: "detailFeedSegue", sender: feedsToDisplay[indexPath.row])
+         performSegue(withIdentifier: "detailFeedSegue", sender: feedsData[indexPath.row])
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        feedsToDisplay.count
+        feedsData.count
     }
     
     private func setupReportAlert() {
@@ -290,7 +300,7 @@ extension FeedsVC : UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "feedCell", for: indexPath) as! FeedCell
-        var feed = feedsToDisplay[indexPath.row]
+        var feed = feedsData[indexPath.row]
         
         if isDarkMode == true {
             cell.contentView.backgroundColor = UIColor(red: 29/255, green: 29/255, blue: 29/255, alpha: 1)
@@ -305,11 +315,12 @@ extension FeedsVC : UICollectionViewDelegate, UICollectionViewDataSource {
         }
         
         cell.userName.text = feed.user.name
-        cell.userImage.image = UIImage(named: feed.user.image)
+        cell.userImage.image = UIImage(named: feed.user.image ?? "destong")
         
-        if feed.location == nil {
+        if feed.location == "" {
             cell.feedLocation.isHidden = true
         } else {
+            cell.feedLocation.isHidden = false
             cell.feedLocation.setTitle(feed.location, for: .normal)
         }
         cell.feed.text = feed.feed
@@ -317,12 +328,11 @@ extension FeedsVC : UICollectionViewDelegate, UICollectionViewDataSource {
         cell.likeCount.text = "\(feed.likeCount) Likes"
         cell.commentCount.text = "\(feed.commentCount) Comments"
         cell.commentTapAction = {() in
-            self.performSegue(withIdentifier: "detailFeedSegue", sender: self.feedsInfo[indexPath.row])
+            self.performSegue(withIdentifier: "detailFeedSegue", sender: self.feedsData[indexPath.row])
         }
+        
         cell.locationTapAction = {() in
-            print("Location Clicked!!")
             self.openMapForPlace()
-            
         }
         
         cell.reportTapAction = {() in

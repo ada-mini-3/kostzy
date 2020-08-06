@@ -103,7 +103,7 @@ class FeedsDetailVC: UIViewController {
     }
     
     private func setupView() {
-        userImage.image = UIImage(named: (feeds?.user.image)!)
+        userImage.image = UIImage(named: (feeds?.user.image) ?? "destong")
         userName.text = feeds?.user.name
         feedLocation.setTitle(feeds?.location, for: .normal)
         feedLocation.contentHorizontalAlignment = .left
@@ -175,7 +175,7 @@ extension FeedsDetailVC: UITableViewDelegate, UITableViewDataSource {
             cell.commentText.backgroundColor = UIColor(red: 234/255, green: 234/255, blue: 234/255, alpha: 1)
         }
         
-        cell.userimage.image = UIImage(named: comments[indexPath.row].user.image)
+        cell.userimage.image = UIImage(named: comments[indexPath.row].user.image ?? "destong")
         cell.userName.text = comments[indexPath.row].user.name
         cell.commentText.text = comments[indexPath.row].comment
         

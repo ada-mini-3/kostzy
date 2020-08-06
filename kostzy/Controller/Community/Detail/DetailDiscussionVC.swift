@@ -123,7 +123,7 @@ extension DetailDiscussionVC: UITableViewDataSource, UITableViewDelegate {
             cell.comment.backgroundColor = UIColor(red: 234/255, green: 234/255, blue: 234/255, alpha: 1)
         }
         
-        cell.userImage.image = UIImage(named: comment.user.image)
+        cell.userImage.image = UIImage(named: comment.user.image ?? "destong")
         cell.userName.text = comment.user.name
         cell.comment.text = comment.comment
         return cell
