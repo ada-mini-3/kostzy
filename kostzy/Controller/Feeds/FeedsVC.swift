@@ -10,19 +10,37 @@ import CoreLocation
 import UIKit
 import MapKit
 
+
+//----------------------------------------------------------------
+// MARK: - NoSwipeSegmendtedControl
+//----------------------------------------------------------------
+class NoSwipeSegmentedControl: UISegmentedControl {
+
+    override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+}
+
+
+//----------------------------------------------------------------
+// MARK: - FeedsVC
+//----------------------------------------------------------------
 class FeedsVC: UIViewController, MKMapViewDelegate {
     
+    //----------------------------------------------------------------
+    // MARK:- Outlets
+    //----------------------------------------------------------------
     @IBOutlet weak var btnLocation: UIButton!
-    
-    @IBOutlet weak var segmentedCategory: UISegmentedControl!
-    
+    @IBOutlet weak var segmentedCategory: NoSwipeSegmentedControl!
     @IBOutlet weak var feedsCollectionView: UICollectionView!
-    
+    @IBOutlet weak var chevron: UIImageView!
+    @IBOutlet weak var actityIndicator: UIActivityIndicatorView!
     private let refreshControl = UIRefreshControl()
     
-    @IBOutlet weak var actityIndicator: UIActivityIndicatorView!
+    var flowLayout: UICollectionViewFlowLayout {
+        return self.feedsCollectionView?.collectionViewLayout as! UICollectionViewFlowLayout
+    }
     
-    @IBOutlet weak var chevron: UIImageView!
     
     //----------------------------------------------------------------
     // MARK:- Variables
@@ -41,10 +59,11 @@ class FeedsVC: UIViewController, MKMapViewDelegate {
     lazy var feedsToDisplay = feedsInfo
     var locationManager : CLLocationManager?
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupNavigationBarItem()
-        setupSegmentedControl()
+    
+    //----------------------------------------------------------------
+    // MARK: - Action Methods
+    //----------------------------------------------------------------
+    @IBAction func unwindToFeeds(_ sender: UIStoryboardSegue) {
         setupButtonToLocation()
         setupRefreshControl()
         setupFeedsData()
@@ -245,8 +264,43 @@ class FeedsVC: UIViewController, MKMapViewDelegate {
         }
     }
     
+    
+    //----------------------------------------------------------------
+    // MARK:- View Life Cycle Methods
+    //----------------------------------------------------------------
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        setupNavigationBarItem()
+        setupSegmentedControl()
+        setupButtonToLocation()
+        setupRefreshControl()
+        setupIndicator()
+        setupLocationManager()
+        setupCollectionViewBg()
+        
+        flowLayout.estimatedItemSize = CGSize(width: 342, height: 266)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        feedsCollectionView.reloadData()
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        setupButtonToLocation()
+        setupSegmentedControl()
+        setupCollectionViewBg()
+        feedsCollectionView.reloadData()
+    }
+    
 }
 
+
+//----------------------------------------------------------------
+// MARK: - CLLocation
+//----------------------------------------------------------------
 extension FeedsVC : CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
@@ -261,6 +315,10 @@ extension FeedsVC : CLLocationManagerDelegate {
     
 }
 
+
+//----------------------------------------------------------------
+// MARK: - UICollectionView
+//----------------------------------------------------------------
 extension FeedsVC : UICollectionViewDelegate, UICollectionViewDataSource {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -312,7 +370,7 @@ extension FeedsVC : UICollectionViewDelegate, UICollectionViewDataSource {
             cell.feedLocation.setTitleColor(UIColor.white, for: .normal)
             cell.commentButton.tintColor = UIColor.white
             cell.likeButton.tintColor = UIColor.white
-            cell.reportButton.setImage(UIImage(named: "Report-dark"), for: .normal)
+            cell.reportButton.setImage(UIImage(named: "Report"), for: .normal)
         } else {
             cell.contentView.backgroundColor = UIColor.white
             cell.feedLocation.setTitleColor(UIColor.black, for: .normal)

@@ -20,17 +20,22 @@ class NewDiscussionTableVC: UITableViewController {
     @IBOutlet weak var profileNameLabel: UILabel!
     @IBOutlet weak var charCountLabel: UILabel!
     
+    @IBOutlet weak var discussionTextViewCell: UITableViewCell!
     @IBOutlet weak var discussionTextView: UITextView!
     
+    @IBOutlet weak var addPhotoView: UIView!
     @IBOutlet weak var discussionImageView: UIImageView!
     @IBOutlet weak var addPhotoButtonOutlet: UIButton!
+    @IBOutlet weak var addPhotoLabel: UILabel!
     @IBOutlet weak var guidelinesButtonOutlet: UIButton!
     
     
     //----------------------------------------------------------------
     // MARK:- Variables
     //----------------------------------------------------------------
-    
+    let defaults = UserDefaults.standard
+    let profileImagePlaceholderImage = "Empty Profile Picture"
+    let profileNamePlaceholderText = "User"
     let discussionTextViewPlaceholderText = "Information or question"
     var discussionImagePicker: UIImagePickerController!
     
@@ -40,7 +45,13 @@ class NewDiscussionTableVC: UITableViewController {
     //----------------------------------------------------------------
     
     @IBAction func cancelButtonAction(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
+        let alert = UIAlertController(title: "Are you sure you want to cancel?", message: "Unsaved changes will be discarded", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { action in
+            self.dismiss(animated: true, completion: nil)
+        }))
+        
+        self.present(alert, animated: true)
     }
     
     @IBAction func postButtonAction(_ sender: Any) {
@@ -81,6 +92,43 @@ class NewDiscussionTableVC: UITableViewController {
     // MARK:- Custom Methods
     //----------------------------------------------------------------
     
+    func loadProfileData() {
+        let savedUserDataDict = defaults.dictionary(forKey: "userDataDict") ?? [String: Any]()
+        let userIsLoggedIn = defaults.bool(forKey: "userIsLoggedIn")
+            
+        if userIsLoggedIn == true {
+            setupImageView()
+            profileNameLabel.text = savedUserDataDict["userName"] as? String
+        }
+        else if userIsLoggedIn == false {
+            setupImageView()
+            profileNameLabel.text = profileNamePlaceholderText
+        }
+    }
+    
+    func setupLabel() {
+        if isDarkMode {
+            charCountLabel.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.5)
+            addPhotoLabel.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.5)
+        }
+        else {
+            charCountLabel.textColor = #colorLiteral(red: 0.2352941176, green: 0.2352941176, blue: 0.262745098, alpha: 0.5)
+            addPhotoLabel.textColor = #colorLiteral(red: 0.2352941176, green: 0.2352941176, blue: 0.262745098, alpha: 0.5)
+        }
+    }
+    
+    private func setupAddPhotoView() {
+        addPhotoView.layer.borderWidth = 1
+        addPhotoView.layer.cornerRadius = 6
+        
+        if isDarkMode {
+            addPhotoView.layer.borderColor = UIColor.separator.cgColor
+        }
+        else {
+            addPhotoView.layer.borderColor = UIColor.separator.cgColor
+        }
+    }
+    
     func setupDiscussionImagePicker() {
         discussionImagePicker = UIImagePickerController()
         discussionImagePicker.delegate = self
@@ -105,6 +153,40 @@ class NewDiscussionTableVC: UITableViewController {
         self.present(discussionImagePicker, animated: true, completion: nil)
     }
     
+    private func setupGuidelinesButton() {
+        let attrs: [NSAttributedString.Key: Any] = [
+            NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16.0),
+            NSAttributedString.Key.foregroundColor : UIColor(red: 254/255, green: 14/255, blue: 115/255, alpha: 1),
+            NSAttributedString.Key.underlineStyle : 1]
+        let attributeString = NSMutableAttributedString(string: "guidelines",
+        attributes: attrs)
+        guidelinesButtonOutlet.setAttributedTitle(attributeString, for: .normal)
+    }
+    
+    func setupImageView() {
+        profileImageView.image = loadImageFromDiskWith(fileName: "profileImage")
+        profileImageView.layer.borderWidth = 1
+        profileImageView.layer.masksToBounds = false
+        profileImageView.layer.borderColor = UIColor.lightGray.cgColor
+        profileImageView.layer.cornerRadius = profileImageView.frame.height/2
+        profileImageView.clipsToBounds = true
+    }
+    
+    func loadImageFromDiskWith(fileName: String) -> UIImage? {
+        let documentDirectory = FileManager.SearchPathDirectory.documentDirectory
+        let userDomainMask = FileManager.SearchPathDomainMask.userDomainMask
+        let paths = NSSearchPathForDirectoriesInDomains(documentDirectory, userDomainMask, true)
+
+        if let dirPath = paths.first {
+            let imageUrl = URL(fileURLWithPath: dirPath).appendingPathComponent(fileName)
+            let image = UIImage(contentsOfFile: imageUrl.path)
+            
+            return image ?? UIImage(named: profileImagePlaceholderImage)
+        }
+        
+        return nil
+    }
+    
     
     //----------------------------------------------------------------
     // MARK:- View Life Cycle Methods
@@ -118,9 +200,18 @@ class NewDiscussionTableVC: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
-        
+        modalPresentationStyle = .formSheet
+        isModalInPresentation = true
         tableView.keyboardDismissMode = .interactive
+        
+        tableView.estimatedRowHeight = 118
+        tableView.rowHeight = UITableView.automaticDimension
+        
+        loadProfileData()
+        setupImageView()
         setupTextView()
+        setupLabel()
+        setupGuidelinesButton()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -128,11 +219,31 @@ class NewDiscussionTableVC: UITableViewController {
         
         setupDiscussionImagePicker()
     }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        setupTextView()
+        setupLabel()
+        setupAddPhotoView()
+    }
 
     
     //----------------------------------------------------------------
     // MARK:- Table view data source
     //----------------------------------------------------------------
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.row == 0 && indexPath.section == 0 {
+            let height: CGFloat = tableView.estimatedRowHeight
+                        
+            return height
+        }
+
+        return UITableView.automaticDimension
+    }
+    
+    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
@@ -211,21 +322,43 @@ extension NewDiscussionTableVC: UITextViewDelegate {
         discussionTextView.delegate = self
         discussionTextView.tag = 0
         discussionTextView.text = discussionTextViewPlaceholderText
-        discussionTextView.textColor = #colorLiteral(red: 0.2352941176, green: 0.2352941176, blue: 0.262745098, alpha: 0.5)
-        discussionTextView.font = UIFont.systemFont(ofSize: 16, weight: .light)
+        
+        if isDarkMode {
+            discussionTextView.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.5)
+        }
+        else {
+            discussionTextView.textColor = #colorLiteral(red: 0.2352941176, green: 0.2352941176, blue: 0.262745098, alpha: 0.5)
+        }
+        
+        discussionTextView.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         discussionTextView.addDoneButton(title: "Done", target: self, selector: #selector(tapDone(sender:)))
+        
+        setSaveButtonState()
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {
         if (textView.tag == 0) {
             if discussionTextView.text == discussionTextViewPlaceholderText {
                 discussionTextView.text = nil
-                discussionTextView.textColor = .black
-                discussionTextView.font = UIFont.systemFont(ofSize: 16, weight: .light)
+                
+                if isDarkMode {
+                    discussionTextView.textColor = .white
+                }
+                else {
+                    discussionTextView.textColor = .black
+                }
+                
+                discussionTextView.font = UIFont.systemFont(ofSize: 16, weight: .regular)
             }
             else {
-                discussionTextView.textColor = .black
-                discussionTextView.font = UIFont.systemFont(ofSize: 16, weight: .light)
+                if isDarkMode {
+                    discussionTextView.textColor = .white
+                }
+                else {
+                    discussionTextView.textColor = .black
+                }
+                
+                discussionTextView.font = UIFont.systemFont(ofSize: 16, weight: .regular)
             }
         }
     }
@@ -233,25 +366,42 @@ extension NewDiscussionTableVC: UITextViewDelegate {
     func textViewDidEndEditing(_ textView: UITextView) {
         if discussionTextView.text.isEmpty {
             discussionTextView.text = discussionTextViewPlaceholderText
-            discussionTextView.textColor = #colorLiteral(red: 0.2352941176, green: 0.2352941176, blue: 0.262745098, alpha: 0.5)
-            discussionTextView.font = UIFont.systemFont(ofSize: 16, weight: .light)
+            
+            if isDarkMode {
+                discussionTextView.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.5)
+            }
+            else {
+                discussionTextView.textColor = #colorLiteral(red: 0.2352941176, green: 0.2352941176, blue: 0.262745098, alpha: 0.5)
+            }
+            discussionTextView.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         }
     }
     
-    
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        return discussionTextView.text.count + (text.count - range.length) <= 300
+        return discussionTextView.text.count + (text.count - range.length) <= 255
     }
-    
     
     func textViewDidChange(_ textView: UITextView) {
         if textView == discussionTextView {
-            charCountLabel.text = "\(0 + discussionTextView.text.count)/300"
-            setSubmitButtonState()
+            let newHeight = discussionTextViewCell.frame.size.height + textView.contentSize.height
+            discussionTextViewCell.frame.size.height = newHeight
+            updateTableViewContentOffsetForTextView()
+            
+            charCountLabel.text = "\(0 + discussionTextView.text.count)/255"
+            setSaveButtonState()
         }
     }
     
-    func setSubmitButtonState() {
+    func updateTableViewContentOffsetForTextView() {
+            let currentOffset = tableView.contentOffset
+            UIView.setAnimationsEnabled(false)
+            tableView.beginUpdates()
+            tableView.endUpdates()
+            UIView.setAnimationsEnabled(true)
+            tableView.setContentOffset(currentOffset, animated: false)
+        }
+    
+    func setSaveButtonState() {
         if discussionTextView.text != discussionTextViewPlaceholderText &&
             !discussionTextView.text.isEmpty {
                 postButtonOutlet.isEnabled = true

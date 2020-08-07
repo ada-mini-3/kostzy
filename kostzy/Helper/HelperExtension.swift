@@ -293,11 +293,21 @@ extension UIView {
         }
     }
     
-    func upperlined() {
+    func upperlinedView() {
         let border = CALayer()
         let width = CGFloat(1.0)
-        border.borderColor = #colorLiteral(red: 0.3294117647, green: 0.3294117647, blue: 0.3450980392, alpha: 0.6)
-        border.frame = CGRect(x: 0, y: 0, width: self.frame.size.width, height: 0.26)
+        border.borderColor = UIColor.separator.cgColor
+        border.frame = CGRect(x: 0, y: 0, width: self.frame.size.width, height: 1)
+        border.borderWidth = width
+        self.layer.addSublayer(border)
+        self.layer.masksToBounds = true
+    }
+    
+    func underlinedView() {
+        let border = CALayer()
+        let width = CGFloat(1.0)
+        border.borderColor = UIColor.separator.cgColor
+        border.frame = CGRect(x: 0, y: self.frame.size.height - width, width: self.frame.size.width, height: 1)
         border.borderWidth = width
         self.layer.addSublayer(border)
         self.layer.masksToBounds = true
@@ -336,7 +346,7 @@ extension UITextField {
     func underlined(){
         let border = CALayer()
         let width = CGFloat(1.0)
-        border.borderColor = UIColor.init(red: 133/255, green: 170/255, blue: 209/255, alpha: 0.61).cgColor
+        border.borderColor = UIColor.separator.cgColor
         border.frame = CGRect(x: 0, y: self.frame.size.height - width, width:  self.frame.size.width, height: self.frame.size.height)
         border.borderWidth = width
         self.layer.addSublayer(border)
@@ -348,7 +358,7 @@ extension UITextView {
     func underlinedTextView() {
         let border = CALayer()
         let width = CGFloat(1.0)
-        border.borderColor = UIColor.init(red: 133/255, green: 170/255, blue: 209/255, alpha: 0.61).cgColor
+        border.borderColor = UIColor.separator.cgColor
         border.frame = CGRect(x: 0, y: self.frame.size.height - width, width:  self.frame.size.width, height: self.frame.size.height)
         border.borderWidth = width
         self.layer.addSublayer(border)
@@ -404,6 +414,17 @@ extension UIImageView {
         return CGRect(x: x, y: y, width: size.width, height: size.height)
     }
     
+}
+
+extension UIView {
+    var isDarkMode: Bool {
+        if #available(iOS 13.0, *) {
+            return self.traitCollection.userInterfaceStyle == .dark
+        }
+        else {
+            return false
+        }
+    }
 }
 
 extension UIViewController {

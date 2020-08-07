@@ -114,6 +114,10 @@ class NotificationVC: UIViewController {
         notifTableView.reloadData()
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        notifTableView.reloadData()
+    }
+    
 
     /*
     // MARK: - Navigation
@@ -149,7 +153,7 @@ extension NotificationVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 20))
-        view.upperlined()
+        view.upperlinedView()
         if isDarkMode {
             view.backgroundColor = .black
         }
@@ -171,7 +175,14 @@ extension NotificationVC: UITableViewDataSource, UITableViewDelegate {
         
         let label = UILabel(frame: CGRect(x: 20, y: 10, width: tableView.frame.size.width, height: 20))
         label.text = dateString
-        label.textColor = UIColor.black
+        
+        if isDarkMode {
+            label.textColor = UIColor.white
+        }
+        else {
+            label.textColor = UIColor.black
+        }
+        
         label.font = .boldSystemFont(ofSize: 18)
 
         view.addSubview(label)

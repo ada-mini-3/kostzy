@@ -160,7 +160,7 @@
                                     <constraint firstAttribute="width" constant="44" id="bgB-i7-Njb"/>
                                     <constraint firstAttribute="height" constant="44" id="jXS-Xp-Bzh"/>
                                 </constraints>
-                                <state key="normal" image="Close Button Dark"/>
+                                <state key="normal" image="Close Button"/>
                                 <connections>
                                     <action selector="closeButtonAction:" destination="RWN-od-yJX" eventType="touchUpInside" id="YKQ-k9-9Qk"/>
                                 </connections>
@@ -234,7 +234,7 @@
         </designable>
     </designables>
     <resources>
-        <image name="Close Button Dark" width="62" height="62"/>
+        <image name="Close Button" width="58" height="58"/>
         <image name="Sign In Background Pattern" width="423" height="415"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

@@ -70,6 +70,9 @@ class CommunityDetailVC: UIViewController {
             requestJoinButtonOutlet.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.63)
             requestJoinButtonOutlet.backgroundColor = #colorLiteral(red: 0.6, green: 0.6, blue: 0.6, alpha: 1)
             communityIsRequested[selectedRow!] = true
+            communityIsJoined[selectedRow!] = true
+            
+            Community.myCommunity.append(Community(communityImage: communityImage[selectedRow!], communityName: communityName[selectedRow!], communityBrief: communityBrief[selectedRow!], communityLocation: communityLocation[selectedRow!], communityPost: communityPost[selectedRow!], communityDescription: communityDescription[selectedRow!], communityAlbumImage: communityAlbumImage[selectedRow!], memberCount: memberCount[selectedRow!], memberImage: memberImage[selectedRow!], memberName: memberName[selectedRow!], memberRole: memberRole[selectedRow!], memberIsAdmin: memberIsAdmin, isRequested: communityIsRequested[selectedRow!], isJoined: communityIsJoined[selectedRow!]))
             
             print("Requested: \(communityIsRequested[selectedRow!])")
         }
@@ -82,6 +85,9 @@ class CommunityDetailVC: UIViewController {
                 self.requestJoinButtonOutlet.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
                 self.requestJoinButtonOutlet.backgroundColor = #colorLiteral(red: 1, green: 0.7813850045, blue: 0.09716629237, alpha: 1)
                 communityIsRequested[self.selectedRow!] = false
+                communityIsJoined[self.selectedRow!] = false
+                
+                Community.myCommunity.remove(at: self.selectedRow!)
                 
                 print("Request Join: \(communityIsRequested[self.selectedRow!])")
             }))

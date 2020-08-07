@@ -32,17 +32,17 @@ class ForgotPasswordVC: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func sendButtonAction(_ sender: UIButton) {
-        let savedUserDataDict = defaults.dictionary(forKey: "userDataDict") as? [String: String] ?? [String: String]()
+        let savedUserDataDict = defaults.dictionary(forKey: "userDataDict") ?? [String: Any]()
         
         if emailTextField.text == "" {
             errorLabel.text = "Fill in your email!"
             errorLabel.isHidden = false
         }
-        else if emailTextField.text != savedUserDataDict["userEmail"] {
+        else if emailTextField.text != savedUserDataDict["userEmail"] as? String {
             errorLabel.text = "Email doesn't exist! Make sure you input the right email."
             errorLabel.isHidden = false
         }
-        else if emailTextField.text == savedUserDataDict["userEmail"] {
+        else if emailTextField.text == savedUserDataDict["userEmail"] as? String {
             defaults.set(true, forKey: "userIsLoggedIn")
             
             // Uncomment for updating userPassword in User Defaluts' userDataDict

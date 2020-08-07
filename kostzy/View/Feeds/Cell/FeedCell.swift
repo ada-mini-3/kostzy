@@ -10,43 +10,44 @@ import UIKit
 
 class FeedCell: UICollectionViewCell, UICollectionViewDataSource {
     
+    //----------------------------------------------------------------
+    // MARK:- Outlets
+    //----------------------------------------------------------------
     @IBOutlet weak var userImage: UIImageView!
-    
     @IBOutlet weak var userName: UILabel!
-    
-    @IBOutlet weak var feedLocation: UIButton!
-    
     @IBOutlet weak var feedTime: UILabel!
-    
-    @IBOutlet weak var feed: UITextView!
-    
+    @IBOutlet weak var feedLocation: UIButton!
+    @IBOutlet weak var feed: UILabel!
     @IBOutlet weak var feedTags: UICollectionView!
-    
     @IBOutlet weak var commentButton: UIButton!
-    
     @IBOutlet weak var likeButton: UIButton!
-    
     @IBOutlet weak var commentCount: UILabel!
-    
     @IBOutlet weak var likeCount: UILabel!
-    
     @IBOutlet weak var reportButton: UIButton!
     
+    
+    //----------------------------------------------------------------
+    // MARK:- Variables
+    //----------------------------------------------------------------
     var tags = [Tag]()
-    
     var commentTapAction : (()->())?
-    
     var locationTapAction : (()->())?
-    
     var likeTapAction : (()->())?
-    
     var reportTapAction: (()->())?
     
+    
+    //----------------------------------------------------------------
+    // MARK:- View Life Cycle Methods
+    //----------------------------------------------------------------
     override func awakeFromNib() {
         self.layer.cornerRadius = 10
         self.layer.masksToBounds = true
     }
     
+    
+    //----------------------------------------------------------------
+    // MARK:- Custom Methods
+    //----------------------------------------------------------------
     func configure() {
         feedLocation.contentHorizontalAlignment = .left
         feedLocation.imageEdgeInsets = UIEdgeInsets(top: 2, left: 5, bottom: 2, right: 5)
@@ -77,6 +78,10 @@ class FeedCell: UICollectionViewCell, UICollectionViewDataSource {
         locationTapAction?()
     }
     
+    
+    //----------------------------------------------------------------
+    // MARK:- UIcollectionView
+    //----------------------------------------------------------------
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         tags.count
     }

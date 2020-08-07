@@ -20,6 +20,7 @@ class CommunityVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
     @IBOutlet weak var locationButtonOutlet: UIButton!
     
     
+    // MARK:- View Life Cycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -27,9 +28,17 @@ class CommunityVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
         setupLocationButton()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        communityTableView.reloadData()
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         communityTableView.reloadData()
     }
     
@@ -86,10 +95,11 @@ class CommunityVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
 
         // Configure the cell...
         if isDarkMode == true {
+            cell.contentView.backgroundColor = .systemBackground
             cell.communityView.backgroundColor = .systemGray5
         }
         else {
-            cell.contentView.backgroundColor = #colorLiteral(red: 0.9803921569, green: 0.9803921569, blue: 0.9921568627, alpha: 1)
+            cell.contentView.backgroundColor = .systemBackground
             cell.communityView.backgroundColor = #colorLiteral(red: 0.9803921569, green: 0.9803921569, blue: 0.9921568627, alpha: 1)
             cell.communityView.shadowColor = .black
             cell.communityView.shadowOffset = CGSize(width: 0, height: 0)
@@ -106,10 +116,12 @@ class CommunityVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 296
-        
+        return UITableView.automaticDimension
     }
     
+    private func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)

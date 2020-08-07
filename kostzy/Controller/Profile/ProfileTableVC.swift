@@ -13,7 +13,7 @@ import UIKit
 class DataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
     
     // MARK: - Arrays
-    var image = ["My Community Dummy Data 2",
+    /*var image = ["My Community Dummy Data 2",
                  "My Community Dummy Data 2 2",
                  "My Community Dummy Data 2",
                  "My Community Dummy Data 2 2",
@@ -32,20 +32,20 @@ class DataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
                      "Kost Area Anggrek Cakra",
                      "Kost Area Binus Syahdan",
                      "Kost Area Anggrek Cakra",
-                     "Kost Area Binus Syahdan"]
+                     "Kost Area Binus Syahdan"]*/
 
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return community.count
+        return Community.myCommunity.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyCommunityCell", for: indexPath) as! MyCommunityCell
-        cell.myCommunityImage.image = UIImage(named: image[indexPath.row])
-        cell.myCommunityLabel.text = community[indexPath.row]
+        cell.myCommunityImage.image = UIImage(named: Community.myCommunity[indexPath.row].communityImage!)
+        cell.myCommunityLabel.text = Community.myCommunity[indexPath.row].communityName
         
         return cell
     }
@@ -59,7 +59,7 @@ class ProfileTableVC: UITableViewController {
     let defaults = UserDefaults.standard
     let notificationCenter = NotificationCenter.default
     
-    let profileImagePlaceholderImage = "Photo Profile (Dummy Data)"
+    let profileImagePlaceholderImage = "Empty Profile Picture"
     let profileNamePlaceholderText = "User"
     let profileTitlePlaceholderText = "Kostzy Beginner"
     let userLikePlaceholderNumber = 0
@@ -69,7 +69,6 @@ class ProfileTableVC: UITableViewController {
     
     var dataSource = DataSource()
     
-    var finalname = ""
     
     // MARK: - IBOutlets
     @IBOutlet weak var badgeCollectionView: UICollectionView!
@@ -79,8 +78,10 @@ class ProfileTableVC: UITableViewController {
     @IBOutlet weak var profileNameLabel: UILabel!
     @IBOutlet weak var profileTitleLabel: UILabel!
     @IBOutlet weak var profileAboutMeLabel: UILabel!
+    @IBOutlet weak var editProfileButtonOutlet: UIButton!
     
     
+    // MARK:- View Life Cycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -94,8 +95,10 @@ class ProfileTableVC: UITableViewController {
         myCommunityTableView.delegate = dataSource
         myCommunityTableView.dataSource = dataSource
         
-        myCommunityTableView.rowHeight = 80
-        myCommunityTableView.estimatedRowHeight = 848
+        myCommunityTableView.rowHeight = 60
+        myCommunityTableView.estimatedRowHeight = 600
+        
+        setupView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -110,6 +113,7 @@ class ProfileTableVC: UITableViewController {
         super.viewDidAppear(animated)
         
         loadProfileData()
+        setupView()
         
         tableView.reloadData()
         badgeCollectionView.reloadData()
@@ -121,7 +125,7 @@ class ProfileTableVC: UITableViewController {
     }
     
     
-    // MARK: - Function
+    // MARK: - Custom Methods
     func loadProfileData() {
 //        let savedUserDataDict = defaults.dictionary(forKey: "userDataDict") as? [String: String] ?? [String: String]()
 //
@@ -189,11 +193,15 @@ class ProfileTableVC: UITableViewController {
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.row == 0 && indexPath.section == 3 {
             let height: CGFloat = myCommunityTableView.estimatedRowHeight
-            
+                        
             return height
         }
 
-        return super.tableView(tableView, heightForRowAt: indexPath)
+        return UITableView.automaticDimension
+    }
+    
+    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return UITableView.automaticDimension
     }
 
     /*
