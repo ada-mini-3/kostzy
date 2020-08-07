@@ -336,7 +336,6 @@
                                                                     <constraint firstItem="dEC-zY-44w" firstAttribute="leading" secondItem="zq0-bH-U2R" secondAttribute="leading" id="1KF-m9-U7m"/>
                                                                     <constraint firstItem="DDx-Om-XkW" firstAttribute="top" secondItem="zq0-bH-U2R" secondAttribute="top" id="3nn-ZW-n7Y"/>
                                                                     <constraint firstAttribute="bottom" secondItem="DDx-Om-XkW" secondAttribute="bottom" id="6nh-pV-a2L"/>
-                                                                    <constraint firstItem="DDx-Om-XkW" firstAttribute="leading" secondItem="zq0-bH-U2R" secondAttribute="leading" constant="50" id="BGs-7L-KoK"/>
                                                                     <constraint firstAttribute="bottom" secondItem="rn4-zt-OGN" secondAttribute="bottom" id="BdU-vC-vib"/>
                                                                     <constraint firstItem="f24-DF-9hr" firstAttribute="centerY" secondItem="zq0-bH-U2R" secondAttribute="centerY" id="Ckw-qu-J1d"/>
                                                                     <constraint firstItem="DzP-iZ-Yw4" firstAttribute="leading" secondItem="f24-DF-9hr" secondAttribute="trailing" id="F5v-e5-8Rj"/>
@@ -348,6 +347,7 @@
                                                                     <constraint firstItem="6Qv-wR-TyZ" firstAttribute="leading" secondItem="rn4-zt-OGN" secondAttribute="trailing" id="fW9-YW-G6T"/>
                                                                     <constraint firstItem="DDx-Om-XkW" firstAttribute="centerY" secondItem="zq0-bH-U2R" secondAttribute="centerY" id="jw8-yh-mmu"/>
                                                                     <constraint firstItem="f24-DF-9hr" firstAttribute="top" secondItem="zq0-bH-U2R" secondAttribute="top" id="knl-Xv-xuC"/>
+                                                                    <constraint firstItem="DzP-iZ-Yw4" firstAttribute="centerX" secondItem="zq0-bH-U2R" secondAttribute="centerX" id="lOs-fW-2Nz"/>
                                                                     <constraint firstItem="6Qv-wR-TyZ" firstAttribute="centerY" secondItem="zq0-bH-U2R" secondAttribute="centerY" id="nMX-nF-mS8"/>
                                                                     <constraint firstItem="6Qv-wR-TyZ" firstAttribute="top" secondItem="zq0-bH-U2R" secondAttribute="top" id="oxB-RO-v9G"/>
                                                                     <constraint firstItem="rn4-zt-OGN" firstAttribute="top" secondItem="zq0-bH-U2R" secondAttribute="top" id="p8F-oQ-ksa"/>

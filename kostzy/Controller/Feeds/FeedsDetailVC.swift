@@ -16,7 +16,7 @@ class FeedsDetailVC: UIViewController {
     
     @IBOutlet weak var feedLocation: UIButton!
     
-    @IBOutlet weak var feedText: UITextView!
+    @IBOutlet weak var feedText: UILabel!
     
     @IBOutlet weak var tagsCollectionView: UICollectionView!
     
