@@ -36,7 +36,7 @@ struct Feeds {
     
     static func initData() -> [Feeds] {
         var feeds = [Feeds]()
-        feeds.append(Feeds(user: User(name: "Desti", image: #imageLiteral(resourceName: "destong")), time: Date(), location: "Syahdan", feed: "Gua recommend banget kost Mandala. Fasilitasnya lengkap dan tau ga sih harganya perbulan cuman 1.5jt!", tags: [Tag.initData()[0], Tag.initData()[1]], likeCount: 10, commentCount: 4, category: 1, likeStatus: false))
+        feeds.append(Feeds(user: User(name: "Desti", image: #imageLiteral(resourceName: "destong")), time: Date(), location: "Syahdan", feed: "Gua recommend banget kost Mandala. Fasilitasnya lengkap dan tau ga sih harganya perbulan cuman 1.5jt! Murah gila kaann. Sekutlah join sinii biar makin rameee.", tags: [Tag.initData()[0], Tag.initData()[1]], likeCount: 10, commentCount: 4, category: 1, likeStatus: false))
         feeds.append(Feeds(user: User(name: "Desti", image: #imageLiteral(resourceName: "destong")), time: Date(), location: "Syahdan", feed: "Kost ini lumayan deket dari binus Anggrek, deket lagi sama d’cost. Mantap", tags: [Tag.initData()[0], Tag.initData()[2]], likeCount: 10, commentCount: 4, category: 1, likeStatus: true))
         
         return feeds
