@@ -503,6 +503,8 @@
 		881D365C24BD56AC00521220 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				88B3280F24DD9B3E007536C0 /* New Group1 */,
+				88B3280E24DD9B36007536C0 /* New Group */,
 				2C86CD6B24D8428F00997B55 /* Notification */,
 				881D366724BD578D00521220 /* Community */,
 				881D366424BD575B00521220 /* User */,
@@ -540,6 +542,20 @@
 				881D366C24BD57BB00521220 /* DiscussionComment.swift */,
 			);
 			path = Community;
+			sourceTree = "<group>";
+		};
+		88B3280E24DD9B36007536C0 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "New Group";
+			sourceTree = "<group>";
+		};
+		88B3280F24DD9B3E007536C0 /* New Group1 */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "New Group1";
 			sourceTree = "<group>";
 		};
 		88DF73C024C724160081B8B0 /* Cell */ = {

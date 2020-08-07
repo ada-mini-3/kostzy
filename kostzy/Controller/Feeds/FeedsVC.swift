@@ -270,7 +270,7 @@ class FeedsVC: UIViewController, MKMapViewDelegate {
         setupRefreshControl()
         setupLocationManager()
         setupCollectionViewBg()
-        
+        setupFeedsData()
         flowLayout.estimatedItemSize = CGSize(width: 342, height: 266)
     }
     

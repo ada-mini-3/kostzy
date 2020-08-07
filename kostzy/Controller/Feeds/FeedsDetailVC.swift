@@ -115,17 +115,15 @@ class FeedsDetailVC: UIViewController {
     }
     
     private func setupView() {
-        userImage.image = UIImage(named: (feeds?.user.image) ?? "destong")
+        userImage.loadImageFromUrl(url: URL(string: (feeds?.user.image)!)!)
         userName.text = feeds?.user.name
         feedLocation.setTitle(feeds?.location, for: .normal)
         feedLocation.contentHorizontalAlignment = .left
         feedText.text = feeds?.feed
         commentCount.text = "\(feeds?.commentCount ?? 0) Comments"
         likeCount.text = "\(feeds?.likeCount ?? 0) Likes"
-        
         userImage.layer.cornerRadius = userImage.frame.height / 2
         userImage.clipsToBounds = true
-        
         profileImage.layer.cornerRadius = profileImage.frame.height / 2
         profileImage.clipsToBounds = true
     }
