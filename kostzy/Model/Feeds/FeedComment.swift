@@ -8,23 +8,23 @@
 
 import Foundation
 
-struct FeedComment {
+struct FeedComment: Codable {
     
     var user : UserFeeds
-    var time: Date
+    var date: String
     var comment: String
     
-    init(user: UserFeeds, time: Date, comment: String) {
+    init(user: UserFeeds, time: String, comment: String) {
         self.user = user
-        self.time = time
+        self.date = time
         self.comment = comment
     }
     
     static func initData() -> [FeedComment] {
         var comments = [FeedComment]()
-        comments.append(FeedComment(user: UserFeeds.initUser(), time: Date(), comment: "Dummy Comment #1"))
-        comments.append(FeedComment(user: UserFeeds.initUser(), time: Date(), comment: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,"))
-        comments.append(FeedComment(user: UserFeeds.initUser(), time: Date(), comment: "Dummy Comment #3"))
+        comments.append(FeedComment(user: UserFeeds.initUser(), time: "", comment: "Dummy Comment #1"))
+        comments.append(FeedComment(user: UserFeeds.initUser(), time: "", comment: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,"))
+        comments.append(FeedComment(user: UserFeeds.initUser(), time: "", comment: "Dummy Comment #3"))
         return comments
     }
     

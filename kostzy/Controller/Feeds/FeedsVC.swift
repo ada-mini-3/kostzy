@@ -49,14 +49,9 @@ class FeedsVC: UIViewController, MKMapViewDelegate {
     
     var apiManager = BaseAPIManager()
     var location : Location?
-    var feedsInfo = Feeds.initData()
-    var feedsFood = Feeds.initFeedCatData()
-    var feedsExp = Feeds.initFeedExpData()
-    var feedsHangouts = Feeds.initFeedHangoutsData()
     var feedsData: [Feeds] = []
     var category = 1
     
-    lazy var feedsToDisplay = feedsInfo
     var locationManager : CLLocationManager?
     
     

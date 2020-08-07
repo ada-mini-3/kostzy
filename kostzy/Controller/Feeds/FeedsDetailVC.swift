@@ -38,28 +38,57 @@ class FeedsDetailVC: UIViewController {
     
     @IBOutlet weak var buttonLocation: UIButton!
     
+    @IBOutlet weak var commentIndicator: UIActivityIndicatorView!
+    
     var feeds : Feeds?
        
     var comments = FeedComment.initData()
+    
+    var commentData: [FeedComment] =  []
        
     var bottomConstraint : NSLayoutConstraint?
+    
+    var apiManager = BaseAPIManager()
+    
+    let defaults = UserDefaults.standard
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
         setupNavigationBar()
-        setupCommentTableView()
         setupKeyboardConstraint()
         setupDarkMode()
+        setupCommentData()
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification), name: UIResponder.keyboardWillHideNotification, object: nil)
         tagsCollectionView.dataSource = self
     }
+
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         setupLocationButton()
         setupDarkMode()
         commentTableView.reloadData()
+    }
+    
+    private func setupCommentData() {
+      commentIndicator.startAnimating()
+        guard let id = feeds?.id else {
+            print("id is nil")
+            return
+        }
+        apiManager.performGenericFetchRequest(urlString: "\(apiManager.baseUrl)comments?feed=\(id)", token: "",
+        errorMsg: {
+            print("Error Kak")
+        }, completion: { (comment: [FeedComment]) in
+            DispatchQueue.main.async {
+                print("Sukses")
+               self.commentIndicator.stopAnimating()
+                self.commentData = comment
+                self.setupCommentTableView()
+                self.commentTableView.reloadData()
+            }
+        })
     }
     
     private func setupLocationButton() {
@@ -134,9 +163,41 @@ class FeedsDetailVC: UIViewController {
     
     
     @IBAction func replyCommentClicked(_ sender: Any) {
-        comments.insert(FeedComment(user: UserFeeds.initUser(), time: Date(), comment: commentField.text ?? "Hello"), at: 0)
-        view.endEditing(true)
-        commentTableView.reloadData()
+        postReplyApi()
+    }
+    
+    private func postReplyApi() {
+        guard let id = feeds?.id else {
+            print("id is nil")
+            return
+        }
+        let token = "Token \(defaults.dictionary(forKey: "userToken")!["token"] as! String)"
+        let payload = ["comment": commentField.text ?? "", "feed": id] as [String : Any]
+        apiManager.performPostRequest(payload: payload, url: "\(apiManager.baseUrl)comments/", token: token) { (data, response, error) in
+            DispatchQueue.main.async {
+                if let response = response as? HTTPURLResponse {
+                    switch response.statusCode {
+                    case 200...299:
+                        self.setupCommentData()
+                        self.view.endEditing(true)
+                        self.commentTableView.reloadData()
+                    case 400:
+                        self.setupAlert(msg: "Bad Request")
+                    default:
+                        print(response.statusCode)
+                        self.setupAlert(msg: "Something's wrong, Please Try Again Later")
+                    }
+                } else if let error = error {
+                    self.setupAlert(msg: error.localizedDescription)
+                }
+            }
+        }
+    }
+    
+    private func setupAlert(msg: String) {
+        let alert = UIAlertController(title: "Whoops!", message: msg, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alert, animated: true)
     }
     
     
@@ -173,7 +234,7 @@ extension FeedsDetailVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        comments.count
+        commentData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -185,9 +246,9 @@ extension FeedsDetailVC: UITableViewDelegate, UITableViewDataSource {
             cell.commentText.backgroundColor = UIColor(red: 234/255, green: 234/255, blue: 234/255, alpha: 1)
         }
         
-        cell.userimage.image = UIImage(named: comments[indexPath.row].user.image ?? "destong")
-        cell.userName.text = comments[indexPath.row].user.name
-        cell.commentText.text = comments[indexPath.row].comment
+        cell.userimage.loadImageFromUrl(url: URL(string: commentData[indexPath.row].user.image!)!)
+        cell.userName.text = commentData[indexPath.row].user.name
+        cell.commentText.text = commentData[indexPath.row].comment
         
         return cell
     }

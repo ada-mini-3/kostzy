@@ -288,6 +288,7 @@ class FeedsCreateVC: UIViewController {
                        case 201:
                             self.performSegue(withIdentifier: "unwindFeeds", sender: self)
                            break
+                        
                        case 400:
                            if let feedErr = data?["feed"] as? [String] {
                                self.setupAlert(msg: "\(feedErr[0]) (Feed)")
@@ -295,6 +296,7 @@ class FeedsCreateVC: UIViewController {
                                self.setupAlert(msg: "\(catErr[0]) (Category)")
                            }
                             break
+                        
                        default:
                             print(response.statusCode)
                            self.setupAlert(msg: "Something Wrong, Try Again Later")
@@ -428,19 +430,19 @@ class FeedsCreateVC: UIViewController {
     //----------------------------------------------------------------
     // MARK:- Segue Preparation
     //----------------------------------------------------------------
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "unwindFeeds" {
-            if let dest = segue.destination as? FeedsVC {
-                let newFeeds = Feeds(user: UserFeeds.initUser(), time: "2019-10-07", location: locationString, feed: feedTextView.text, tags: newTag, likeCount: 0, commentCount: 0, category: catId!, likeStatus: false)
-            switch catId {
-                case 1:
-                    dest.feedsInfo.insert(newFeeds, at: 0)
-                default:
-                    dest.feedsFood.insert(newFeeds, at: 0)
-                }
-            }
-        }
-    }
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.identifier == "unwindFeeds" {
+//            if let dest = segue.destination as? FeedsVC {
+//                let newFeeds = Feeds(user: UserFeeds.initUser(), time: "2019-10-07", location: locationString, feed: feedTextView.text, tags: newTag, likeCount: 0, commentCount: 0, category: catId!, likeStatus: false)
+//            switch catId {
+//                case 1:
+//                    dest.feedsInfo.insert(newFeeds, at: 0)
+//                default:
+//                    dest.feedsFood.insert(newFeeds, at: 0)
+//                }
+//            }
+//        }
+//    }
 
 }
 
