@@ -98,7 +98,7 @@ class ProfileTableVC: UITableViewController {
         myCommunityTableView.rowHeight = 60
         myCommunityTableView.estimatedRowHeight = 600
         
-        setupView()
+        setupBtnEdit()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -113,7 +113,7 @@ class ProfileTableVC: UITableViewController {
         super.viewDidAppear(animated)
         
         loadProfileData()
-        setupView()
+        setupBtnEdit()
         
         tableView.reloadData()
         badgeCollectionView.reloadData()
@@ -122,6 +122,17 @@ class ProfileTableVC: UITableViewController {
     
     override func viewDidLayoutSubviews() {
         profileAboutMeLabel.sizeToFit()
+    }
+    
+    func setupBtnEdit() {
+        let userIsLoggedIn = defaults.bool(forKey: "userIsLoggedIn")
+        
+        if userIsLoggedIn == false {
+            editProfileButtonOutlet.isHidden = true
+        }
+        else {
+            editProfileButtonOutlet.isHidden = false
+        }
     }
     
     

@@ -10,9 +10,6 @@ import UIKit
 
 class FeedsCreateVC: UIViewController {
     
-    @IBOutlet weak var addPhoto: UIView!
-    
-    @IBOutlet weak var mapView: UIView!
     
     //----------------------------------------------------------------
     // MARK:- Outlets
@@ -30,9 +27,10 @@ class FeedsCreateVC: UIViewController {
     @IBOutlet weak var kostNameTextView: UITextView!
     
     @IBOutlet weak var locationName: UILabel!
+    @IBOutlet weak var addPhoto: UIView!
+    
     @IBOutlet weak var mapView: UIView!
     
-    @IBOutlet weak var addPhoto: UIView!
     @IBOutlet weak var addPhotoButtonOutlet: UIButton!
     @IBOutlet weak var photoImageView: UIImageView!
     
@@ -61,6 +59,9 @@ class FeedsCreateVC: UIViewController {
     let hangoutTags = Tag.initHangoutsTag()
     let expTags = Tag.initExpTag()
     lazy var displayedTags = infoTags
+    let defaults = UserDefaults.standard
+    let apiManager = BaseAPIManager()
+    var tagsId: [Int] = []
     
     var toolbar = UIToolbar()
     var photoImagePicker: UIImagePickerController!
@@ -256,11 +257,7 @@ class FeedsCreateVC: UIViewController {
         profilePhoto.layer.cornerRadius = profilePhoto.frame.height / 2
         profilePhoto.clipsToBounds = true
     }
-    
-    private func setupTextView() {
-        feedTextView.text = "Information or Question"
-        feedTextView.textColor = UIColor.lightGray
-    }
+
     
     private func setupCancelButton() {
         let attributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17, weight: .medium)]
@@ -280,6 +277,7 @@ class FeedsCreateVC: UIViewController {
         let payload = ["feed": feedTextView.text ?? "", "category": catId ?? 1,
                        "lat": 0, "long": 0, "location_name": locationString ?? "",
                        "tags": tagsId] as [String : Any]
+        
         let token = "Token \(defaults.dictionary(forKey: "userToken")!["token"] as! String)"
         apiManager.performPostRequest(payload: payload, url: "\(apiManager.baseUrl)feeds/",
             token: token)
@@ -523,6 +521,7 @@ extension FeedsCreateVC: UITextFieldDelegate {
 // MARK:- Text View Delegate
 //----------------------------------------------------------------
 extension FeedsCreateVC: UITextViewDelegate {
+    
     func setupTextView() {
         feedTextView.delegate = self
         kostNameTextView.delegate = self
@@ -548,6 +547,7 @@ extension FeedsCreateVC: UITextViewDelegate {
         
         kostNameTextView.font = UIFont.systemFont(ofSize: 16, weight: .light)
         kostNameTextView.addDoneButton(title: "Done", target: self, selector: #selector(tapDone(sender:)))
+        
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {

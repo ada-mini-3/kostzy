@@ -40,7 +40,8 @@ class EditProfileVC: UIViewController, UIGestureRecognizerDelegate, UITextFieldD
       //  print(savedUserDataDict)
         var payload: [String: Any] = [:]
         let name = nameContent.text!
-        let about = txtContent.text ?? ""
+        let about = aboutMeTextView.text ?? ""
+        
         let token = "Token \(defaults.dictionary(forKey: "userToken")!["token"] as! String)"
         let imageData = profileImageView.image?.pngData()
         
@@ -68,12 +69,13 @@ class EditProfileVC: UIViewController, UIGestureRecognizerDelegate, UITextFieldD
     }
     
     
-    /*override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        var vc = segue.destination as! ProfileTableVC
-        vc.finalname = self.nameText
-    }*/
+    private func setupAlert(msg: String) {
+        let alert = UIAlertController(title: "Whoops!", message: msg, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alert, animated: true)
+    }
     
-    
+
     @IBAction func cancelButton(_ sender: Any) {
         let alert = UIAlertController(title: "Are you sure you want to cancel?", message: "Unsaved changes will be discarded", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
@@ -200,6 +202,7 @@ class EditProfileVC: UIViewController, UIGestureRecognizerDelegate, UITextFieldD
         view.endEditing(true)
     }
     
+    
     func saveImage(imageName: String, image: UIImage) {
      guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
         let fileName = imageName
@@ -233,7 +236,7 @@ class EditProfileVC: UIViewController, UIGestureRecognizerDelegate, UITextFieldD
             let imageUrl = URL(fileURLWithPath: dirPath).appendingPathComponent(fileName)
             let image = UIImage(contentsOfFile: imageUrl.path)
             
-            return image ?? UIImage(named: profileImagePlaceholderImage)
+            return image ?? UIImage(named: "destong")
         }
         
         return nil
@@ -294,6 +297,7 @@ class EditProfileVC: UIViewController, UIGestureRecognizerDelegate, UITextFieldD
 // MARK:- Text View Delegate
 //----------------------------------------------------------------
 extension EditProfileVC: UITextViewDelegate {
+    
     func setupTextView() {
         let savedUserDataDict = defaults.dictionary(forKey: "userDataDict") ?? [String: Any]()
         
@@ -301,7 +305,7 @@ extension EditProfileVC: UITextViewDelegate {
         aboutMeTextView.tag = 0
         
         if savedUserDataDict["userDesc"] == nil {
-            aboutMeTextView.text = aboutMeTextViewPlaceholderText
+            aboutMeTextView.text = "About Me"
             saveButtonOutlet.isEnabled = false
         }
         else {
@@ -322,7 +326,7 @@ extension EditProfileVC: UITextViewDelegate {
     
     func textViewDidBeginEditing(_ textView: UITextView) {
         if (textView.tag == 0) {
-            if aboutMeTextView.text == aboutMeTextViewPlaceholderText {
+            if aboutMeTextView.text == "About Me" {
                 aboutMeTextView.text = nil
                 
                 if isDarkMode {
@@ -349,7 +353,7 @@ extension EditProfileVC: UITextViewDelegate {
     
     func textViewDidEndEditing(_ textView: UITextView) {
         if aboutMeTextView.text.isEmpty {
-            aboutMeTextView.text = aboutMeTextViewPlaceholderText
+            aboutMeTextView.text = "About Me"
             
             if isDarkMode {
                 aboutMeTextView.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.5)
@@ -375,7 +379,7 @@ extension EditProfileVC: UITextViewDelegate {
     }
     
     func setSaveButtonState() {
-        if aboutMeTextView.text != aboutMeTextViewPlaceholderText &&
+        if aboutMeTextView.text != "About Me" &&
             !aboutMeTextView.text.isEmpty {
                 saveButtonOutlet.isEnabled = true
         }

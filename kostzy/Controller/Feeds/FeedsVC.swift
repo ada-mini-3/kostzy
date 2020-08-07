@@ -208,13 +208,6 @@ class FeedsVC: UIViewController, MKMapViewDelegate {
         
     }
     
-    @IBAction func unwindToFeeds(_ sender: UIStoryboardSegue) {
-        setupButtonToLocation()
-        segmentedCategory.selectedSegmentIndex = 0
-        changeSegmentedImage()
-        feedsToDisplay = feedsInfo
-        feedsCollectionView.reloadData()
-    }
     
     @IBAction func changeCategory(_ sender: UISegmentedControl) {
         changeSegmentedImage()
@@ -275,7 +268,6 @@ class FeedsVC: UIViewController, MKMapViewDelegate {
         setupSegmentedControl()
         setupButtonToLocation()
         setupRefreshControl()
-        setupIndicator()
         setupLocationManager()
         setupCollectionViewBg()
         
