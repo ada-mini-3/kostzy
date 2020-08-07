@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-struct User: Codable {
+struct UserFeeds: Codable {
     
     var name: String
     var image: String?
@@ -24,8 +24,8 @@ struct User: Codable {
         case image = "image"
     }
     
-    static func initUser() -> User {
-        return User(name: "Desti", image: "destong")
+    static func initUser() -> UserFeeds {
+        return UserFeeds(name: "Desti", image: "destong")
     }
     
 }
@@ -33,5 +33,5 @@ struct User: Codable {
 var userImage: String?
 var userFullName: String?
 var userTitle: String?
-var userLike: Int?
+//var userLike: Int?
 var userAboutMe: String?

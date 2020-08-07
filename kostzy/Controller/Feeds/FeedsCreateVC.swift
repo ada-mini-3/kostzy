@@ -247,7 +247,7 @@ class FeedsCreateVC: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "unwindFeeds" {
             if let dest = segue.destination as? FeedsVC {
-                let newFeeds = Feeds(user: User.initUser(), time: "2019-10-07", location: locationString, feed: feedTextView.text, tags: newTag, likeCount: 0, commentCount: 0, category: catId!, likeStatus: false)
+                let newFeeds = Feeds(user: UserFeeds.initUser(), time: "2019-10-07", location: locationString, feed: feedTextView.text, tags: newTag, likeCount: 0, commentCount: 0, category: catId!, likeStatus: false)
             switch catId {
                 case 1:
                     dest.feedsInfo.insert(newFeeds, at: 0)

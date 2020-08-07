@@ -35,7 +35,6 @@ class DataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
                      "Kost Area Binus Syahdan"]
 
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-
         return 1
     }
 
@@ -65,6 +64,8 @@ class ProfileTableVC: UITableViewController {
     let profileTitlePlaceholderText = "Kostzy Beginner"
     let userLikePlaceholderNumber = 0
     let profileAboutMePlaceholderText = "There's no description."
+    var userLike: Int?
+    let apiManager = BaseAPIManager()
     
     var dataSource = DataSource()
     
@@ -122,23 +123,32 @@ class ProfileTableVC: UITableViewController {
     
     // MARK: - Function
     func loadProfileData() {
-        let savedUserDataDict = defaults.dictionary(forKey: "userDataDict") as? [String: String] ?? [String: String]()
-        
+//        let savedUserDataDict = defaults.dictionary(forKey: "userDataDict") as? [String: String] ?? [String: String]()
+//
         let userIsLoggedIn = defaults.bool(forKey: "userIsLoggedIn")
+        let token = "Token \(defaults.dictionary(forKey: "userToken")!["token"] as! String)"
         
-        if finalname != ""{
-            profileNameLabel.text = finalname
-        }
-            
-            
         if userIsLoggedIn == true {
-            profileImage.image = UIImage(named: profileImagePlaceholderImage)
-            profileNameLabel.text = savedUserDataDict["userName"]
-            profileTitleLabel.text = profileTitlePlaceholderText
-            userLike = userLikePlaceholderNumber
-            profileAboutMeLabel.text = profileAboutMePlaceholderText
-        }
-        else if userIsLoggedIn == false && finalname == "" {
+            apiManager.performGenericFetchRequest(urlString: "\(BaseAPIManager.authUrl)profile/", token: token,
+            errorMsg: {
+                print("Error Kak")
+            }) { (user: Profile) in
+                DispatchQueue.main.async {
+                    self.profileNameLabel.text = user.name
+                    if let image = user.image {
+                        self.profileImage.loadImageFromUrl(url: URL(string: image)!)
+                    } else {
+                        self.profileImage.image = UIImage(named: self.profileImagePlaceholderImage)
+                    }
+                    if user.about == "" {
+                        self.profileAboutMeLabel.text = "No About Me"
+                    } else {
+                        self.profileAboutMeLabel.text = user.about
+                    }
+                    self.userLike = user.exp
+                }
+            }
+        } else {
             profileImage.image = UIImage(named: profileImagePlaceholderImage)
             profileNameLabel.text = profileNamePlaceholderText
             profileTitleLabel.text = profileTitlePlaceholderText
@@ -146,11 +156,31 @@ class ProfileTableVC: UITableViewController {
             profileAboutMeLabel.text = profileAboutMePlaceholderText
         }
         
-        if savedUserDataDict["userDesc"] != "" {
-            profileAboutMeLabel.text = savedUserDataDict["userDesc"]
-        } else {
-            profileAboutMeLabel.text = profileAboutMePlaceholderText
-        }
+//        if finalname != ""{
+//            profileNameLabel.text = finalname
+//        }
+            
+            
+//        if userIsLoggedIn == true {
+//            profileImage.image = UIImage(named: profileImagePlaceholderImage)
+//            profileNameLabel.text = savedUserDataDict["userName"]
+//            profileTitleLabel.text = profileTitlePlaceholderText
+//            userLike = userLikePlaceholderNumber
+//            profileAboutMeLabel.text = profileAboutMePlaceholderText
+//        }
+//        else if userIsLoggedIn == false && finalname == "" {
+//            profileImage.image = UIImage(named: profileImagePlaceholderImage)
+//            profileNameLabel.text = profileNamePlaceholderText
+//            profileTitleLabel.text = profileTitlePlaceholderText
+//            userLike = userLikePlaceholderNumber
+//            profileAboutMeLabel.text = profileAboutMePlaceholderText
+//        }
+        
+//        if savedUserDataDict["userDesc"] != "" {
+//            profileAboutMeLabel.text = savedUserDataDict["userDesc"]
+//        } else {
+//            profileAboutMeLabel.text = profileAboutMePlaceholderText
+//        }
 
     }
     

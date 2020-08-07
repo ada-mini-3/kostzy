@@ -320,6 +320,9 @@ extension UIImage {
 
         return image!
     }
+    
+    
+    
 }
 
 extension UIColor{
@@ -400,6 +403,7 @@ extension UIImageView {
         
         return CGRect(x: x, y: y, width: size.width, height: size.height)
     }
+    
 }
 
 extension UIViewController {
@@ -1163,5 +1167,19 @@ extension UIColor {
             blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
             alpha: CGFloat(1.0)
         )
+    }
+}
+
+extension UIImageView {
+    func loadImageFromUrl(url: URL) {
+        DispatchQueue.global().async { [weak self] in
+            if let data = try? Data(contentsOf: url) {
+                if let image = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        self?.image = image
+                    }
+                }
+            }
+        }
     }
 }

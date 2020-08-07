@@ -124,7 +124,7 @@ class FeedsDetailVC: UIViewController {
     
     
     @IBAction func replyCommentClicked(_ sender: Any) {
-        comments.insert(FeedComment(user: User.initUser(), time: Date(), comment: commentField.text ?? "Hello"), at: 0)
+        comments.insert(FeedComment(user: UserFeeds.initUser(), time: Date(), comment: commentField.text ?? "Hello"), at: 0)
         view.endEditing(true)
         commentTableView.reloadData()
     }

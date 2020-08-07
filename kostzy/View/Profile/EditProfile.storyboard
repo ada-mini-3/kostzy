@@ -122,6 +122,7 @@
                         <outlet property="lblNumber" destination="6LO-hT-N3C" id="Wtd-Rf-7gm"/>
                         <outlet property="nameContent" destination="Ko5-V3-YJu" id="e2g-TU-RUh"/>
                         <outlet property="profileImageView" destination="juH-VB-gMj" id="tW5-UZ-art"/>
+                        <outlet property="saveButton" destination="Zfw-2D-IWV" id="5cI-2g-YMv"/>
                         <outlet property="txtContent" destination="CaA-GN-4Ry" id="sVg-R3-cHB"/>
                         <segue destination="j3v-E1-m7l" kind="presentation" identifier="data" id="rZo-Pm-com"/>
                         <segue destination="LFU-Rd-UO9" kind="unwind" identifier="unwindProfile" unwindAction="unwindToProfile:" id="ske-Y1-NaP"/>

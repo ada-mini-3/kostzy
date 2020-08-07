@@ -55,7 +55,7 @@ class FeedsVC: UIViewController, MKMapViewDelegate {
     private func setupFeedsData() {
         self.actityIndicator.isHidden = false
         self.actityIndicator.startAnimating()
-        apiManager.performGenericFetchRequest(urlString: "feeds?category=\(category)",
+        apiManager.performGenericFetchRequest(urlString: "\(apiManager.baseUrl)feeds?category=\(category)",
             token: "",
             errorMsg: {
             print("Error Bosss")
@@ -200,8 +200,10 @@ class FeedsVC: UIViewController, MKMapViewDelegate {
     @IBAction func changeCategory(_ sender: UISegmentedControl) {
         changeSegmentedImage()
         filterFeedBasedOnCategory()
+        self.feedsData.removeAll()
         self.feedsCollectionView.dataSource = nil
         self.feedsCollectionView.delegate = nil
+        feedsCollectionView.reloadData()
         setupFeedsData()
     }
     
@@ -318,7 +320,14 @@ extension FeedsVC : UICollectionViewDelegate, UICollectionViewDataSource {
         }
         
         cell.userName.text = feed.user.name
-        cell.userImage.image = UIImage(named: feed.user.image ?? "destong")
+        
+      
+        if let userImage = feed.user.image {
+            cell.userImage.loadImageFromUrl(url: URL(string: userImage)!)
+        } else {
+            cell.userImage.image = UIImage(named: "destong")
+        }
+        
         
         if feed.location == "" {
             cell.feedLocation.isHidden = true
@@ -326,6 +335,7 @@ extension FeedsVC : UICollectionViewDelegate, UICollectionViewDataSource {
             cell.feedLocation.isHidden = false
             cell.feedLocation.setTitle(feed.location, for: .normal)
         }
+        
         cell.feed.text = feed.feed
         cell.tags = feed.tags
         cell.likeCount.text = "\(feed.likeCount) Likes"

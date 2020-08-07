@@ -91,7 +91,7 @@ class DetailDiscussionVC: UIViewController {
     
     
     @IBAction func replyButtonClicked(_ sender: UIButton) {
-        let newComment = FeedComment(user: User.initUser(), time: Date(), comment: commentField.text ?? "Oi")
+        let newComment = FeedComment(user: UserFeeds.initUser(), time: Date(), comment: commentField.text ?? "Oi")
         comments.insert(newComment, at: 0)
         view.endEditing(true)
         commentTV.reloadData()
