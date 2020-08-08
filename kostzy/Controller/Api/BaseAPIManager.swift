@@ -111,9 +111,7 @@ struct BaseAPIManager {
         
         httpBody.appendString("--\(boundary)--")
         request.httpBody = httpBody as Data
-        
-       // print(String(data: httpBody as Data, encoding: .utf8)!)
-        
+                
        let task = session.dataTask(with: request, completionHandler: { data, response, error in
             if error != nil {
                 completion(nil, nil, error)

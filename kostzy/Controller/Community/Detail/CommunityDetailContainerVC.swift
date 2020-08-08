@@ -44,6 +44,7 @@ class CommunityDetailContainerVC: UIViewController {
     //----------------------------------------------------------------
     
     var selectedRow: Int?
+    var community: Community?
     var containerViewheight: CGFloat!
     var percentageVerticalOffset: CGFloat = 0
     
@@ -57,7 +58,9 @@ class CommunityDetailContainerVC: UIViewController {
         // Instantiate View Controller
         var viewController = storyboard.instantiateViewController(withIdentifier: "CommunityDetailVC") as! CommunityDetailVC
         viewController.selectedRow = selectedRow
-        
+        if let community = self.community {
+             viewController.community = community
+        }
         // Add View Controller as Child View Controller
         self.add(asChildViewController: viewController)
         
@@ -194,7 +197,7 @@ class CommunityDetailContainerVC: UIViewController {
         scrollView.delegate = self
         
         topView.backgroundColor = UIColor.clear
-        topLabel.text = communityName[selectedRow!]
+        topLabel.text = community?.name
         topLabel.alpha = 0.0
         
         /*topView.addSubview(blurEffectView)
@@ -249,12 +252,12 @@ class CommunityDetailContainerVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
+        guard let theCommunity = community else { return }
         
-        communityDetailImageView.image = UIImage(named: communityImage[selectedRow!])
-        communityNameLabel.text = communityName[selectedRow!]
-        communityLocationLabel.text = "\(communityLocation[selectedRow!]) • \(communityPost[selectedRow!]) POSTS"
+        communityDetailImageView.loadImageFromUrl(url: URL(string: theCommunity.image)!)
+        communityNameLabel.text = theCommunity.name
+        communityLocationLabel.text = "\(theCommunity.location) • \(communityPost[selectedRow!]) POSTS"
         
         debugCustomization()
         setupView()
@@ -353,6 +356,6 @@ extension CommunityDetailContainerVC: UIScrollViewDelegate {
 
         // update the new position acquired
         lastContentOffset = scrollView.contentOffset.y
-        print(lastContentOffset)
+        //print(lastContentOffset)
     }
 }

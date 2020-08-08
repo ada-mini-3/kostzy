@@ -8,25 +8,30 @@
 
 import Foundation
 
-struct Community {
-    var communityImage: String?
-    var communityName: String?
-    var communityBrief: String?
-    var communityLocation: String?
-    var communityPost: Int?
-    var communityDescription: String?
-    var communityAlbumImage: String?
+struct Community: Codable {
     
-    var memberCount: Int?
-    var memberImage: String?
-    var memberName: String?
-    var memberRole: String?
-    var memberIsAdmin: Bool?
+    let id: Int
+    let name: String
+    let image: String
+    let description: String
+    let subtitle: String
+    let location: String
+    let lat: String
+    let long: String
+    let isJoined: Bool
     
-    var isRequested: Bool?
-    var isJoined: Bool?
+    enum CodingKeys: String, CodingKey {
+        case id = "id"
+        case name = "name"
+        case image = "image"
+        case description = "description"
+        case subtitle = "subtitle"
+        case location = "location"
+        case lat = "lat"
+        case long = "long"
+        case isJoined = "is_joined"
+    }
     
-    static var myCommunity: [Community] = []
 }
 
 

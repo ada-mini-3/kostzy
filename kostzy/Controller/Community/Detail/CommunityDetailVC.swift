@@ -13,28 +13,17 @@ class CommunityDetailVC: UIViewController {
     
     // MARK: - Variable
     var selectedRow: Int?
-    
-    
+    var community: Community?
     // MARK: - Array
     
     
     // MARK: - IBOutlet
     @IBOutlet weak var memberCollectionView: UICollectionView!
     @IBOutlet weak var albumCollectionView: UICollectionView!
-    
-    @IBOutlet weak var communityDetailImageView: UIImageView!
-    @IBOutlet weak var communityNameLabel: UILabel!
-    @IBOutlet weak var communityLocationLabel: UILabel!
     @IBOutlet weak var communityDescriptionLabel: UILabel!
-    @IBOutlet weak var aboutAndDiscussionSegmentedControl: UISegmentedControl!
     @IBOutlet weak var memberCountLabel: UILabel!
-    
-    @IBOutlet weak var segmentedControlSeparator: UIView!
     @IBOutlet weak var albumPlaceholderTextLabel: UILabel!
-    
     @IBOutlet weak var requestJoinButtonOutlet: DesignableButton!
-    
-    @IBOutlet weak var memberCountSeparatorConstraint: NSLayoutConstraint!
     @IBOutlet weak var requestJoinSeparatorConstraint: NSLayoutConstraint!
     
     override func viewDidLoad() {
@@ -44,8 +33,9 @@ class CommunityDetailVC: UIViewController {
 //        communityDetailImageView.image = UIImage(named: communityImage[selectedRow!])
 //        communityNameLabel.text = communityName[selectedRow!]
 //        communityLocationLabel.text = "\(communityLocation[selectedRow!]) • \(communityPost[selectedRow!]) POSTS"
-        communityDescriptionLabel.text = communityDescription[selectedRow!]
-        
+        if let community = self.community {
+            communityDescriptionLabel.text = community.description
+        }
         /* memberCountLabel.text = "\(memberCount[selectedRow!]) Members" */
         memberCountLabel.text = "\(memberName.count) Members"
         
@@ -71,8 +61,7 @@ class CommunityDetailVC: UIViewController {
             requestJoinButtonOutlet.backgroundColor = #colorLiteral(red: 0.6, green: 0.6, blue: 0.6, alpha: 1)
             communityIsRequested[selectedRow!] = true
             communityIsJoined[selectedRow!] = true
-            
-            Community.myCommunity.append(Community(communityImage: communityImage[selectedRow!], communityName: communityName[selectedRow!], communityBrief: communityBrief[selectedRow!], communityLocation: communityLocation[selectedRow!], communityPost: communityPost[selectedRow!], communityDescription: communityDescription[selectedRow!], communityAlbumImage: communityAlbumImage[selectedRow!], memberCount: memberCount[selectedRow!], memberImage: memberImage[selectedRow!], memberName: memberName[selectedRow!], memberRole: memberRole[selectedRow!], memberIsAdmin: memberIsAdmin, isRequested: communityIsRequested[selectedRow!], isJoined: communityIsJoined[selectedRow!]))
+//            Community.myCommunity.append(Community(communityImage: communityImage[selectedRow!], communityName: communityName[selectedRow!], communityBrief: communityBrief[selectedRow!], communityLocation: communityLocation[selectedRow!], communityPost: communityPost[selectedRow!], communityDescription: communityDescription[selectedRow!], communityAlbumImage: communityAlbumImage[selectedRow!], memberCount: memberCount[selectedRow!], memberImage: memberImage[selectedRow!], memberName: memberName[selectedRow!], memberRole: memberRole[selectedRow!], memberIsAdmin: memberIsAdmin, isRequested: communityIsRequested[selectedRow!], isJoined: communityIsJoined[selectedRow!]))
             
             print("Requested: \(communityIsRequested[selectedRow!])")
         }
@@ -87,8 +76,8 @@ class CommunityDetailVC: UIViewController {
                 communityIsRequested[self.selectedRow!] = false
                 communityIsJoined[self.selectedRow!] = false
                 
-                Community.myCommunity.remove(at: self.selectedRow!)
-                
+                //Community.myCommunity.remove(at: self.selectedRow!)
+              
                 print("Request Join: \(communityIsRequested[self.selectedRow!])")
             }))
             

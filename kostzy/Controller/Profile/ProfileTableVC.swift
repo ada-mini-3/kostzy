@@ -39,13 +39,13 @@ class DataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Community.myCommunity.count
+        return 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyCommunityCell", for: indexPath) as! MyCommunityCell
-        cell.myCommunityImage.image = UIImage(named: Community.myCommunity[indexPath.row].communityImage!)
-        cell.myCommunityLabel.text = Community.myCommunity[indexPath.row].communityName
+//        cell.myCommunityImage.image = UIImage(named: Community.myCommunity[indexPath.row].communityImage!)
+//        cell.myCommunityLabel.text = Community.myCommunity[indexPath.row].communityName
         
         return cell
     }
