@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17147" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Alm-Nf-tvp">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Alm-Nf-tvp">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17120"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -36,32 +34,32 @@
                                             </textField>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fuN-Wb-7YG">
                                                 <rect key="frame" x="20" y="121" width="374" height="1"/>
-                                                <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
+                                                <color key="backgroundColor" systemColor="opaqueSeparatorColor" red="0.77647058820000003" green="0.77647058820000003" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="1" id="TSo-W3-zxw"/>
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q97-uS-tz4">
                                                 <rect key="frame" x="20" y="198" width="374" height="1"/>
-                                                <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
+                                                <color key="backgroundColor" systemColor="opaqueSeparatorColor" red="0.77647058820000003" green="0.77647058820000003" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="1" id="268-gy-Y8R"/>
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZRG-Wc-nsr">
                                                 <rect key="frame" x="20" y="301" width="374" height="1"/>
-                                                <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
+                                                <color key="backgroundColor" systemColor="opaqueSeparatorColor" red="0.77647058820000003" green="0.77647058820000003" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="1" id="xpO-xy-iJ7"/>
                                                 </constraints>
                                             </view>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aQl-v5-AEY">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aQl-v5-AEY">
                                                 <rect key="frame" x="166.5" y="20" width="81" height="81"/>
                                                 <connections>
                                                     <action selector="changePhotoButtonAction:" destination="otR-k4-EAg" eventType="touchUpInside" id="MNr-O5-Q0d"/>
                                                 </connections>
                                             </button>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Photo Profile" translatesAutoresizingMaskIntoConstraints="NO" id="juH-VB-gMj">
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Empty Profile Picture" translatesAutoresizingMaskIntoConstraints="NO" id="juH-VB-gMj">
                                                 <rect key="frame" x="166.5" y="20" width="81" height="81"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="81" id="3pQ-J4-gmY"/>
@@ -75,7 +73,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0/255" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6LO-hT-N3C">
-                                                <rect key="frame" x="353.5" y="310" width="40.5" height="18"/>
+                                                <rect key="frame" x="353" y="310" width="41" height="18"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -89,13 +87,13 @@
                                             </imageView>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x5B-Wr-r22">
                                                 <rect key="frame" x="16" y="260" width="382" height="33"/>
-                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                                <color key="textColor" systemColor="labelColor"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                         </subviews>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <constraints>
                                             <constraint firstItem="Ko5-V3-YJu" firstAttribute="leading" secondItem="R0M-fT-MAD" secondAttribute="leading" constant="20" id="5YR-pi-5ya"/>
                                             <constraint firstAttribute="trailing" secondItem="6LO-hT-N3C" secondAttribute="trailing" constant="20" id="7nF-ak-eQ7"/>
@@ -139,14 +137,14 @@
                                 </constraints>
                             </scrollView>
                         </subviews>
-                        <viewLayoutGuide key="safeArea" id="wYU-ou-rba"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="5Ah-K2-vtw" firstAttribute="top" secondItem="wYU-ou-rba" secondAttribute="top" id="8AJ-Xu-1Vq"/>
                             <constraint firstItem="wYU-ou-rba" firstAttribute="bottom" secondItem="5Ah-K2-vtw" secondAttribute="bottom" id="dNk-oZ-5ye"/>
                             <constraint firstItem="wYU-ou-rba" firstAttribute="leading" secondItem="5Ah-K2-vtw" secondAttribute="leading" id="x8f-u7-uCy"/>
                             <constraint firstItem="5Ah-K2-vtw" firstAttribute="trailing" secondItem="wYU-ou-rba" secondAttribute="trailing" id="xwK-5k-sMG"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="wYU-ou-rba"/>
                     </view>
                     <navigationItem key="navigationItem" id="NBT-sw-ZEy">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="Ota-Ue-mhd">
@@ -207,15 +205,6 @@
     </scenes>
     <resources>
         <image name="Edit Photo Icon" width="17" height="17"/>
-        <image name="Photo Profile" width="81" height="81"/>
-        <systemColor name="labelColor">
-            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="opaqueSeparatorColor">
-            <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
+        <image name="Empty Profile Picture" width="81" height="81"/>
     </resources>
 </document>

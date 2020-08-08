@@ -52,6 +52,8 @@ class FeedsDetailVC: UIViewController {
     
     let defaults = UserDefaults.standard
     
+    let refreshControl = UIRefreshControl()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
@@ -59,6 +61,7 @@ class FeedsDetailVC: UIViewController {
         setupKeyboardConstraint()
         setupDarkMode()
         setupCommentData()
+        setupRefreshControl()
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification), name: UIResponder.keyboardWillHideNotification, object: nil)
         tagsCollectionView.dataSource = self
@@ -72,24 +75,40 @@ class FeedsDetailVC: UIViewController {
     }
     
     private func setupCommentData() {
-      commentIndicator.startAnimating()
-        guard let id = feeds?.id else {
-            print("id is nil")
-            return
-        }
+        guard let id = feeds?.id else { return }
+        self.commentTableView.delegate = nil
+        self.commentTableView.dataSource = nil
         apiManager.performGenericFetchRequest(urlString: "\(apiManager.baseUrl)comments?feed=\(id)", token: "",
         errorMsg: {
             print("Error Kak")
         }, completion: { (comment: [FeedComment]) in
             DispatchQueue.main.async {
-                print("Sukses")
-               self.commentIndicator.stopAnimating()
+                
+                self.refreshControl.endRefreshing()
                 self.commentData = comment
                 self.setupCommentTableView()
                 self.commentTableView.reloadData()
             }
         })
     }
+    
+    private func setupRefreshControl() {
+        if #available(iOS 10.0, *) {
+            commentTableView.refreshControl = refreshControl
+        } else {
+            commentTableView.addSubview(refreshControl)
+        }
+        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        refreshControl.attributedTitle = NSAttributedString(string: "Fetching New Comments ...", attributes: nil)
+    }
+    
+    @objc func refresh(){
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.setupCommentData()
+        }
+    }
+    
+    
     
     private func setupLocationButton() {
         feedLocation.contentHorizontalAlignment = .left
@@ -144,7 +163,11 @@ class FeedsDetailVC: UIViewController {
     }
     
     private func setupView() {
-        userImage.loadImageFromUrl(url: URL(string: (feeds?.user.image)!)!)
+        if let theImage = feeds?.user.image {
+             userImage.loadImageFromUrl(url: URL(string: (theImage))!)
+        } else {
+            userImage.image = UIImage(named: "Empty Profile Picture")
+        }
         userName.text = feeds?.user.name
         feedLocation.setTitle(feeds?.location, for: .normal)
         feedLocation.contentHorizontalAlignment = .left
@@ -178,9 +201,8 @@ class FeedsDetailVC: UIViewController {
                 if let response = response as? HTTPURLResponse {
                     switch response.statusCode {
                     case 200...299:
-                        self.setupCommentData()
-                        self.view.endEditing(true)
-                        self.commentTableView.reloadData()
+                      self.setupAlert(title: "Success!" ,msg: "Success Post Reply")
+                      self.view.endEditing(true)
                     case 400:
                         self.setupAlert(msg: "Bad Request")
                     default:
@@ -194,8 +216,8 @@ class FeedsDetailVC: UIViewController {
         }
     }
     
-    private func setupAlert(msg: String) {
-        let alert = UIAlertController(title: "Whoops!", message: msg, preferredStyle: .alert)
+    private func setupAlert(title: String =  "Whoops!", msg: String) {
+        let alert = UIAlertController(title: title, message: msg, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         self.present(alert, animated: true)
     }

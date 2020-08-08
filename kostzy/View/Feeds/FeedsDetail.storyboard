@@ -76,7 +76,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="destong" translatesAutoresizingMaskIntoConstraints="NO" id="nDs-te-XWL">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Empty Profile Picture" translatesAutoresizingMaskIntoConstraints="NO" id="nDs-te-XWL">
                                 <rect key="frame" x="20" y="72" width="45" height="45"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="Z3b-dM-IpN"/>
@@ -115,7 +115,7 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="PxD-2y-dpu">
                                 <rect key="frame" x="0.0" y="302.5" width="414" height="470.5"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <activityIndicatorView key="tableFooterView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="medium" id="plx-cF-1kJ">
+                                <activityIndicatorView key="tableFooterView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" id="plx-cF-1kJ">
                                     <rect key="frame" x="0.0" y="172.5" width="414" height="44"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 </activityIndicatorView>
@@ -147,12 +147,15 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="destong" translatesAutoresizingMaskIntoConstraints="NO" id="065-KZ-9dv">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Empty Profile Picture" translatesAutoresizingMaskIntoConstraints="NO" id="065-KZ-9dv">
                                                     <rect key="frame" x="26" y="18" width="45" height="45"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="45" id="c9t-CT-3au"/>
                                                         <constraint firstAttribute="height" constant="45" id="wHC-Q1-4lz"/>
                                                     </constraints>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="shimmerAnimation" value="NO"/>
+                                                    </userDefinedRuntimeAttributes>
                                                 </imageView>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="Lorem ipsum dolor sit er elit lamet, do consequat. Duis aute irure dolor in  sint occaecat" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tmd-G0-QLS">
                                                     <rect key="frame" x="94" y="40" width="288" height="67"/>
@@ -359,6 +362,7 @@
     </scenes>
     <resources>
         <image name="Badge-100 Likes" width="39" height="42"/>
+        <image name="Empty Profile Picture" width="81" height="81"/>
         <image name="chevron.right" catalog="system" width="96" height="128"/>
         <image name="circle.fill" catalog="system" width="128" height="121"/>
         <image name="destong" width="1148" height="1140"/>

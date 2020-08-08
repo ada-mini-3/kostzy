@@ -129,7 +129,6 @@ class FeedsVC: UIViewController, MKMapViewDelegate {
         }
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         refreshControl.attributedTitle = NSAttributedString(string: "Fetching New Post ...", attributes: nil)
-
     }
     
     @objc func refresh(){
@@ -370,7 +369,7 @@ extension FeedsVC : UICollectionViewDelegate, UICollectionViewDataSource {
         if let userImage = feed.user.image {
             cell.userImage.loadImageFromUrl(url: URL(string: userImage)!)
         } else {
-            cell.userImage.image = UIImage(named: "destong")
+            cell.userImage.image = UIImage(named: "Empty Profile Picture")
         }
         
         

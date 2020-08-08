@@ -30,6 +30,7 @@ class EditProfileVC: UIViewController, UIGestureRecognizerDelegate, UITextFieldD
     var nameText = ""
     var apiManager = BaseAPIManager()
     var imagePicked = false
+    var profile: Profile?
     
     @IBAction func saveButton(_ sender: Any) {
        // var savedUserDataDict = defaults.dictionary(forKey: "userDataDict") as? [String: String] ?? [String: String]()
@@ -162,11 +163,14 @@ class EditProfileVC: UIViewController, UIGestureRecognizerDelegate, UITextFieldD
     }
     
     func setupTextField() {
-        let savedUserDataDict = defaults.dictionary(forKey: "userDataDict") ?? [String: Any]()
-        
         nameContent.delegate = self
         nameContent.keyboardType = .namePhonePad
-        nameContent.text = savedUserDataDict["userName"] as? String
+        
+        if let theProfile = profile {
+            nameContent.text = theProfile.name
+        } else {
+            nameContent.text = "LOOOL"
+        }
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapView(gesture:)))
         let notificationCenter = NotificationCenter.default
@@ -236,7 +240,7 @@ class EditProfileVC: UIViewController, UIGestureRecognizerDelegate, UITextFieldD
             let imageUrl = URL(fileURLWithPath: dirPath).appendingPathComponent(fileName)
             let image = UIImage(contentsOfFile: imageUrl.path)
             
-            return image ?? UIImage(named: "destong")
+            return image ?? UIImage(named: "Empty Profile Picture")
         }
         
         return nil
@@ -299,18 +303,15 @@ class EditProfileVC: UIViewController, UIGestureRecognizerDelegate, UITextFieldD
 extension EditProfileVC: UITextViewDelegate {
     
     func setupTextView() {
-        let savedUserDataDict = defaults.dictionary(forKey: "userDataDict") ?? [String: Any]()
-        
         aboutMeTextView.delegate = self
         aboutMeTextView.tag = 0
         
-        if savedUserDataDict["userDesc"] == nil {
+        if let theProfile = profile {
+            aboutMeTextView.text = theProfile.about
+            saveButtonOutlet.isEnabled = true
+        } else {
             aboutMeTextView.text = "About Me"
             saveButtonOutlet.isEnabled = false
-        }
-        else {
-            aboutMeTextView.text = savedUserDataDict["userDesc"] as? String
-            saveButtonOutlet.isEnabled = true
         }
         
         if isDarkMode {

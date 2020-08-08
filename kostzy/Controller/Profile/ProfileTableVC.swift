@@ -68,7 +68,7 @@ class ProfileTableVC: UITableViewController {
     let apiManager = BaseAPIManager()
     
     var dataSource = DataSource()
-    
+    var profile: Profile?
     
     // MARK: - IBOutlets
     @IBOutlet weak var badgeCollectionView: UICollectionView!
@@ -103,8 +103,6 @@ class ProfileTableVC: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        let token = defaults.dictionary(forKey: "userToken") as? [String: String]
-//        print(token!["token"]! as String)
         self.loadProfileData()
         self.tableView.reloadData()
     }
@@ -138,17 +136,17 @@ class ProfileTableVC: UITableViewController {
     
     // MARK: - Custom Methods
     func loadProfileData() {
-//        let savedUserDataDict = defaults.dictionary(forKey: "userDataDict") as? [String: String] ?? [String: String]()
-//
         let userIsLoggedIn = defaults.bool(forKey: "userIsLoggedIn")
         let token = "Token \(defaults.dictionary(forKey: "userToken")!["token"] as! String)"
-        
+        editProfileButtonOutlet.isEnabled = false
         if userIsLoggedIn == true {
             apiManager.performGenericFetchRequest(urlString: "\(BaseAPIManager.authUrl)profile/", token: token,
             errorMsg: {
                 print("Error Kak")
             }) { (user: Profile) in
                 DispatchQueue.main.async {
+                    self.profile = user
+                    self.editProfileButtonOutlet.isEnabled = true
                     self.profileNameLabel.text = user.name
                     if let image = user.image {
                         self.profileImage.loadImageFromUrl(url: URL(string: image)!)
@@ -170,33 +168,6 @@ class ProfileTableVC: UITableViewController {
             userLike = userLikePlaceholderNumber
             profileAboutMeLabel.text = profileAboutMePlaceholderText
         }
-        
-//        if finalname != ""{
-//            profileNameLabel.text = finalname
-//        }
-            
-            
-//        if userIsLoggedIn == true {
-//            profileImage.image = UIImage(named: profileImagePlaceholderImage)
-//            profileNameLabel.text = savedUserDataDict["userName"]
-//            profileTitleLabel.text = profileTitlePlaceholderText
-//            userLike = userLikePlaceholderNumber
-//            profileAboutMeLabel.text = profileAboutMePlaceholderText
-//        }
-//        else if userIsLoggedIn == false && finalname == "" {
-//            profileImage.image = UIImage(named: profileImagePlaceholderImage)
-//            profileNameLabel.text = profileNamePlaceholderText
-//            profileTitleLabel.text = profileTitlePlaceholderText
-//            userLike = userLikePlaceholderNumber
-//            profileAboutMeLabel.text = profileAboutMePlaceholderText
-//        }
-        
-//        if savedUserDataDict["userDesc"] != "" {
-//            profileAboutMeLabel.text = savedUserDataDict["userDesc"]
-//        } else {
-//            profileAboutMeLabel.text = profileAboutMePlaceholderText
-//        }
-
     }
     
 
@@ -214,7 +185,21 @@ class ProfileTableVC: UITableViewController {
     func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
-
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "editProfileSegue" {
+            guard let destFirst = segue.destination as? UINavigationController else { return }
+            guard let targetController = destFirst.topViewController as? EditProfileVC else { return }
+            guard let theProfile = self.profile else { return }
+            targetController.profile = theProfile
+        }
+    }
+    
+    
+    @IBAction func editProfileClicked(_ sender: Any) {
+        performSegue(withIdentifier: "editProfileSegue", sender: self)
+    }
+    
     /*
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
