@@ -89,24 +89,31 @@ struct BaseAPIManager {
         request.httpMethod = "PATCH"
         
         request.addValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+        request.addValue(token, forHTTPHeaderField: "Authorization")
         let httpBody = NSMutableData()
 
-        for (key, value) in payload {
-            httpBody.appendString(convertFormField(named: key, value: value, using: boundary))
+        if let name = payload["name"] {
+             httpBody.appendString(convertFormField(named: "name", value: name, using: boundary))
         }
         
-        if payload["image"] != nil {
+        if let about = payload["about"] {
+             httpBody.appendString(convertFormField(named: "about", value: about, using: boundary))
+        }
+        
+        if let image = payload["image"] {
             httpBody.append(convertFileData(fieldName: "image",
-                                            fileName: UUID().uuidString,
+                                            fileName: UUID().uuidString + ".png",
                                             mimeType: "image/png",
-                                            fileData: imageData,
+                                            fileData: image as! Data,
                                             using: boundary))
         }
         
+        
         httpBody.appendString("--\(boundary)--")
         request.httpBody = httpBody as Data
-        print(String(data: httpBody as Data, encoding: .utf8)!)
-
+        
+       // print(String(data: httpBody as Data, encoding: .utf8)!)
+        
        let task = session.dataTask(with: request, completionHandler: { data, response, error in
             if error != nil {
                 completion(nil, nil, error)

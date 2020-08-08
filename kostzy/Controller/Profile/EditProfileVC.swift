@@ -47,7 +47,12 @@ class EditProfileVC: UIViewController, UIGestureRecognizerDelegate, UITextFieldD
         let imageData = profileImageView.image?.pngData()
         
         if imagePicked == true {
-            payload = ["name": name, "about": about, "image": imageData?.base64EncodedString() ?? ""]
+            if let image = imageData {
+                payload = ["name": name, "about": about, "image": image]
+            } else {
+                payload = ["name": name, "about": about, "image": ""]
+            }
+    
         } else {
              payload = ["name": name, "about": about]
         }
@@ -58,8 +63,14 @@ class EditProfileVC: UIViewController, UIGestureRecognizerDelegate, UITextFieldD
                     switch response.statusCode {
                         case 200...299:
                             self.performSegue(withIdentifier: "unwindProfile", sender: self)
+                        case 400:
+                            if let errName = data?["name"] as? [String] {
+                                self.setupAlert(msg: errName[0] + " (Name)")
+                            } else if let errImage = data?["image"] as? [String] {
+                                self.setupAlert(msg: errImage[0] + " (Image)")
+                            }
                         default:
-                            print(response.statusCode)
+                            print(data)
                             self.setupAlert(msg: "Something's Wrong, Please Try Again Later")
                     }
                 } else if let error = error {
@@ -169,7 +180,7 @@ class EditProfileVC: UIViewController, UIGestureRecognizerDelegate, UITextFieldD
         if let theProfile = profile {
             nameContent.text = theProfile.name
         } else {
-            nameContent.text = "LOOOL"
+            nameContent.text = "Name"
         }
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapView(gesture:)))
@@ -405,7 +416,7 @@ extension EditProfileVC: UIImagePickerControllerDelegate, UINavigationController
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-
+        imagePicked = true
         picker.dismiss(animated: true, completion: nil)
         guard let image = info[.editedImage] as? UIImage else { return }
         self.profileImageView.image = image
