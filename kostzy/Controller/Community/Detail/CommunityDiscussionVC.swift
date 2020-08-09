@@ -48,8 +48,9 @@ class CommunityDiscussionVC: UIViewController {
     //----------------------------------------------------------------
     // MARK:- Action Methods
     //----------------------------------------------------------------
-    @IBAction func newDiscussionButtonAction(_ sender: Any) {
-        performSegue(withIdentifier: "newDiscussionSegue", sender: self)
+    
+    @IBAction func createDiscussionAction(_ sender: Any) {
+        performSegue(withIdentifier: "createDiscussionSegue", sender: self)
     }
     
     
@@ -92,7 +93,6 @@ class CommunityDiscussionVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        setupDiscussionData()
     }
     
     //----------------------------------------------------------------
@@ -105,7 +105,7 @@ class CommunityDiscussionVC: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+        setupDiscussionData()
         DispatchQueue.main.async(execute: {
             self.discussionTableView.reloadData()
 

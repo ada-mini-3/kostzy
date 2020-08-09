@@ -1162,9 +1162,10 @@
         <!--New Discussion-->
         <scene sceneID="Hpf-Uv-vhW">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AA0-88-AiZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <tableViewController id="9AK-B5-J1r" customClass="NewDiscussionTableVC" customModule="kostzy" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="ES9-ns-NsO">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <sections>
@@ -1407,7 +1408,6 @@
                         <outlet property="profileNameLabel" destination="0ck-yl-W48" id="odO-Hi-P6U"/>
                     </connections>
                 </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="AA0-88-AiZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="5645" y="1228"/>
         </scene>
@@ -1577,7 +1577,7 @@ We want our users to freely communicate on Koszy, but we have to impose restrict
                                                     <color key="titleColor" red="1" green="0.74117647060000003" blue="0.086274509799999996" alpha="1" colorSpace="calibratedRGB"/>
                                                 </state>
                                                 <connections>
-                                                    <segue destination="owH-LN-xhv" kind="presentation" id="S2f-uL-bmF"/>
+                                                    <action selector="createDiscussionAction:" destination="mj4-iz-4EE" eventType="touchUpInside" id="N4U-bP-75O"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5LM-yu-lYd">
@@ -1711,16 +1711,25 @@ We want our users to freely communicate on Koszy, but we have to impose restrict
                         <outlet property="communityLocationLabel" destination="0Sr-Zc-vkK" id="iOl-wb-rDX"/>
                         <outlet property="communityNameLabel" destination="IPX-lh-LCB" id="JXg-xM-yR4"/>
                         <outlet property="containerSeparatorTopConstraint" destination="TQZ-ju-W1g" id="KJP-sm-7QK"/>
-                        <outlet property="newDiscussionButtonOutlet" destination="s2Y-gC-3al" id="gLF-Th-p6g"/>
+                        <outlet property="newDiscussionButtonOutlet" destination="s2Y-gC-3al" id="MyU-a7-GwJ"/>
                         <outlet property="scrollView" destination="Xix-b0-SDE" id="eN7-sY-BXk"/>
                         <outlet property="sortByButtonOutlet" destination="5LM-yu-lYd" id="C86-1A-RE5"/>
                         <outlet property="topLabel" destination="TBb-ic-SaW" id="dti-XQ-Ect"/>
                         <outlet property="topView" destination="QTO-Ls-n2f" id="MCf-Bb-kyV"/>
+                        <segue destination="90E-rK-fdW" kind="presentation" identifier="createDiscussionSegue" id="mWd-Xc-dAW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RvX-5g-Cll" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2808.6956521739135" y="466.74107142857139"/>
+        </scene>
+        <!--CreateDiscussion-->
+        <scene sceneID="uqA-RW-5e3">
+            <objects>
+                <viewControllerPlaceholder storyboardName="CreateDiscussion" id="90E-rK-fdW" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9GN-we-eXo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2783" y="922"/>
         </scene>
         <!--Community DetailVC-->
         <scene sceneID="1q8-oX-dPc">
@@ -2234,22 +2243,21 @@ We want our users to freely communicate on Koszy, but we have to impose restrict
         <!--Navigation Controller-->
         <scene sceneID="06R-hh-6iY">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gbi-vY-4hz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="owH-LN-xhv" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="FaV-9B-YZR">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="108"/>
+                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="xOp-lM-pQ0">
-                        <rect key="frame" x="0.0" y="-54" width="0.0" height="0.0"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </toolbar>
                     <connections>
                         <segue destination="9AK-B5-J1r" kind="relationship" relationship="rootViewController" id="sfK-0l-re5"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="gbi-vY-4hz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4697" y="1228"/>
         </scene>

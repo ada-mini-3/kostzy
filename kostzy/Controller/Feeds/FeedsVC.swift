@@ -73,7 +73,6 @@ class FeedsVC: UIViewController, MKMapViewDelegate {
         if let token = defaults.dictionary(forKey: "userToken") {
             theToken = "Token \(token["token"]!)"
         }
-        print(theToken)
         apiManager.performGenericFetchRequest(urlString: "\(apiManager.baseUrl)feeds/?category=\(category)",
             token: theToken,
             errorMsg: {
@@ -393,7 +392,6 @@ extension FeedsVC : UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "feedCell", for: indexPath) as! FeedCell
         var feed = feedsData[indexPath.row]
-        print(feed)
         if isDarkMode == true {
             cell.contentView.backgroundColor = UIColor(red: 29/255, green: 29/255, blue: 29/255, alpha: 1)
             cell.feedLocation.setTitleColor(UIColor.white, for: .normal)
@@ -449,10 +447,7 @@ extension FeedsVC : UICollectionViewDelegate, UICollectionViewDataSource {
             self.setLikeButtonState(button: cell.likeButton, feed: feed)
         }
         
-        print(feed.likeStatus)
-        print(feed.id)
         setLikeButtonState(button: cell.likeButton, feed: feed)
-        
         cell.configure()
         return cell
     }

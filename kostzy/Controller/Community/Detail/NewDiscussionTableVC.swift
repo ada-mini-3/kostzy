@@ -38,7 +38,8 @@ class NewDiscussionTableVC: UITableViewController {
     let profileNamePlaceholderText = "User"
     let discussionTextViewPlaceholderText = "Information or question"
     var discussionImagePicker: UIImagePickerController!
-    
+    var apiManager = BaseAPIManager()
+    var communityId: Int?
     
     //----------------------------------------------------------------
     // MARK:- Action Methods
@@ -55,7 +56,7 @@ class NewDiscussionTableVC: UITableViewController {
     }
     
     @IBAction func postButtonAction(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
+        postDiscussionApi()
     }
     
     @IBAction func addPhotoButtonAction(_ sender: UIButton) {
@@ -91,6 +92,50 @@ class NewDiscussionTableVC: UITableViewController {
     //----------------------------------------------------------------
     // MARK:- Custom Methods
     //----------------------------------------------------------------
+    private func postDiscussionApi() {
+        guard let token = defaults.dictionary(forKey: "userToken") else { return }
+        guard let id = communityId else { return }
+        let theToken = "Token \(token["token"]!)"
+        let payload = ["text": discussionTextView.text ?? "", "community": id] as [String : Any]
+        apiManager.performPostRequest(payload: payload, url: "\(apiManager.baseUrl)discussion/", token: theToken) { (data, response, error) in
+            DispatchQueue.main.async {
+                if let response = response as? HTTPURLResponse {
+                    switch response.statusCode {
+                    case 200...299:
+                        self.setupAlertSuccess(title: "Success!",msg: "Success Post New Discussion!")
+                    case 400:
+                        if let errText = data?["text"] as? [String] {
+                            self.setupAlert(msg: errText[0])
+                        } else if let errCommmunity = data?["community"] as? [String] {
+                            self.setupAlert(msg: errCommmunity[0])
+                        }
+                        break
+                    default:
+                        self.setupAlert(msg: "Something went wrong, please try again later")
+                        break
+                    }
+                } else if let error = error {
+                    self.setupAlert(msg: error.localizedDescription)
+                }
+            }
+        }
+    }
+    
+    private func setupAlertSuccess(title: String = "Whoops!",msg: String) {
+        let alert = UIAlertController(title: title, message: msg, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: title, style: .default, handler: { (UIAlertAction) in
+            self.dismiss(animated: true, completion: nil)
+        }))
+        
+        self.present(alert, animated: true)
+    }
+    
+    private func setupAlert(title: String = "Whoops!",msg: String) {
+        let alert = UIAlertController(title: title, message: msg, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: title, style: .default, handler: nil))
+        self.present(alert, animated: true)
+    }
+    
     
     func loadProfileData() {
         let savedUserDataDict = defaults.dictionary(forKey: "userDataDict") ?? [String: Any]()
@@ -183,7 +228,6 @@ class NewDiscussionTableVC: UITableViewController {
             
             return image ?? UIImage(named: profileImagePlaceholderImage)
         }
-        
         return nil
     }
     
@@ -206,7 +250,6 @@ class NewDiscussionTableVC: UITableViewController {
         
         tableView.estimatedRowHeight = 118
         tableView.rowHeight = UITableView.automaticDimension
-        
         loadProfileData()
         setupImageView()
         setupTextView()
@@ -216,7 +259,6 @@ class NewDiscussionTableVC: UITableViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
         setupDiscussionImagePicker()
     }
     
@@ -405,8 +447,7 @@ extension NewDiscussionTableVC: UITextViewDelegate {
         if discussionTextView.text != discussionTextViewPlaceholderText &&
             !discussionTextView.text.isEmpty {
                 postButtonOutlet.isEnabled = true
-        }
-        else {
+        } else {
             postButtonOutlet.isEnabled = false
         }
     }

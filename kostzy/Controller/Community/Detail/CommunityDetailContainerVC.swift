@@ -112,6 +112,9 @@ class CommunityDetailContainerVC: UIViewController {
         updateView()
     }
     
+    @IBAction func createDiscussionAction(_ sender: Any) {
+        performSegue(withIdentifier: "createDiscussionSegue", sender: self)
+    }
     
     //----------------------------------------------------------------
     // MARK:- Custom Methods
@@ -287,6 +290,16 @@ class CommunityDetailContainerVC: UIViewController {
         else {
             let black = UIColor.init(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: percentageVerticalOffset)
             topView.backgroundColor = black
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "createDiscussionSegue" {
+            if let destFirst = segue.destination as? UINavigationController {
+                guard let targetController = destFirst.topViewController as? NewDiscussionTableVC else { return }
+                guard let id = community?.id else { return }
+                targetController.communityId = id
+            }
         }
     }
     
