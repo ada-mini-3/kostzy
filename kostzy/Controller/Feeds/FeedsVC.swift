@@ -69,8 +69,13 @@ class FeedsVC: UIViewController, MKMapViewDelegate {
     private func setupFeedsData() {
         self.actityIndicator.isHidden = false
         self.actityIndicator.startAnimating()
-        apiManager.performGenericFetchRequest(urlString: "\(apiManager.baseUrl)feeds?category=\(category)",
-            token: "",
+        var theToken = ""
+        if let token = defaults.dictionary(forKey: "userToken") {
+            theToken = "Token \(token["token"]!)"
+        }
+        print(theToken)
+        apiManager.performGenericFetchRequest(urlString: "\(apiManager.baseUrl)feeds/?category=\(category)",
+            token: theToken,
             errorMsg: {
             print("Error Bosss")
         },
@@ -87,6 +92,45 @@ class FeedsVC: UIViewController, MKMapViewDelegate {
         })
     }
     
+    private func setupFeedLikeApi(button: UIButton, feed: Feeds) {
+        guard let token = defaults.dictionary(forKey: "userToken") else {
+            setupLoginPage()
+            return
+        }
+        let payload = ["feed": feed.id]
+        apiManager.performPostRequest(payload: payload, url: "\(apiManager.baseUrl)likes/",
+        token: "Token \(token["token"]!)") { (data, response, error) in
+            DispatchQueue.main.async {
+                if let response = response as? HTTPURLResponse {
+                    switch response.statusCode {
+                    case 200...299:
+                        print("Like Success")
+                        break
+                    default:
+                        print(response.statusCode)
+                        self.setupAlert(msg: "Something went wrong, please try again later")
+                        break
+                    }
+                } else if let error = error {
+                    self.setupAlert(msg: error.localizedDescription)
+                }
+            }
+        }
+        
+    }
+    
+    private func setupAlert(title: String =  "Whoops!", msg: String) {
+        let alert = UIAlertController(title: title, message: msg, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alert, animated: true)
+    }
+    
+    private func setupLoginPage() {
+        let storyboard = UIStoryboard(name: "Login", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "NavigationController") as! UINavigationController
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true, completion: nil)
+    }
     
     private func setupCollectionViewBg() {
         if isDarkMode == true {
@@ -334,10 +378,9 @@ extension FeedsVC : UICollectionViewDelegate, UICollectionViewDataSource {
     
     private func setLikeButtonState(button: UIButton, feed: Feeds) {
         if feed.likeStatus == true {
-            button.setImage(UIImage(systemName: "hand.thumbsup.fill"), for: .normal)
-            button.tintColor = UIColor(red: 255/255, green: 183/255, blue: 0/255, alpha: 1)
-            }
-        else {
+                button.setImage(UIImage(systemName: "hand.thumbsup.fill"), for: .normal)
+                button.tintColor = UIColor(red: 255/255, green: 183/255, blue: 0/255, alpha: 1)
+        } else if feed.likeStatus == false {
             button.setImage(UIImage(systemName: "hand.thumbsup"), for: .normal)
             if isDarkMode == true {
                 button.tintColor = UIColor.white
@@ -350,7 +393,7 @@ extension FeedsVC : UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "feedCell", for: indexPath) as! FeedCell
         var feed = feedsData[indexPath.row]
-        
+        print(feed)
         if isDarkMode == true {
             cell.contentView.backgroundColor = UIColor(red: 29/255, green: 29/255, blue: 29/255, alpha: 1)
             cell.feedLocation.setTitleColor(UIColor.white, for: .normal)
@@ -365,7 +408,6 @@ extension FeedsVC : UICollectionViewDelegate, UICollectionViewDataSource {
         
         cell.userName.text = feed.user.name
         
-      
         if let userImage = feed.user.image {
             cell.userImage.loadImageFromUrl(url: URL(string: userImage)!)
         } else {
@@ -395,16 +437,20 @@ extension FeedsVC : UICollectionViewDelegate, UICollectionViewDataSource {
         cell.reportTapAction = {() in
             self.setupReportAlert()
         }
-        
+    
         cell.likeTapAction = {() in
             if feed.likeStatus == false {
                 feed.likeStatus = true
+                cell.commentCount.text = "\(feed.commentCount + 1) Likes"
+                self.setupFeedLikeApi(button: cell.likeButton, feed: feed)
             } else {
                 feed.likeStatus = false
             }
             self.setLikeButtonState(button: cell.likeButton, feed: feed)
         }
         
+        print(feed.likeStatus)
+        print(feed.id)
         setLikeButtonState(button: cell.likeButton, feed: feed)
         
         cell.configure()

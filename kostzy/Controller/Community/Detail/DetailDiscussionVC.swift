@@ -29,13 +29,10 @@ class DetailDiscussionVC: UIViewController {
     @IBOutlet weak var likeButton: UIButton!
     
     var uImage: UIImage?
-    
+    var theDiscussion: Discussion?
     var uName: String?
-    
     var discussion: String?
-    
     var comments = FeedComment.initData()
-    
     var bottomConstraint: NSLayoutConstraint?
         
     override func viewDidLoad() {
@@ -75,9 +72,11 @@ class DetailDiscussionVC: UIViewController {
     }
     
     private func setupView() {
-        userImage.image = uImage
-        userName.text = uName
-        discussionText.text = discussion
+        if let userImageUrl = theDiscussion?.user.image {
+            userImage.loadImageFromUrl(url: URL(string: userImageUrl)!)
+        }
+        userName.text = theDiscussion?.user.name
+        discussionText.text = theDiscussion?.text
         
         commentTV.tableFooterView = UIView()
         commentTV.delegate = self

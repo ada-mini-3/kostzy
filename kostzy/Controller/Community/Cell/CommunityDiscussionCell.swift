@@ -25,7 +25,8 @@ class CommunityDiscussionCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        memberImageView.layer.cornerRadius = memberImageView.frame.height / 2
+        memberImageView.clipsToBounds = true
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

@@ -20,6 +20,7 @@ struct BaseAPIManager {
             let session = URLSession(configuration: .default)
             var request = URLRequest(url: url)
             request.addValue(token, forHTTPHeaderField: "Authorization")
+            
             let task = session.dataTask(with: request) { (data, response, error) in
                 if error != nil {
                     errorMsg()
@@ -27,7 +28,7 @@ struct BaseAPIManager {
                 }
                 
                 guard let data = data else { return }
-    
+                
                 do {
                     let obj = try JSONDecoder().decode(T.self, from: data)
                     completion(obj)

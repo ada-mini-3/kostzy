@@ -67,14 +67,14 @@ class CommunityDetailContainerVC: UIViewController {
         return viewController
     }()
     
-    private lazy var CommunityDiscussionVC: CommunityDiscussionVC = {
+    private lazy var communityDiscussionVC: CommunityDiscussionVC = {
         // Load Storyboard
         let storyboard = UIStoryboard(name: "Community", bundle: Bundle.main)
         
         // Instantiate View Controller
         var viewController = storyboard.instantiateViewController(withIdentifier: "DetailDiscussionVC") as! CommunityDiscussionVC
         containerViewheight = viewController.height
-        
+        viewController.communityId = self.community?.id
         // Add View Controller as Child View Controller
         self.add(asChildViewController: viewController)
         
@@ -150,7 +150,7 @@ class CommunityDetailContainerVC: UIViewController {
     
     private func updateView() {
         if aboutAndDiscussionSegmentedControl.selectedSegmentIndex == 0 {
-            remove(asChildViewController: CommunityDiscussionVC)
+            remove(asChildViewController: communityDiscussionVC)
             add(asChildViewController: CommunityAboutVC)
             
             newDiscussionButtonOutlet.isHidden = true
@@ -164,7 +164,7 @@ class CommunityDetailContainerVC: UIViewController {
             })
         } else {
             remove(asChildViewController: CommunityAboutVC)
-            add(asChildViewController: CommunityDiscussionVC)
+            add(asChildViewController: communityDiscussionVC)
             
             newDiscussionButtonOutlet.isHidden = false
             sortByButtonOutlet.isHidden = false

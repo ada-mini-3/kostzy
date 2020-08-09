@@ -32,8 +32,10 @@ class CommunityDiscussionVC: UIViewController {
     var height: CGFloat!
     var discussionTableHeightConstraint: NSLayoutConstraint!
     var selectedRow: Int = 0
-    
-    
+    var communityId: Int?
+    var apiManager = BaseAPIManager()
+    let defaults = UserDefaults.standard
+    var commDiscussions: [Discussion] = []
     //----------------------------------------------------------------
     // MARK:- Memory Management Methods
     //----------------------------------------------------------------
@@ -89,8 +91,8 @@ class CommunityDiscussionVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
+        setupDiscussionData()
     }
     
     //----------------------------------------------------------------
@@ -120,6 +122,23 @@ class CommunityDiscussionVC: UIViewController {
         discussionTableView.reloadData()
     }
     
+    private func setupDiscussionData() {
+        guard let token = defaults.dictionary(forKey: "userToken") else { return }
+        let theToken = "Token \(token["token"]!)"
+        print(theToken)
+        guard let id = communityId else { return }
+        apiManager.performGenericFetchRequest(urlString: "\(apiManager.baseUrl)discussion/?community=\(id)",
+            token: theToken,
+            errorMsg: {
+            print("Error gan")
+        }) { (discussions: [Discussion]) in
+            DispatchQueue.main.async {
+                print("Sukses")
+                self.commDiscussions = discussions
+                self.discussionTableView.reloadData()
+            }
+        }
+    }
 
     /*
     // MARK: - Navigation
@@ -134,9 +153,8 @@ class CommunityDiscussionVC: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "discussionDetailSegue" {
             if let dest = segue.destination as? DetailDiscussionVC {
-                dest.uName = memberName[selectedRow]
-                dest.uImage = UIImage(named: memberImage[selectedRow])
-                dest.discussion = discussion[selectedRow]
+               let discussion = commDiscussions[selectedRow]
+                dest.theDiscussion = discussion
             }
         }
     }
@@ -157,7 +175,6 @@ extension CommunityDiscussionVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         selectedRow = indexPath.row
-        print(selectedRow)
         performSegue(withIdentifier: "discussionDetailSegue", sender: self)
     }
 
@@ -166,18 +183,17 @@ extension CommunityDiscussionVC: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return discussion.count
+        return commDiscussions.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CommunityDiscussionCell", for: indexPath) as! CommunityDiscussionCell
-
+        let discussion = commDiscussions[indexPath.row]
         // Configure the cell...
         if isDarkMode == true {
             cell.contentView.backgroundColor = .systemBackground
             cell.discussionView.backgroundColor = .systemGray5
-        }
-        else {
+        } else {
             cell.contentView.backgroundColor = .systemBackground
             cell.discussionView.backgroundColor = #colorLiteral(red: 0.9803921569, green: 0.9803921569, blue: 0.9921568627, alpha: 1)
             cell.discussionView.shadowColor = .black
@@ -187,11 +203,16 @@ extension CommunityDiscussionVC: UITableViewDataSource, UITableViewDelegate {
         }
         cell.discussionView.cornerRadius = 10
         
-        cell.memberImageView.image = UIImage(named: memberImage[indexPath.row])
-        cell.memberNameLabel.text = memberName[indexPath.row]
-        cell.discussionLabel.text = discussion[indexPath.row]
-        cell.commentCountLabel.text = "\(commentCount[indexPath.row]) Comments"
-        cell.likeCountLabel.text = "\(likeCount[indexPath.row]) Likes"
+       // cell.memberImageView.image = UIImage(named: memberImage[indexPath.row])
+        if let userImage = discussion.user.image {
+            cell.memberImageView.loadImageFromUrl(url: URL(string: userImage)!)
+        } else {
+            cell.memberImageView.image = #imageLiteral(resourceName: "Empty Profile Picture")
+        }
+        cell.memberNameLabel.text = discussion.user.name
+        cell.discussionLabel.text = discussion.text
+        cell.commentCountLabel.text = "\(discussion.commentCount) Comments"
+        cell.likeCountLabel.text = "\(discussion.likeCount) Likes"
 
         return cell
     }
