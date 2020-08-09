@@ -182,7 +182,6 @@ class CommunityDetailContainerVC: UIViewController {
     
     func setupView() {
 //        setupSegmentedControl()
-        
         updateView()
     }
     
@@ -206,14 +205,13 @@ class CommunityDetailContainerVC: UIViewController {
     
     // Delete or comment this function when user testing is finished
     func debugCustomization() {
-        if communityIsRequested[selectedRow!] == false {
+        guard let community = community else { return }
+        if community.isJoined == false {
             aboutAndDiscussionSegmentedControl.isHidden = true
             newDiscussionButtonOutlet.isHidden = true
             sortByButtonOutlet.isHidden = true
-            
             containerSeparatorTopConstraint.constant = 20
-        }
-        else if communityIsRequested[selectedRow!] == true {
+        } else {
             let segmentedControlTitle = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 12)]
             aboutAndDiscussionSegmentedControl.setTitleTextAttributes(segmentedControlTitle, for: .selected)
         }

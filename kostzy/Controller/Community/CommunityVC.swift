@@ -33,8 +33,8 @@ class CommunityVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
         self.communityTableView.delegate = nil
         self.communityTableView.dataSource = nil
         var theToken = ""
-        if let token = defaults.dictionary(forKey: "userToken")!["token"] {
-            theToken = "Token \(token)"
+        if let token = defaults.dictionary(forKey: "userToken") {
+            theToken = "Token \(token["token"]!)"
         }
         apiManager.performGenericFetchRequest(urlString: "\(apiManager.baseUrl)community/", token: theToken, errorMsg: {
             print("Error Kak")

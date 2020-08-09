@@ -273,6 +273,7 @@ class FeedsCreateVC: UIViewController {
         postButtonState()
     }
     
+    
     func postFeedApi() {
         let payload = ["feed": feedTextView.text ?? "", "category": catId ?? 1,
                        "lat": 0, "long": 0, "location_name": locationString ?? "",

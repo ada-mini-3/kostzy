@@ -56,6 +56,8 @@ struct BaseAPIManager {
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         request.addValue(token, forHTTPHeaderField: "Authorization")
         
+        print(request)
+        
         let task = session.dataTask(with: request, completionHandler: { data, response, error in
             if error != nil {
                 completion(nil, nil, error)

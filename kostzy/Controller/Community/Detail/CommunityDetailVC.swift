@@ -14,6 +14,8 @@ class CommunityDetailVC: UIViewController {
     // MARK: - Variable
     var selectedRow: Int?
     var community: Community?
+    var defaults = UserDefaults.standard
+    var apiManager = BaseAPIManager()
     // MARK: - Array
     
     
@@ -32,20 +34,73 @@ class CommunityDetailVC: UIViewController {
         // Do any additional setup after loading the view.
 //        communityDetailImageView.image = UIImage(named: communityImage[selectedRow!])
 //        communityNameLabel.text = communityName[selectedRow!]
-//        communityLocationLabel.text = "\(communityLocation[selectedRow!]) • \(communityPost[selectedRow!]) POSTS"
+      // communityLocationLabel.text = "\(communityLocation[selectedRow!]) • \(communityPost[selectedRow!]) POSTS"
         if let community = self.community {
             communityDescriptionLabel.text = community.description
         }
+       
         /* memberCountLabel.text = "\(memberCount[selectedRow!]) Members" */
         memberCountLabel.text = "\(memberName.count) Members"
-        
+        setupRequestButton()
         debugCustomization()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
         memberCollectionView.reloadData()
+    }
+    
+    private func setupRequestButton() {
+        guard let community = community else { return }
+        let isRequested = defaults.bool(forKey: "requestComm\(community.id)")
+        if isRequested == true {
+            requestJoinButtonOutlet.setTitle("Requested", for: .normal)
+            requestJoinButtonOutlet.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.63)
+            requestJoinButtonOutlet.backgroundColor = #colorLiteral(red: 0.6, green: 0.6, blue: 0.6, alpha: 1)
+        } else {
+            self.requestJoinButtonOutlet.setTitle("Request Join", for: .normal)
+            self.requestJoinButtonOutlet.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+            self.requestJoinButtonOutlet.backgroundColor = #colorLiteral(red: 1, green: 0.7813850045, blue: 0.09716629237, alpha: 1)
+        }
+    }
+    
+    private func setupRequestJoinApi(token: String) {
+        let payload = ["is_joined": false]
+        requestJoinButtonOutlet.backgroundColor = #colorLiteral(red: 0.6, green: 0.6, blue: 0.6, alpha: 1)
+        self.requestJoinButtonOutlet.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.63)
+        guard let community = community else { return }
+        apiManager.performPostRequest(payload: payload, url: "\(apiManager.baseUrl)community/\(community.id)/member-request/", token: "Token \(token)") { (data, response, error) in
+            DispatchQueue.main.async {
+                if let response = response as? HTTPURLResponse {
+                    switch response.statusCode {
+                    case 200...299:
+                        self.setupAlert(title: "Success!",msg: "You've Successfully Requested To Join \(self.community!.name)!")
+                        self.requestJoinButtonOutlet.setTitle("Requested", for: .normal)
+                        self.defaults.set(true, forKey: "requestComm\(community.id)")
+                    default:
+                        print(response.statusCode)
+                        self.requestJoinButtonOutlet.backgroundColor = #colorLiteral(red: 1, green: 0.7813850045, blue: 0.09716629237, alpha: 1)
+                        self.requestJoinButtonOutlet.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+                        self.setupAlert(msg: "Something went wrong, Please try again later")
+                    }
+                } else if let error = error {
+                    self.setupAlert(msg: error.localizedDescription)
+                }
+            }
+        }
+    }
+    
+    private func setupAlert(title: String =  "Whoops!", msg: String) {
+        let alert = UIAlertController(title: title, message: msg, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alert, animated: true)
+    }
+    
+    private func setupLoginPage() {
+        let storyboard = UIStoryboard(name: "Login", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "NavigationController") as! UINavigationController
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true, completion: nil)
     }
     
     
@@ -55,17 +110,15 @@ class CommunityDetailVC: UIViewController {
     }
     
     @IBAction func requestJoinButtonAction(_ sender: Any) {
-        if communityIsRequested[selectedRow!] == false {
-            requestJoinButtonOutlet.setTitle("Requested", for: .normal)
-            requestJoinButtonOutlet.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.63)
-            requestJoinButtonOutlet.backgroundColor = #colorLiteral(red: 0.6, green: 0.6, blue: 0.6, alpha: 1)
-            communityIsRequested[selectedRow!] = true
-            communityIsJoined[selectedRow!] = true
-//            Community.myCommunity.append(Community(communityImage: communityImage[selectedRow!], communityName: communityName[selectedRow!], communityBrief: communityBrief[selectedRow!], communityLocation: communityLocation[selectedRow!], communityPost: communityPost[selectedRow!], communityDescription: communityDescription[selectedRow!], communityAlbumImage: communityAlbumImage[selectedRow!], memberCount: memberCount[selectedRow!], memberImage: memberImage[selectedRow!], memberName: memberName[selectedRow!], memberRole: memberRole[selectedRow!], memberIsAdmin: memberIsAdmin, isRequested: communityIsRequested[selectedRow!], isJoined: communityIsJoined[selectedRow!]))
-            
-            print("Requested: \(communityIsRequested[selectedRow!])")
+        guard let community = community else { return }
+        let isRequested = defaults.bool(forKey: "requestComm\(community.id)")
+        guard let token = defaults.dictionary(forKey: "userToken") else {
+            setupLoginPage()
+            return
         }
-        else if communityIsRequested[selectedRow!] == true {
+        if isRequested == false {
+            setupRequestJoinApi(token: token["token"] as! String)
+        } else {
             let alert = UIAlertController(title: "Are you sure you want to cancel the request?", message: "You will still be able to request to join the community later.", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
             alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { action in
@@ -73,14 +126,9 @@ class CommunityDetailVC: UIViewController {
                 self.requestJoinButtonOutlet.setTitle("Request Join", for: .normal)
                 self.requestJoinButtonOutlet.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
                 self.requestJoinButtonOutlet.backgroundColor = #colorLiteral(red: 1, green: 0.7813850045, blue: 0.09716629237, alpha: 1)
-                communityIsRequested[self.selectedRow!] = false
                 communityIsJoined[self.selectedRow!] = false
-                
-                //Community.myCommunity.remove(at: self.selectedRow!)
-              
-                print("Request Join: \(communityIsRequested[self.selectedRow!])")
+                self.defaults.set(false, forKey: "requestComm\(community.id)")
             }))
-            
             self.present(alert, animated: true)
         }
     }
@@ -103,18 +151,18 @@ class CommunityDetailVC: UIViewController {
     
     // Delete or comment this function when user testing is finished
     func debugCustomization() {
-        if communityIsRequested[selectedRow!] == false {
+        guard let community = community else { return }
+        //let isRequested = defaults.bool(forKey: "requestComm\(community.id)")
+        if community.isJoined == false {
 //            aboutAndDiscussionSegmentedControl.isHidden = true
             albumPlaceholderTextLabel.isHidden = true
             albumCollectionView.isHidden = true
             
 //            memberCountSeparatorConstraint.constant = 16
             requestJoinSeparatorConstraint.constant = 20
-        }
-        else if communityIsRequested[selectedRow!] == true {
+        } else {
 //            let segmentedControlTitle = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 12)]
 //            aboutAndDiscussionSegmentedControl.setTitleTextAttributes(segmentedControlTitle, for: .selected)
-            
             requestJoinButtonOutlet.isHidden = true
             requestJoinSeparatorConstraint.constant = 120
         }
