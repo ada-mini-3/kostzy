@@ -14,5 +14,6 @@ struct Profile: Codable {
     let image: String?
     let exp: Int
     let about: String
+    let community: [CommunityProfile]
     
 }

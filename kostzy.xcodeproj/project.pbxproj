@@ -86,6 +86,7 @@
 		881D366D24BD57BB00521220 /* DiscussionComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 881D366C24BD57BB00521220 /* DiscussionComment.swift */; };
 		883A49FE24E1261C00F6B6B8 /* DiscussionLike.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883A49FD24E1261C00F6B6B8 /* DiscussionLike.swift */; };
 		883A4A0024E136DD00F6B6B8 /* FeedLike.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883A49FF24E136DD00F6B6B8 /* FeedLike.swift */; };
+		883A4A0324E1935F00F6B6B8 /* CommunityProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883A4A0124E1926800F6B6B8 /* CommunityProfile.swift */; };
 		886800C524D12814008E7AAE /* DetailDiscussionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886800C424D12814008E7AAE /* DetailDiscussionVC.swift */; };
 		886800C824D134D0008E7AAE /* DiscussionCommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886800C724D134D0008E7AAE /* DiscussionCommentCell.swift */; };
 		887F289E24CC418E00018E67 /* FeedCommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887F289D24CC418E00018E67 /* FeedCommentCell.swift */; };
@@ -181,6 +182,7 @@
 		881D366C24BD57BB00521220 /* DiscussionComment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscussionComment.swift; sourceTree = "<group>"; };
 		883A49FD24E1261C00F6B6B8 /* DiscussionLike.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscussionLike.swift; sourceTree = "<group>"; };
 		883A49FF24E136DD00F6B6B8 /* FeedLike.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedLike.swift; sourceTree = "<group>"; };
+		883A4A0124E1926800F6B6B8 /* CommunityProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityProfile.swift; sourceTree = "<group>"; };
 		886800C424D12814008E7AAE /* DetailDiscussionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailDiscussionVC.swift; sourceTree = "<group>"; };
 		886800C724D134D0008E7AAE /* DiscussionCommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscussionCommentCell.swift; sourceTree = "<group>"; };
 		887F289D24CC418E00018E67 /* FeedCommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCommentCell.swift; sourceTree = "<group>"; };
@@ -542,6 +544,7 @@
 			isa = PBXGroup;
 			children = (
 				881D366824BD579C00521220 /* Community.swift */,
+				883A4A0124E1926800F6B6B8 /* CommunityProfile.swift */,
 				881D366A24BD57B200521220 /* Discussion.swift */,
 				881D366C24BD57BB00521220 /* DiscussionComment.swift */,
 			);
@@ -711,6 +714,7 @@
 				2CE981B924CA6B1E007B2FF4 /* CommunityDraftVC.swift in Sources */,
 				2C625BCB24CA8681005EF2EF /* Expandable.swift in Sources */,
 				2C86CD6D24D8429D00997B55 /* Notif.swift in Sources */,
+				883A4A0324E1935F00F6B6B8 /* CommunityProfile.swift in Sources */,
 				88E028F424C86FF0005EF2AE /* FeedTagsCell.swift in Sources */,
 				88DF73C224C724840081B8B0 /* FeedCell.swift in Sources */,
 				2C66A7F424CFE6690039A167 /* OffLimitsTableVC.swift in Sources */,
