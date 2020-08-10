@@ -206,7 +206,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Kz-AB-C0s">
                                 <rect key="frame" x="0.0" y="773" width="414" height="89"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="destong" translatesAutoresizingMaskIntoConstraints="NO" id="qam-mg-I5f">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Empty Profile Picture" translatesAutoresizingMaskIntoConstraints="NO" id="qam-mg-I5f">
                                         <rect key="frame" x="20" y="29.5" width="30" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="8lG-ai-Acm"/>
@@ -350,6 +350,7 @@
                         <outlet property="likeButton" destination="LPR-qo-Gh7" id="V4N-EV-Zp8"/>
                         <outlet property="likeCount" destination="CPa-D3-f6g" id="1Ql-AI-JJG"/>
                         <outlet property="profileImage" destination="qam-mg-I5f" id="tsN-nh-Oep"/>
+                        <outlet property="replyButton" destination="beE-2t-M4Z" id="pE0-zW-nl0"/>
                         <outlet property="tagsCollectionView" destination="G8c-si-YTZ" id="noE-EX-c3d"/>
                         <outlet property="userImage" destination="nDs-te-XWL" id="eKN-LN-8bX"/>
                         <outlet property="userName" destination="ZOe-Qc-LCb" id="kKp-ym-f7x"/>
@@ -365,7 +366,6 @@
         <image name="Empty Profile Picture" width="81" height="81"/>
         <image name="chevron.right" catalog="system" width="96" height="128"/>
         <image name="circle.fill" catalog="system" width="128" height="121"/>
-        <image name="destong" width="1148" height="1140"/>
         <image name="ellipses.bubble" catalog="system" width="128" height="110"/>
         <image name="hand.thumbsup" catalog="system" width="128" height="128"/>
     </resources>

@@ -17,7 +17,6 @@ class FeedCell: UICollectionViewCell, UICollectionViewDataSource {
     @IBOutlet weak var userName: UILabel!
     @IBOutlet weak var feedTime: UILabel!
     @IBOutlet weak var feedLocation: UIButton!
-    @IBOutlet weak var feedLocationImageView: UIImageView!
     @IBOutlet weak var feed: UILabel!
     @IBOutlet weak var feedTags: UICollectionView!
     @IBOutlet weak var commentButton: UIButton!

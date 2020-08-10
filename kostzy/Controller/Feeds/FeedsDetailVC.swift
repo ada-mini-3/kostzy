@@ -12,30 +12,21 @@ class FeedsDetailVC: UIViewController {
             
     @IBOutlet weak var userImage: UIImageView!
     @IBOutlet weak var userName: UILabel!
-    
     @IBOutlet weak var feedLocation: UIButton!
    // @IBOutlet weak var feedLocationImageView: UIImageView!
     @IBOutlet weak var feedText: UILabel!
-    
     @IBOutlet weak var tagsCollectionView: UICollectionView!
-    
     @IBOutlet weak var commentButton: UIButton!
     @IBOutlet weak var likeButton: UIButton!
-    
     @IBOutlet weak var commentCount: UILabel!
     @IBOutlet weak var likeCount: UILabel!
-    
     @IBOutlet weak var commentTableView: UITableView!
-    
     @IBOutlet weak var profileImage: UIImageView!
-    
     @IBOutlet weak var commentFormView: UIView!
-    
     @IBOutlet weak var commentField: UITextField!
-    
     @IBOutlet weak var buttonLocation: UIButton!
-    
     @IBOutlet weak var commentIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var replyButton: UIButton!
     
     var feeds : Feeds?
     var comments = FeedComment.initData()
@@ -52,7 +43,6 @@ class FeedsDetailVC: UIViewController {
         setupLocationButton()
         setupCommentTableView()
         setupKeyboardConstraint()
-        setupDarkMode()
         setupCommentData()
         setupRefreshControl()
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification), name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -100,8 +90,6 @@ class FeedsDetailVC: UIViewController {
         }
     }
     
-    
-    
     private func setupLocationButton() {
         if isDarkMode == true {
             feedLocation.setTitleColor(UIColor.white, for: .normal)
@@ -110,6 +98,11 @@ class FeedsDetailVC: UIViewController {
             feedLocation.setTitleColor(#colorLiteral(red: 0.1462399662, green: 0.1462444067, blue: 0.1462419927, alpha: 0.71), for: .normal)
             feedLocation.tintColor = UIColor(#colorLiteral(red: 0.1462399662, green: 0.1462444067, blue: 0.1462419927, alpha: 0.71))
         }
+        
+        if let location = feeds?.location {
+            feedLocation.setTitle(location, for: .normal)
+        }
+         feedLocation.contentHorizontalAlignment = .left
     }
     
     private func setupDarkMode() {
@@ -119,8 +112,7 @@ class FeedsDetailVC: UIViewController {
             feedLocation.tintColor = UIColor.white
             feedLocation.setTitleColor(UIColor.white, for: .normal)
             feedLocation.tintColor = .white
-        }
-        else {
+        } else {
             likeButton.tintColor = UIColor.black
             commentButton.tintColor = UIColor.black
             feedLocation.tintColor = #colorLiteral(red: 0.1462399662, green: 0.1462444067, blue: 0.1462419927, alpha: 0.71)
@@ -148,7 +140,6 @@ class FeedsDetailVC: UIViewController {
         }
     }
     
-    
     private func setupCommentTableView() {
         commentTableView.delegate = self
         commentTableView.dataSource = self
@@ -161,16 +152,43 @@ class FeedsDetailVC: UIViewController {
         } else {
             userImage.image = UIImage(named: "Empty Profile Picture")
         }
+        
+        setupDarkMode()
+        
+        if let feed = feeds {
+            setLikeButtonState(button: likeButton, feed: feed)
+        }
+        
+        replyButton.isEnabled = false
+        replyButton.setTitleColor(UIColor.lightGray, for: .normal)
+        commentField.delegate = self
+        
         userName.text = feeds?.user.name
         feedLocation.setTitle(feeds?.location, for: .normal)
-        feedLocation.contentHorizontalAlignment = .left
+        
         feedText.text = feeds?.feed
         commentCount.text = "\(feeds?.commentCount ?? 0) Comments"
         likeCount.text = "\(feeds?.likeCount ?? 0) Likes"
+        
         userImage.layer.cornerRadius = userImage.frame.height / 2
         userImage.clipsToBounds = true
+        
         profileImage.layer.cornerRadius = profileImage.frame.height / 2
         profileImage.clipsToBounds = true
+    }
+    
+    private func setLikeButtonState(button: UIButton, feed: Feeds) {
+        if feed.likeStatus == true {
+            button.setImage(UIImage(systemName: "hand.thumbsup.fill"), for: .normal)
+            button.tintColor = UIColor.hexStringToUIColor(hex: "#FFB700")
+        } else if feed.likeStatus == false {
+            button.setImage(UIImage(systemName: "hand.thumbsup"), for: .normal)
+            if isDarkMode == true {
+                button.tintColor = UIColor.white
+            } else {
+                button.tintColor = UIColor.black
+            }
+        }
     }
     
     private func setupNavigationBar() {
@@ -183,13 +201,14 @@ class FeedsDetailVC: UIViewController {
     }
     
     private func postReplyApi() {
-        guard let id = feeds?.id else {
-            print("id is nil")
+        guard let id = feeds?.id else { return }
+        guard let token = defaults.dictionary(forKey: "userToken") else {
+            setupLoginPage()
             return
         }
-        let token = "Token \(defaults.dictionary(forKey: "userToken")!["token"] as! String)"
+        let theToken = "Token \(token["token"]!)"
         let payload = ["comment": commentField.text ?? "", "feed": id] as [String : Any]
-        apiManager.performPostRequest(payload: payload, url: "\(apiManager.baseUrl)comments/", token: token) { (data, response, error) in
+        apiManager.performPostRequest(payload: payload, url: "\(apiManager.baseUrl)comments/", token: theToken) { (data, response, error) in
             DispatchQueue.main.async {
                 if let response = response as? HTTPURLResponse {
                     switch response.statusCode {
@@ -209,6 +228,13 @@ class FeedsDetailVC: UIViewController {
         }
     }
     
+    private func setupLoginPage() {
+        let storyboard = UIStoryboard(name: "Login", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "NavigationController") as! UINavigationController
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true, completion: nil)
+    }
+    
     private func setupAlert(title: String =  "Whoops!", msg: String) {
         let alert = UIAlertController(title: title, message: msg, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
@@ -219,6 +245,32 @@ class FeedsDetailVC: UIViewController {
     @IBAction func likeButtonClicked(_ sender: Any) {
         likeButton.setImage(UIImage(systemName: "hand.thumbsup.fill"), for: .normal)
         likeButton.tintColor = UIColor.red
+    }
+    
+}
+
+extension FeedsDetailVC: UITextFieldDelegate {
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+         if textField.text?.isEmpty == true {
+            replyButton.isEnabled = false
+            replyButton.setTitleColor(UIColor.lightGray, for: .normal)
+         } else {
+            replyButton.isEnabled = true
+            replyButton.setTitleColor(UIColor.hexStringToUIColor(hex: "#FFB700"), for: .normal)
+        }
+        
+        return true
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if textField.text?.isEmpty == true {
+            replyButton.isEnabled = false
+            replyButton.setTitleColor(UIColor.lightGray, for: .normal)
+        } else {
+            replyButton.isEnabled = true
+            replyButton.setTitleColor(UIColor.hexStringToUIColor(hex: "#FFB700"), for: .normal)
+        }
     }
     
 }

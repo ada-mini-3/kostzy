@@ -109,6 +109,7 @@ class FeedsCreateVC: UIViewController {
     //----------------------------------------------------------------
     func setupKeyboardDismissal() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapView(gesture:)))
+        tapGesture.cancelsTouchesInView = false
         let notificationCenter = NotificationCenter.default
         
         view.addGestureRecognizer(tapGesture)
@@ -408,6 +409,7 @@ class FeedsCreateVC: UIViewController {
         tagCollectionView.delegate = self
         tagCollectionView.dataSource = self
         tagCollectionView.allowsMultipleSelection = true
+        
         feedTextView.delegate = self
         
         navigationItem.rightBarButtonItem?.isEnabled = false
@@ -417,7 +419,6 @@ class FeedsCreateVC: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
         setupDiscussionImagePicker()
     }
     
@@ -452,6 +453,7 @@ class FeedsCreateVC: UIViewController {
 // MARK:- Picker View Delegate
 //----------------------------------------------------------------
 extension FeedsCreateVC: UIPickerViewDelegate, UIPickerViewDataSource {
+    
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
@@ -477,18 +479,19 @@ extension FeedsCreateVC: UIPickerViewDelegate, UIPickerViewDataSource {
 // MARK:- Collection View Delegate
 //----------------------------------------------------------------
 extension FeedsCreateVC: UICollectionViewDelegate, UICollectionViewDataSource {
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         displayedTags.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = tagCollectionView.dequeueReusableCell(withReuseIdentifier: "tagCreateCell", for: indexPath) as! FeedTagsCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "tagCreateCell", for: indexPath) as! FeedTagsCell
         cell.tagCreateName.text = displayedTags[indexPath.row].name
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let cell = tagCollectionView.cellForItem(at: indexPath)
+        let cell = collectionView.cellForItem(at: indexPath)
         if cell?.isSelected == true {
             cell?.backgroundColor = UIColor.hexStringToUIColor(hex: displayedTags[indexPath.row].color)
             newTag.append(displayedTags[indexPath.row])
@@ -498,7 +501,7 @@ extension FeedsCreateVC: UICollectionViewDelegate, UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        let cell = tagCollectionView.cellForItem(at: indexPath)
+        let cell = collectionView.cellForItem(at: indexPath)
         cell?.backgroundColor = UIColor.lightGray
         if let idx = newTag.firstIndex(where: {$0.name == infoTags[indexPath.row].name}) {
             newTag.remove(at: idx)

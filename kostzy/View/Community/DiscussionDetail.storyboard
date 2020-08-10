@@ -176,7 +176,7 @@
                                             <action selector="replyButtonClicked:" destination="oo0-xv-U5f" eventType="touchUpInside" id="4jQ-68-xFP"/>
                                         </connections>
                                     </button>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="destong" translatesAutoresizingMaskIntoConstraints="NO" id="H95-1B-OrC">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Empty Profile Picture" translatesAutoresizingMaskIntoConstraints="NO" id="H95-1B-OrC">
                                         <rect key="frame" x="24" y="21.5" width="30" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="30" id="GUQ-ij-Ng8"/>
@@ -269,7 +269,6 @@
     <resources>
         <image name="Empty Profile Picture" width="81" height="81"/>
         <image name="circle.fill" catalog="system" width="128" height="121"/>
-        <image name="destong" width="1148" height="1140"/>
         <image name="ellipses.bubble" catalog="system" width="128" height="110"/>
         <image name="hand.thumbsup" catalog="system" width="128" height="128"/>
     </resources>
