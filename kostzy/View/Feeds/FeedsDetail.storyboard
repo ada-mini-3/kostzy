@@ -199,7 +199,7 @@
                                 <rect key="frame" x="77" y="97.5" width="261" height="18"/>
                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
                                 <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="Kost Mandala" image="chevron.right" catalog="system">
+                                <state key="normal" title="Kost Mandala" image="chevron.left" catalog="system">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                             </button>
@@ -364,7 +364,7 @@
     <resources>
         <image name="Badge-100 Likes" width="39" height="42"/>
         <image name="Empty Profile Picture" width="81" height="81"/>
-        <image name="chevron.right" catalog="system" width="96" height="128"/>
+        <image name="chevron.left" catalog="system" width="96" height="128"/>
         <image name="circle.fill" catalog="system" width="128" height="121"/>
         <image name="ellipses.bubble" catalog="system" width="128" height="110"/>
         <image name="hand.thumbsup" catalog="system" width="128" height="128"/>

@@ -81,7 +81,6 @@ class FeedsVC: UIViewController, MKMapViewDelegate {
         },
             completion: { (feeds: [Feeds]) in
             DispatchQueue.main.async {
-                self.restore()
                 self.actityIndicator.stopAnimating()
                 self.refreshControl.endRefreshing()
                 self.actityIndicator.isHidden = true
@@ -333,9 +332,6 @@ class FeedsVC: UIViewController, MKMapViewDelegate {
          self.feedsCollectionView.backgroundView = messageLabel
      }
     
-    func restore() {
-         self.feedsCollectionView.backgroundView = nil
-    }
     
     func cacheProfileImageFromUrl() {
         guard let token = defaults.dictionary(forKey: "userToken") else { return }
@@ -380,7 +376,6 @@ class FeedsVC: UIViewController, MKMapViewDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
         feedsCollectionView.reloadData()
     }
     

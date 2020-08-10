@@ -29,13 +29,17 @@ class DetailDiscussionVC: UIViewController {
     var apiManager = BaseAPIManager()
     var defaults = UserDefaults.standard
     var commentData: [DiscussionComment] = []
+    let refreshControl = UIRefreshControl()
         
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupRefreshControl()
         setupView()
         setupUserImage()
         setupKeyboardConstraint()
         setupButtonDarkMode()
+        guard let discussion = discussion else { return }
+        setLikeButtonState(button: likeButton, discussion: discussion)
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
@@ -56,13 +60,29 @@ class DetailDiscussionVC: UIViewController {
         })
         { (comments: [DiscussionComment]) in
             DispatchQueue.main.async {
-                self.commentIndicator.stopAnimating()
+                self.refreshControl.endRefreshing()
                 self.commentData = comments
                 self.commentTV.tableFooterView = UIView()
                 self.commentTV.delegate = self
                 self.commentTV.dataSource = self
                 self.commentTV.reloadData()
             }
+        }
+    }
+    
+    private func setupRefreshControl() {
+        if #available(iOS 10.0, *) {
+            commentTV.refreshControl = refreshControl
+        } else {
+            commentTV.addSubview(refreshControl)
+        }
+        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        refreshControl.attributedTitle = NSAttributedString(string: "Fetching New Comments ...", attributes: nil)
+    }
+    
+    @objc func refresh(){
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.setupDiscussionComment()
         }
     }
         
@@ -164,11 +184,91 @@ class DetailDiscussionVC: UIViewController {
          self.commentTV.backgroundView = nil
     }
     
+    private func setupDiscussionLikeApi(discussionId: Int) {
+        guard let token = defaults.dictionary(forKey: "userToken") else { return }
+        guard let discussion = discussion else { return }
+        let theToken = "Token \(token["token"]!)"
+        let payload = ["discussion": discussion.id]
+        apiManager.performPostRequest(payload: payload, url: "\(apiManager.baseUrl)discussion-like/", token: theToken) { (data, response, error) in
+            DispatchQueue.main.async {
+                if let response = response as? HTTPURLResponse {
+                    switch response.statusCode {
+                    case 200...299:
+                        print("Success Like Discussion")
+                        break
+                    case 400:
+                        self.setupAlert(msg: "Something went wrong, please try again later")
+                        break
+                    default:
+                        print(response.statusCode)
+                        self.setupAlert(msg: "Error Like Discussion")
+                    }
+                } else if let error = error {
+                    self.setupAlert(msg: error.localizedDescription)
+                }
+            }
+        }
+    }
+    
+    private func setupDiscussionDislikeApi(likeId: Int) {
+        guard let token = defaults.dictionary(forKey: "userToken") else { return }
+        guard let discussion = discussion else { return }
+        guard let likeId = discussion.like else { return }
+        let theToken = "Token \(token["token"]!)"
+        apiManager.performDeleteRequest(url: "\(apiManager.baseUrl)discussion-like/\(likeId)/", token: theToken) { (response, error) in
+            DispatchQueue.main.async {
+                if let response = response as? HTTPURLResponse {
+                    switch response.statusCode {
+                    case 200...299:
+                        print("Success Dislike Discussion")
+                        break
+                    default:
+                        self.setupAlert(msg: "Something went wrong, please try again later")
+                        break
+                    }
+                } else if let error = error {
+                    self.setupAlert(msg: error.localizedDescription)
+                }
+            }
+        }
+    }
+    
+    private func setLikeButtonState(button: UIButton, discussion: Discussion) {
+        if discussion.likeStatus == true {
+            button.setImage(UIImage(systemName: "hand.thumbsup.fill"), for: .normal)
+            button.tintColor = UIColor.hexStringToUIColor(hex: "#FFB700")
+        } else if discussion.likeStatus == false {
+            button.setImage(UIImage(systemName: "hand.thumbsup"), for: .normal)
+            if isDarkMode == true {
+                button.tintColor = UIColor.white
+            } else {
+                button.tintColor = UIColor.black
+            }
+        }
+    }
+    
     
     @IBAction func replyButtonClicked(_ sender: UIButton) {
         postDiscussionReplyApi()
         view.endEditing(true)
     }
+    
+    
+    @IBAction func likeButtonClicked(_ sender: Any) {
+        guard var discussion = discussion else { return }
+        if discussion.likeStatus == false {
+            discussion.likeStatus = true
+            setupDiscussionLikeApi(discussionId: discussion.id)
+            likesCount.text = "\(discussion.likeCount + 1) Likes"
+        } else {
+            discussion.likeStatus = false
+            guard let like = discussion.like else { return }
+            setupDiscussionDislikeApi(likeId: like.id)
+            likesCount.text = "\(discussion.likeCount - 1) Likes"
+        }
+        setLikeButtonState(button: likeButton, discussion: discussion)
+    }
+
     
 }
 

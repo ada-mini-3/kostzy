@@ -44,6 +44,9 @@
                                 <rect key="frame" x="66" y="214" width="21" height="22"/>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" image="hand.thumbsup" catalog="system"/>
+                                <connections>
+                                    <action selector="likeButtonClicked:" destination="oo0-xv-U5f" eventType="touchUpInside" id="Blq-NG-zBg"/>
+                                </connections>
                             </button>
                             <button opaque="NO" alpha="0.44999998807907104" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="arQ-yI-UvQ">
                                 <rect key="frame" x="27" y="214" width="22" height="22"/>

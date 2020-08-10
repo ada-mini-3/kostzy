@@ -315,7 +315,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Feeds" largeTitleDisplayMode="always" id="2nq-gM-rzP"/>
                     <connections>
-                        <outlet property="actityIndicator" destination="UbT-jV-h7e" id="UrL-ZE-gxv"/>
+                        <outlet property="actityIndicator" destination="UbT-jV-h7e" id="oj2-rv-prq"/>
                         <outlet property="btnLocation" destination="Kka-NS-Bx2" id="Yor-Ei-K8K"/>
                         <outlet property="chevron" destination="QUx-SY-D7g" id="6km-0L-qfN"/>
                         <outlet property="feedsCollectionView" destination="c0l-ss-4XP" id="ck7-tE-cHQ"/>

@@ -55,6 +55,59 @@ class FeedsDetailVC: UIViewController {
         commentTableView.reloadData()
     }
     
+    private func setupFeedLikeApi() {
+        guard let token = defaults.dictionary(forKey: "userToken") else {
+            setupLoginPage()
+            return
+        }
+        guard let feeds = feeds else { return }
+        let payload = ["feed": feeds.id]
+        apiManager.performPostRequest(payload: payload, url: "\(apiManager.baseUrl)likes/",
+        token: "Token \(token["token"]!)") { (data, response, error) in
+            DispatchQueue.main.async {
+                if let response = response as? HTTPURLResponse {
+                    switch response.statusCode {
+                    case 200...299:
+                        print("Like Success")
+                        break
+                    default:
+                        print(response.statusCode)
+                        self.setupAlert(msg: "Something went wrong, please try again later")
+                        break
+                    }
+                } else if let error = error {
+                    self.setupAlert(msg: error.localizedDescription)
+                }
+            }
+        }
+        
+    }
+    
+    private func setupFeedDislikeApi(likeId: Int) {
+        guard let token = defaults.dictionary(forKey: "userToken") else {
+            setupLoginPage()
+            return
+        }
+        let theToken = "Token \(token["token"]!)"
+        apiManager.performDeleteRequest(url: "\(apiManager.baseUrl)likes/\(likeId)/", token: theToken) { (response, error) in
+            DispatchQueue.main.async {
+                if let response = response as? HTTPURLResponse {
+                    switch response.statusCode {
+                    case 200...299:
+                        print("Success Dislike Feed")
+                        break
+                    default:
+                        print(response.statusCode)
+                        self.setupAlert(msg: "Something went wrong, please try again later")
+                        break
+                    }
+                } else if let error = error {
+                    self.setupAlert(msg: error.localizedDescription)
+                }
+            }
+        }
+    }
+    
     private func setupCommentData() {
         guard let id = feeds?.id else { return }
         self.commentTableView.delegate = nil
@@ -244,8 +297,17 @@ class FeedsDetailVC: UIViewController {
     
     
     @IBAction func likeButtonClicked(_ sender: Any) {
-        likeButton.setImage(UIImage(systemName: "hand.thumbsup.fill"), for: .normal)
-        likeButton.tintColor = UIColor.red
+        guard var feeds = feeds else { return }
+        if feeds.likeStatus == false {
+            feeds.likeStatus = true
+            likeCount.text = "\(feeds.commentCount + 1) Likes"
+            setupFeedLikeApi()
+        } else {
+            feeds.likeStatus = false
+            likeCount.text = "\(feeds.commentCount - 1) Likes"
+            setupFeedDislikeApi(likeId: feeds.like!.id)
+        }
+        setLikeButtonState(button: likeButton, feed: feeds)
     }
     
     func setEmptyMessage(_ message: String) {
@@ -322,8 +384,6 @@ extension FeedsDetailVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if commentData.count == 0 {
             setEmptyMessage("Feeds Comment is Empty")
-        } else {
-            restore()
         }
         return commentData.count
     }
