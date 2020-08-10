@@ -189,18 +189,16 @@ class FeedsVC: UIViewController, MKMapViewDelegate {
         }
     }
     
-    private func setupButtonToLocation() {
-        btnLocation.contentHorizontalAlignment = .left
-        if location != nil {
+    private func setupButtonToLocation() {        if location != nil {
              btnLocation.setTitle(location?.name, for: .normal)
         }
         
         if isDarkMode == true {
-            btnLocation.setTitleColor(UIColor.white, for: .normal)
-            chevron.tintColor = UIColor.white
+            btnLocation.setTitleColor(.white, for: .normal)
+            chevron.tintColor = .white
         } else {
-            btnLocation.setTitleColor(UIColor.black, for: .normal)
-            chevron.tintColor = UIColor.black
+            btnLocation.setTitleColor(.black, for: .normal)
+            chevron.tintColor = .black
         }
         
     }
@@ -346,14 +344,16 @@ extension FeedsVC : UICollectionViewDelegate, UICollectionViewDataSource {
         
         if isDarkMode == true {
             cell.contentView.backgroundColor = UIColor(red: 29/255, green: 29/255, blue: 29/255, alpha: 1)
-            cell.feedLocation.setTitleColor(UIColor.white, for: .normal)
-            cell.commentButton.tintColor = UIColor.white
-            cell.likeButton.tintColor = UIColor.white
+            cell.feedLocation.setTitleColor(.white, for: .normal)
+            cell.feedLocationImageView.tintColor = .white
+            cell.commentButton.tintColor = .white
+            cell.likeButton.tintColor = .white
             cell.reportButton.setImage(UIImage(named: "Report"), for: .normal)
         } else {
-            cell.contentView.backgroundColor = UIColor.white
-            cell.feedLocation.setTitleColor(UIColor.black, for: .normal)
-            cell.commentButton.tintColor = UIColor.black
+            cell.contentView.backgroundColor = .white
+            cell.feedLocation.setTitleColor(#colorLiteral(red: 0.1462399662, green: 0.1462444067, blue: 0.1462419927, alpha: 0.71), for: .normal)
+            cell.feedLocationImageView.tintColor = #colorLiteral(red: 0.1462399662, green: 0.1462444067, blue: 0.1462419927, alpha: 0.71)
+            cell.commentButton.tintColor = .black
         }
         
         cell.userName.text = feed.user.name
