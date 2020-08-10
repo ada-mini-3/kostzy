@@ -18,6 +18,7 @@ struct Discussion: Codable {
     var likeStatus: Bool
     let likeCount: Int
     let commentCount: Int
+    let like: DiscussionLike?
     
     enum CodingKeys: String, CodingKey {
         case id = "id"
@@ -28,6 +29,7 @@ struct Discussion: Codable {
         case communityId = "community"
         case likeStatus = "like_status"
         case text = "text"
+        case like = "like"
     }
     
 }

@@ -20,6 +20,7 @@ struct Feeds: Codable {
     let commentCount: Int
     let category: Int
     var likeStatus : Bool
+    let like: FeedLike?
     
     enum CodingKeys: String, CodingKey {
         case id = "id"
@@ -32,6 +33,7 @@ struct Feeds: Codable {
         case commentCount = "comment_count"
         case category = "category"
         case likeStatus = "like_status"
+        case like = "like"
     }
     
 }

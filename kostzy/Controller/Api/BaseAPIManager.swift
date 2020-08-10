@@ -137,6 +137,23 @@ struct BaseAPIManager {
         task.resume()
     }
     
+    func performDeleteRequest(url: String, token: String,
+                              completion: @escaping (URLResponse?, Error?) -> Void) {
+        let session = URLSession.shared
+        var request = URLRequest(url:  URL(string: url)!)
+        request.httpMethod = "DELETE"
+        request.addValue(token, forHTTPHeaderField: "Authorization")
+        print(request)
+        let task = session.dataTask(with: request) { (data, response, error) in
+            if error != nil {
+                completion(nil, error)
+                return
+            }
+            completion(response, nil)
+        }
+        task.resume()
+    }
+    
     func convertFormField(named name: String, value: Any, using boundary: String) -> String {
       var fieldString = "--\(boundary)\r\n"
       fieldString += "Content-Disposition: form-data; name=\"\(name)\"\r\n"

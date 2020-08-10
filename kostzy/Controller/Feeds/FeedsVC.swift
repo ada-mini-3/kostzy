@@ -118,6 +118,31 @@ class FeedsVC: UIViewController, MKMapViewDelegate {
         
     }
     
+    private func setupFeedDislikeApi(likeId: Int) {
+        guard let token = defaults.dictionary(forKey: "userToken") else {
+            setupLoginPage()
+            return
+        }
+        let theToken = "Token \(token["token"]!)"
+        apiManager.performDeleteRequest(url: "\(apiManager.baseUrl)likes/\(likeId)/", token: theToken) { (response, error) in
+            DispatchQueue.main.async {
+                if let response = response as? HTTPURLResponse {
+                    switch response.statusCode {
+                    case 200...299:
+                        print("Success Dislike Feed")
+                        break
+                    default:
+                        print(response.statusCode)
+                        self.setupAlert(msg: "Something went wrong, please try again later")
+                        break
+                    }
+                } else if let error = error {
+                    self.setupAlert(msg: error.localizedDescription)
+                }
+            }
+        }
+    }
+    
     private func setupAlert(title: String =  "Whoops!", msg: String) {
         let alert = UIAlertController(title: title, message: msg, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
@@ -431,18 +456,20 @@ extension FeedsVC : UICollectionViewDelegate, UICollectionViewDataSource {
         cell.locationTapAction = {() in
             self.openMapForPlace()
         }
-        
+    
         cell.reportTapAction = {() in
             self.setupReportAlert()
         }
     
         cell.likeTapAction = {() in
             if feed.likeStatus == false {
-                feed.likeStatus = true
-                cell.commentCount.text = "\(feed.commentCount + 1) Likes"
                 self.setupFeedLikeApi(button: cell.likeButton, feed: feed)
+                feed.likeStatus = true
+                cell.likeCount.text = "\(feed.likeCount + 1) Likes"
             } else {
+                self.setupFeedDislikeApi(likeId: feed.like!.id)
                 feed.likeStatus = false
+                cell.likeCount.text = "\(feed.likeCount - 1) Likes"
             }
             self.setLikeButtonState(button: cell.likeButton, feed: feed)
         }

@@ -127,6 +127,27 @@ class CommunityDiscussionVC: UIViewController {
         }
     }
     
+    private func setupDiscussionDislikeApi(likeId: Int) {
+        guard let token = defaults.dictionary(forKey: "userToken") else { return }
+        let theToken = "Token \(token["token"]!)"
+        apiManager.performDeleteRequest(url: "\(apiManager.baseUrl)discussion-like/\(likeId)/", token: theToken) { (response, error) in
+            DispatchQueue.main.async {
+                if let response = response as? HTTPURLResponse {
+                    switch response.statusCode {
+                    case 200...299:
+                        print("Success Dislike Discussion")
+                        break
+                    default:
+                        self.setupAlert(msg: "Something went wrong, please try again later")
+                        break
+                    }
+                } else if let error = error {
+                    self.setupAlert(msg: error.localizedDescription)
+                }
+            }
+        }
+    }
+    
     private func setupAlert(msg: String) {
         let alert = UIAlertController(title: "Whoops!", message: msg, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
@@ -261,6 +282,8 @@ extension CommunityDiscussionVC: UITableViewDataSource, UITableViewDelegate {
                 self.setupDiscussionLikeApi(discussionId: discussion.id)
             } else {
                 discussion.likeStatus = false
+                cell.likeCountLabel.text = "\(discussion.likeCount-1) Likes"
+                self.setupDiscussionDislikeApi(likeId: discussion.like!.id)
             }
             self.setLikeButtonState(button: cell.likeButton, discussion: discussion)
         }
