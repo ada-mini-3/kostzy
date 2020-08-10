@@ -136,6 +136,9 @@ class DetailDiscussionVC: UIViewController {
     
     private func setupUserImage() {
         userImage.layer.cornerRadius = userImage.frame.height / 2
+        if let image = profileImageCache.object(forKey: "imageProfile") {
+            commentFormImage.image = image
+        }
         commentFormImage.layer.cornerRadius = commentFormImage.frame.height / 2
     }
     

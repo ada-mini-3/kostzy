@@ -10,6 +10,7 @@ import CoreLocation
 import UIKit
 import MapKit
 
+let profileImageCache = NSCache<NSString, UIImage>()
 
 //----------------------------------------------------------------
 // MARK: - NoSwipeSegmendtedControl
@@ -317,13 +318,37 @@ class FeedsVC: UIViewController, MKMapViewDelegate {
         }
     }
     
+    func cacheProfileImageFromUrl() {
+        guard let token = defaults.dictionary(forKey: "userToken") else { return }
+        let theToken = "Token \(token["token"]!)"
+        if profileImageCache.object(forKey: "imageProfile") == nil {
+            apiManager.performGenericFetchRequest(urlString: "\(BaseAPIManager.authUrl)profile/",
+                token: theToken,
+                errorMsg: {
+                self.setupAlert(msg: "Something went wrong")
+            }) { (profle: Profile) in
+                DispatchQueue.main.async {
+                    if let image = profle.image {
+                        let imageData = try? Data(contentsOf: URL(string: image)!)
+                        if let data = imageData {
+                            if let theImage = UIImage(data: data) {
+                                print("Sampe gak")
+                                profileImageCache.setObject(theImage, forKey: "imageProfile")
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
     
     //----------------------------------------------------------------
     // MARK:- View Life Cycle Methods
     //----------------------------------------------------------------
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        cacheProfileImageFromUrl()
         setupNavigationBarItem()
         setupSegmentedControl()
         setupButtonToLocation()

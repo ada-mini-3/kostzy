@@ -172,6 +172,9 @@ class FeedsDetailVC: UIViewController {
         userImage.layer.cornerRadius = userImage.frame.height / 2
         userImage.clipsToBounds = true
         
+        if let image = profileImageCache.object(forKey: "imageProfile") {
+            profileImage.image = image
+        }
         profileImage.layer.cornerRadius = profileImage.frame.height / 2
         profileImage.clipsToBounds = true
     }

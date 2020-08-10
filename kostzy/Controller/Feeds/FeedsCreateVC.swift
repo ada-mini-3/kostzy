@@ -145,6 +145,7 @@ class FeedsCreateVC: UIViewController {
         }
     }
     
+    
     fileprivate func setupCollectionViewData() {
         switch catId {
             case 1:
@@ -318,7 +319,6 @@ class FeedsCreateVC: UIViewController {
     }
     
     @objc private func postFeed() {
-       print("Post Clicked....")
        postFeedApi()
     }
     
@@ -365,7 +365,9 @@ class FeedsCreateVC: UIViewController {
     }
     
     func setupImageView() {
-        profilePhoto.image = loadImageFromDiskWith(fileName: "profileImage")
+        if let image = profileImageCache.object(forKey: "imageProfile") {
+            profilePhoto.image = image
+        }
         profilePhoto.layer.borderWidth = 1
         profilePhoto.layer.masksToBounds = false
         profilePhoto.layer.borderColor = UIColor.lightGray.cgColor
