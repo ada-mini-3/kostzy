@@ -15,7 +15,7 @@ struct Discussion: Codable {
     let user: UserFeeds
     let text: String
     let date: String
-    let likeStatus: Bool
+    var likeStatus: Bool
     let likeCount: Int
     let commentCount: Int
     

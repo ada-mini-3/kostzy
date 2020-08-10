@@ -85,6 +85,68 @@ class CommunityDiscussionVC: UIViewController {
         })
     }
     
+    private func setupDiscussionData() {
+        guard let token = defaults.dictionary(forKey: "userToken") else { return }
+        let theToken = "Token \(token["token"]!)"
+        guard let id = communityId else { return }
+        apiManager.performGenericFetchRequest(urlString: "\(apiManager.baseUrl)discussion/?community=\(id)",
+            token: theToken,
+            errorMsg: {
+            print("Error gan")
+        }) { (discussions: [Discussion]) in
+            DispatchQueue.main.async {
+                print("Sukses")
+                self.commDiscussions = discussions
+                self.discussionTableView.reloadData()
+            }
+        }
+    }
+    
+    private func setupDiscussionLikeApi(discussionId: Int) {
+        guard let token = defaults.dictionary(forKey: "userToken") else { return }
+        let theToken = "Token \(token["token"]!)"
+        let payload = ["discussion": discussionId]
+        apiManager.performPostRequest(payload: payload, url: "\(apiManager.baseUrl)discussion-like/", token: theToken) { (data, response, error) in
+            DispatchQueue.main.async {
+                if let response = response as? HTTPURLResponse {
+                    switch response.statusCode {
+                    case 200...299:
+                        print("Success Like Discussion")
+                        break
+                    case 400:
+                        self.setupAlert(msg: "Something went wrong, please try again later")
+                        break
+                    default:
+                        print(response.statusCode)
+                        self.setupAlert(msg: "Error Like Discussion")
+                    }
+                } else if let error = error {
+                    self.setupAlert(msg: error.localizedDescription)
+                }
+            }
+        }
+    }
+    
+    private func setupAlert(msg: String) {
+        let alert = UIAlertController(title: "Whoops!", message: msg, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alert, animated: true)
+    }
+    
+    private func setLikeButtonState(button: UIButton, discussion: Discussion) {
+        if discussion.likeStatus == true {
+                button.setImage(UIImage(systemName: "hand.thumbsup.fill"), for: .normal)
+                button.tintColor = UIColor(red: 255/255, green: 183/255, blue: 0/255, alpha: 1)
+        } else if discussion.likeStatus == false {
+            button.setImage(UIImage(systemName: "hand.thumbsup"), for: .normal)
+            if isDarkMode == true {
+                button.tintColor = UIColor.white
+            } else {
+                button.tintColor = UIColor.black
+            }
+        }
+    }
+    
     
     //----------------------------------------------------------------
     // MARK:- View Life Cycle Methods
@@ -120,24 +182,6 @@ class CommunityDiscussionVC: UIViewController {
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         discussionTableView.reloadData()
-    }
-    
-    private func setupDiscussionData() {
-        guard let token = defaults.dictionary(forKey: "userToken") else { return }
-        let theToken = "Token \(token["token"]!)"
-        print(theToken)
-        guard let id = communityId else { return }
-        apiManager.performGenericFetchRequest(urlString: "\(apiManager.baseUrl)discussion/?community=\(id)",
-            token: theToken,
-            errorMsg: {
-            print("Error gan")
-        }) { (discussions: [Discussion]) in
-            DispatchQueue.main.async {
-                print("Sukses")
-                self.commDiscussions = discussions
-                self.discussionTableView.reloadData()
-            }
-        }
     }
 
     /*
@@ -188,7 +232,7 @@ extension CommunityDiscussionVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CommunityDiscussionCell", for: indexPath) as! CommunityDiscussionCell
-        let discussion = commDiscussions[indexPath.row]
+        var discussion = commDiscussions[indexPath.row]
         // Configure the cell...
         if isDarkMode == true {
             cell.contentView.backgroundColor = .systemBackground
@@ -209,6 +253,23 @@ extension CommunityDiscussionVC: UITableViewDataSource, UITableViewDelegate {
         } else {
             cell.memberImageView.image = #imageLiteral(resourceName: "Empty Profile Picture")
         }
+        
+        cell.likeAction = {() in
+            if discussion.likeStatus == false {
+                discussion.likeStatus = true
+                cell.likeCountLabel.text = "\(discussion.likeCount+1) Likes"
+                self.setupDiscussionLikeApi(discussionId: discussion.id)
+            } else {
+                discussion.likeStatus = false
+            }
+            self.setLikeButtonState(button: cell.likeButton, discussion: discussion)
+        }
+        
+        cell.commentAction = {() in
+            self.performSegue(withIdentifier: "discussionDetailSegue", sender: self)
+        }
+    
+        setLikeButtonState(button: cell.likeButton, discussion: discussion)
         cell.memberNameLabel.text = discussion.user.name
         cell.discussionLabel.text = discussion.text
         cell.commentCountLabel.text = "\(discussion.commentCount) Comments"
