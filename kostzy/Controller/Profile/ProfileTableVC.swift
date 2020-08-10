@@ -33,19 +33,23 @@ class DataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
                      "Kost Area Binus Syahdan",
                      "Kost Area Anggrek Cakra",
                      "Kost Area Binus Syahdan"]*/
+    
+    var communities = [CommunityProfile]()
+    let baseUrl = "http://34.101.87.22:8000"
 
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return communities.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyCommunityCell", for: indexPath) as! MyCommunityCell
-//        cell.myCommunityImage.image = UIImage(named: Community.myCommunity[indexPath.row].communityImage!)
-//        cell.myCommunityLabel.text = Community.myCommunity[indexPath.row].communityName
+        let community = communities[indexPath.row]
+        cell.myCommunityImage.loadImageFromUrl(url: URL(string: baseUrl + community.image)!)
+        cell.myCommunityLabel.text = community.name
         
         return cell
     }
@@ -90,10 +94,7 @@ class ProfileTableVC: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
-        
-
-        myCommunityTableView.delegate = dataSource
-        myCommunityTableView.dataSource = dataSource
+    
         
         myCommunityTableView.rowHeight = 60
         myCommunityTableView.estimatedRowHeight = 600
@@ -159,6 +160,9 @@ class ProfileTableVC: UITableViewController {
                         self.profileAboutMeLabel.text = user.about
                     }
                     self.userLike = user.exp
+                    self.dataSource.communities = user.community
+                    self.myCommunityTableView.delegate = self.dataSource
+                    self.myCommunityTableView.dataSource = self.dataSource
                 }
             }
         } else {
