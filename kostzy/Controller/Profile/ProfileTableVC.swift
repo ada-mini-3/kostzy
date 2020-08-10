@@ -12,28 +12,6 @@ import UIKit
 // MARK: - DataSource
 class DataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
     
-    // MARK: - Arrays
-    /*var image = ["My Community Dummy Data 2",
-                 "My Community Dummy Data 2 2",
-                 "My Community Dummy Data 2",
-                 "My Community Dummy Data 2 2",
-                 "My Community Dummy Data 2",
-                 "My Community Dummy Data 2 2",
-                 "My Community Dummy Data 2",
-                 "My Community Dummy Data 2 2",
-                 "My Community Dummy Data 2",
-                 "My Community Dummy Data 2 2"]
-    var community = ["Kost Area Anggrek Cakra",
-                     "Kost Area Binus Syahdan",
-                     "Kost Area Anggrek Cakra",
-                     "Kost Area Binus Syahdan",
-                     "Kost Area Anggrek Cakra",
-                     "Kost Area Binus Syahdan",
-                     "Kost Area Anggrek Cakra",
-                     "Kost Area Binus Syahdan",
-                     "Kost Area Anggrek Cakra",
-                     "Kost Area Binus Syahdan"]*/
-    
     var communities = [CommunityProfile]()
     let baseUrl = "http://34.101.87.22:8000"
 
