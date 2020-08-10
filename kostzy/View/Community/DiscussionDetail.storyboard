@@ -73,6 +73,10 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="fgf-ol-0Lx">
                                 <rect key="frame" x="0.0" y="291" width="414" height="532"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <activityIndicatorView key="tableFooterView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="medium" id="Jct-O1-Epe">
+                                    <rect key="frame" x="0.0" y="148.5" width="414" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                </activityIndicatorView>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="dissCommentCell" id="89l-uH-T59" customClass="DiscussionCommentCell" customModule="kostzy" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="92.5"/>
@@ -114,7 +118,7 @@
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                 </textView>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="destong" translatesAutoresizingMaskIntoConstraints="NO" id="lPB-aK-x95">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Empty Profile Picture" translatesAutoresizingMaskIntoConstraints="NO" id="lPB-aK-x95">
                                                     <rect key="frame" x="31" y="18" width="45" height="45"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="45" id="MFb-Ep-35U"/>
@@ -243,12 +247,16 @@
                     </view>
                     <connections>
                         <outlet property="commentButton" destination="arQ-yI-UvQ" id="Kf7-pB-mrY"/>
+                        <outlet property="commentCount" destination="EIL-hg-bhQ" id="2oJ-Yo-SnJ"/>
                         <outlet property="commentField" destination="AK0-7A-2it" id="89J-XT-nQz"/>
                         <outlet property="commentForm" destination="0aF-kH-RBz" id="ALa-rj-Tmx"/>
                         <outlet property="commentFormImage" destination="H95-1B-OrC" id="R7s-aZ-ZYE"/>
+                        <outlet property="commentIndicator" destination="Jct-O1-Epe" id="ePT-8f-Qrz"/>
                         <outlet property="commentTV" destination="fgf-ol-0Lx" id="as8-zq-Av8"/>
                         <outlet property="discussionText" destination="xbn-oC-KrT" id="SfY-6D-euI"/>
                         <outlet property="likeButton" destination="ByI-4k-0h0" id="gM2-Xx-uRV"/>
+                        <outlet property="likesCount" destination="tGR-E3-woD" id="cfq-xx-wYn"/>
+                        <outlet property="replyButton" destination="Bdt-Sn-scD" id="XFQ-bt-1MP"/>
                         <outlet property="userImage" destination="BP7-wc-IxW" id="365-Ce-2Xf"/>
                         <outlet property="userName" destination="wYt-bR-xnR" id="Psq-61-r7q"/>
                     </connections>

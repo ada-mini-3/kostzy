@@ -154,7 +154,7 @@ class CommunityDiscussionVC: UIViewController {
         if segue.identifier == "discussionDetailSegue" {
             if let dest = segue.destination as? DetailDiscussionVC {
                let discussion = commDiscussions[selectedRow]
-                dest.theDiscussion = discussion
+                dest.discussion = discussion
             }
         }
     }

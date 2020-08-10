@@ -8,6 +8,12 @@
 
 import Foundation
 
-struct DiscussionComment {
+struct DiscussionComment: Codable {
+    
+    var id: Int
+    var user: UserFeeds
+    var discussion: Int
+    var comment: String
+    var date: String
     
 }
