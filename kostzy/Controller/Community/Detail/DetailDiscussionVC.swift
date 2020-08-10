@@ -25,7 +25,6 @@ class DetailDiscussionVC: UIViewController {
     @IBOutlet weak var replyButton: UIButton!
     
     var discussion: Discussion?
-    var comments = FeedComment.initData()
     var bottomConstraint: NSLayoutConstraint?
     var apiManager = BaseAPIManager()
     var defaults = UserDefaults.standard

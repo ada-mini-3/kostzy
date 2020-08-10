@@ -412,6 +412,20 @@ extension FeedsVC : UICollectionViewDelegate, UICollectionViewDataSource {
         }
     }
     
+    private func setupUserBadge(badge: UIImageView,feed: Feeds) {
+        if feed.user.exp <= 100 {
+            badge.image = #imageLiteral(resourceName: "Badge-100 Likes")
+        } else if feed.user.exp <= 200 {
+            badge.image = #imageLiteral(resourceName: "Badge-200 Likes")
+        } else if feed.user.exp <= 300 {
+            badge.image = #imageLiteral(resourceName: "Badge-300 Likes")
+        } else if feed.user.exp <= 400 {
+            badge.image = #imageLiteral(resourceName: "Badge-400 Likes")
+        } else if feed.user.exp >= 500 {
+            badge.image = #imageLiteral(resourceName: "Badge-500 Likes")
+        }
+    }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "feedCell", for: indexPath) as! FeedCell
         var feed = feedsData[indexPath.row]
@@ -473,6 +487,7 @@ extension FeedsVC : UICollectionViewDelegate, UICollectionViewDataSource {
         }
         
         setLikeButtonState(button: cell.likeButton, feed: feed)
+        setupUserBadge(badge: cell.userBadge, feed: feed)
         cell.configure()
         return cell
     }

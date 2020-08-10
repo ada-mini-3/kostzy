@@ -29,7 +29,6 @@ class FeedsDetailVC: UIViewController {
     @IBOutlet weak var replyButton: UIButton!
     
     var feeds : Feeds?
-    var comments = FeedComment.initData()
     var commentData: [FeedComment] =  []
     var bottomConstraint : NSLayoutConstraint?
     var apiManager = BaseAPIManager()

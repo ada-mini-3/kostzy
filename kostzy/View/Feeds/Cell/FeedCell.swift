@@ -24,7 +24,7 @@ class FeedCell: UICollectionViewCell, UICollectionViewDataSource {
     @IBOutlet weak var commentCount: UILabel!
     @IBOutlet weak var likeCount: UILabel!
     @IBOutlet weak var reportButton: UIButton!
-    
+    @IBOutlet weak var userBadge: UIImageView!
     
     //----------------------------------------------------------------
     // MARK:- Variables

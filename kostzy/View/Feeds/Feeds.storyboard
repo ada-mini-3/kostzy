@@ -240,6 +240,7 @@
                                             <outlet property="likeButton" destination="rAg-lZ-DgN" id="FyV-qK-een"/>
                                             <outlet property="likeCount" destination="Mkd-6t-6Ju" id="utb-lb-Euz"/>
                                             <outlet property="reportButton" destination="XFh-7g-fnO" id="ito-A9-3ka"/>
+                                            <outlet property="userBadge" destination="tS2-T6-PQk" id="StF-Uo-CCs"/>
                                             <outlet property="userImage" destination="DdF-2l-gIu" id="hpy-4j-ocW"/>
                                             <outlet property="userName" destination="ks5-br-w8N" id="bMx-3s-fXF"/>
                                         </connections>

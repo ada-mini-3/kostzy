@@ -13,20 +13,7 @@ struct UserFeeds: Codable {
     
     var name: String
     var image: String?
-    
-    init(name: String, image: String) {
-        self.name = name
-        self.image = image
-    }
-    
-    enum CodingKeys: String, CodingKey {
-        case name = "name"
-        case image = "image"
-    }
-    
-    static func initUser() -> UserFeeds {
-        return UserFeeds(name: "Desti", image: "destong")
-    }
+    let exp: Int
     
 }
 
