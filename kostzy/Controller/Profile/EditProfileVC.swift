@@ -27,36 +27,67 @@ class EditProfileVC: UIViewController, UIGestureRecognizerDelegate, UITextFieldD
     var profileTableVC: ProfileTableVC!
     var profileImagePicker: UIImagePickerController!
     let defaults = UserDefaults.standard
-    let profileImagePlaceholderImage = "Empty Profile Picture"
-    let aboutMeTextViewPlaceholderText = "Describe about yourself"
+    var nameText = ""
+    var apiManager = BaseAPIManager()
+    var imagePicked = false
+    var profile: Profile?
     
-    
-    //----------------------------------------------------------------
-    // MARK:- Action Methods
-    //----------------------------------------------------------------
     @IBAction func saveButton(_ sender: Any) {
-        var savedUserDataDict = defaults.dictionary(forKey: "userDataDict") ?? [String: Any]()
-        savedUserDataDict["userName"] = nameContent.text
-        savedUserDataDict["userDesc"] = aboutMeTextView.text
-        defaults.set(savedUserDataDict, forKey: "userDataDict")
-        print(savedUserDataDict)
+       // var savedUserDataDict = defaults.dictionary(forKey: "userDataDict") as? [String: String] ?? [String: String]()
         
-        saveImage(imageName: "profileImage", image: profileImageView.image!)
+//        savedUserDataDict["userName"] = nameContent.text
+//        savedUserDataDict["userDesc"] = txtContent.text
+//        defaults.set(savedUserDataDict, forKey: "userDataDict")
+      //  print(savedUserDataDict)
+        var payload: [String: Any] = [:]
+        let name = nameContent.text!
+        let about = aboutMeTextView.text ?? ""
         
-        performSegue(withIdentifier: "unwindProfile", sender: self)
-       // profileTableVC.tableView.reloadData()
-        //self.nameText = nameContent.text!
-        //performSegue(withIdentifier: "data", sender: self)
-        //self.navigationController?.dismiss(animated: true, completion: nil)
+        let token = "Token \(defaults.dictionary(forKey: "userToken")!["token"] as! String)"
+        let imageData = profileImageView.image?.pngData()
+        
+        if imagePicked == true {
+            if let image = imageData {
+                payload = ["name": name, "about": about, "image": image]
+            } else {
+                payload = ["name": name, "about": about, "image": ""]
+            }
+    
+        } else {
+             payload = ["name": name, "about": about]
+        }
+        
+        apiManager.performPatchUploadRequest(payload: payload, imageData: imageData!, url: "\(BaseAPIManager.authUrl)profile/", token: token) { (data, response, error) in
+            DispatchQueue.main.async {
+                if let response = response as? HTTPURLResponse {
+                    switch response.statusCode {
+                        case 200...299:
+                            self.performSegue(withIdentifier: "unwindProfile", sender: self)
+                        case 400:
+                            if let errName = data?["name"] as? [String] {
+                                self.setupAlert(msg: errName[0] + " (Name)")
+                            } else if let errImage = data?["image"] as? [String] {
+                                self.setupAlert(msg: errImage[0] + " (Image)")
+                            }
+                        default:
+                            print(data)
+                            self.setupAlert(msg: "Something's Wrong, Please Try Again Later")
+                    }
+                } else if let error = error {
+                    self.setupAlert(msg: error.localizedDescription)
+                }
+            }
+        }
     }
     
     
-    /*override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        var vc = segue.destination as! ProfileTableVC
-        vc.finalname = self.nameText
-    }*/
+    private func setupAlert(msg: String) {
+        let alert = UIAlertController(title: "Whoops!", message: msg, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alert, animated: true)
+    }
     
-    
+
     @IBAction func cancelButton(_ sender: Any) {
         let alert = UIAlertController(title: "Are you sure you want to cancel?", message: "Unsaved changes will be discarded", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
@@ -143,11 +174,14 @@ class EditProfileVC: UIViewController, UIGestureRecognizerDelegate, UITextFieldD
     }
     
     func setupTextField() {
-        let savedUserDataDict = defaults.dictionary(forKey: "userDataDict") ?? [String: Any]()
-        
         nameContent.delegate = self
         nameContent.keyboardType = .namePhonePad
-        nameContent.text = savedUserDataDict["userName"] as? String
+        
+        if let theProfile = profile {
+            nameContent.text = theProfile.name
+        } else {
+            nameContent.text = "Name"
+        }
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapView(gesture:)))
         let notificationCenter = NotificationCenter.default
@@ -183,6 +217,7 @@ class EditProfileVC: UIViewController, UIGestureRecognizerDelegate, UITextFieldD
         view.endEditing(true)
     }
     
+    
     func saveImage(imageName: String, image: UIImage) {
      guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
         let fileName = imageName
@@ -216,7 +251,7 @@ class EditProfileVC: UIViewController, UIGestureRecognizerDelegate, UITextFieldD
             let imageUrl = URL(fileURLWithPath: dirPath).appendingPathComponent(fileName)
             let image = UIImage(contentsOfFile: imageUrl.path)
             
-            return image ?? UIImage(named: profileImagePlaceholderImage)
+            return image ?? UIImage(named: "Empty Profile Picture")
         }
         
         return nil
@@ -277,19 +312,17 @@ class EditProfileVC: UIViewController, UIGestureRecognizerDelegate, UITextFieldD
 // MARK:- Text View Delegate
 //----------------------------------------------------------------
 extension EditProfileVC: UITextViewDelegate {
+    
     func setupTextView() {
-        let savedUserDataDict = defaults.dictionary(forKey: "userDataDict") ?? [String: Any]()
-        
         aboutMeTextView.delegate = self
         aboutMeTextView.tag = 0
         
-        if savedUserDataDict["userDesc"] == nil {
-            aboutMeTextView.text = aboutMeTextViewPlaceholderText
-            saveButtonOutlet.isEnabled = false
-        }
-        else {
-            aboutMeTextView.text = savedUserDataDict["userDesc"] as? String
+        if let theProfile = profile {
+            aboutMeTextView.text = theProfile.about
             saveButtonOutlet.isEnabled = true
+        } else {
+            aboutMeTextView.text = "About Me"
+            saveButtonOutlet.isEnabled = false
         }
         
         if isDarkMode {
@@ -305,7 +338,7 @@ extension EditProfileVC: UITextViewDelegate {
     
     func textViewDidBeginEditing(_ textView: UITextView) {
         if (textView.tag == 0) {
-            if aboutMeTextView.text == aboutMeTextViewPlaceholderText {
+            if aboutMeTextView.text == "About Me" {
                 aboutMeTextView.text = nil
                 
                 if isDarkMode {
@@ -332,7 +365,7 @@ extension EditProfileVC: UITextViewDelegate {
     
     func textViewDidEndEditing(_ textView: UITextView) {
         if aboutMeTextView.text.isEmpty {
-            aboutMeTextView.text = aboutMeTextViewPlaceholderText
+            aboutMeTextView.text = "About Me"
             
             if isDarkMode {
                 aboutMeTextView.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.5)
@@ -358,7 +391,7 @@ extension EditProfileVC: UITextViewDelegate {
     }
     
     func setSaveButtonState() {
-        if aboutMeTextView.text != aboutMeTextViewPlaceholderText &&
+        if aboutMeTextView.text != "About Me" &&
             !aboutMeTextView.text.isEmpty {
                 saveButtonOutlet.isEnabled = true
         }
@@ -383,7 +416,7 @@ extension EditProfileVC: UIImagePickerControllerDelegate, UINavigationController
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-
+        imagePicked = true
         picker.dismiss(animated: true, completion: nil)
         guard let image = info[.editedImage] as? UIImage else { return }
         self.profileImageView.image = image

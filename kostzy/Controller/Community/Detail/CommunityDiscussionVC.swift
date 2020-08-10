@@ -32,8 +32,10 @@ class CommunityDiscussionVC: UIViewController {
     var height: CGFloat!
     var discussionTableHeightConstraint: NSLayoutConstraint!
     var selectedRow: Int = 0
-    
-    
+    var communityId: Int?
+    var apiManager = BaseAPIManager()
+    let defaults = UserDefaults.standard
+    var commDiscussions: [Discussion] = []
     //----------------------------------------------------------------
     // MARK:- Memory Management Methods
     //----------------------------------------------------------------
@@ -46,8 +48,9 @@ class CommunityDiscussionVC: UIViewController {
     //----------------------------------------------------------------
     // MARK:- Action Methods
     //----------------------------------------------------------------
-    @IBAction func newDiscussionButtonAction(_ sender: Any) {
-        performSegue(withIdentifier: "newDiscussionSegue", sender: self)
+    
+    @IBAction func createDiscussionAction(_ sender: Any) {
+        performSegue(withIdentifier: "createDiscussionSegue", sender: self)
     }
     
     
@@ -82,6 +85,90 @@ class CommunityDiscussionVC: UIViewController {
         })
     }
     
+    private func setupDiscussionData() {
+        guard let token = defaults.dictionary(forKey: "userToken") else { return }
+        let theToken = "Token \(token["token"]!)"
+        guard let id = communityId else { return }
+        apiManager.performGenericFetchRequest(urlString: "\(apiManager.baseUrl)discussion/?community=\(id)",
+            token: theToken,
+            errorMsg: {
+            print("Error gan")
+        }) { (discussions: [Discussion]) in
+            DispatchQueue.main.async {
+                print("Sukses")
+                self.commDiscussions = discussions
+                self.discussionTableView.reloadData()
+            }
+        }
+    }
+    
+    private func setupDiscussionLikeApi(discussionId: Int) {
+        guard let token = defaults.dictionary(forKey: "userToken") else { return }
+        let theToken = "Token \(token["token"]!)"
+        let payload = ["discussion": discussionId]
+        apiManager.performPostRequest(payload: payload, url: "\(apiManager.baseUrl)discussion-like/", token: theToken) { (data, response, error) in
+            DispatchQueue.main.async {
+                if let response = response as? HTTPURLResponse {
+                    switch response.statusCode {
+                    case 200...299:
+                        print("Success Like Discussion")
+                        break
+                    case 400:
+                        self.setupAlert(msg: "Something went wrong, please try again later")
+                        break
+                    default:
+                        print(response.statusCode)
+                        self.setupAlert(msg: "Error Like Discussion")
+                    }
+                } else if let error = error {
+                    self.setupAlert(msg: error.localizedDescription)
+                }
+            }
+        }
+    }
+    
+    private func setupDiscussionDislikeApi(likeId: Int) {
+        guard let token = defaults.dictionary(forKey: "userToken") else { return }
+        let theToken = "Token \(token["token"]!)"
+        apiManager.performDeleteRequest(url: "\(apiManager.baseUrl)discussion-like/\(likeId)/", token: theToken) { (response, error) in
+            DispatchQueue.main.async {
+                if let response = response as? HTTPURLResponse {
+                    switch response.statusCode {
+                    case 200...299:
+                        print("Success Dislike Discussion")
+                        break
+                    default:
+                        self.setupAlert(msg: "Something went wrong, please try again later")
+                        break
+                    }
+                } else if let error = error {
+                    self.setupAlert(msg: error.localizedDescription)
+                }
+            }
+        }
+    }
+    
+    private func setupAlert(msg: String) {
+        let alert = UIAlertController(title: "Whoops!", message: msg, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alert, animated: true)
+    }
+    
+    private func setLikeButtonState(button: UIButton, discussion: Discussion) {
+        if discussion.likeStatus == true {
+                button.setImage(UIImage(systemName: "hand.thumbsup.fill"), for: .normal)
+                button.tintColor = UIColor(red: 255/255, green: 183/255, blue: 0/255, alpha: 1)
+        } else if discussion.likeStatus == false {
+            button.setImage(UIImage(systemName: "hand.thumbsup"), for: .normal)
+            if isDarkMode == true {
+                button.tintColor = UIColor.white
+            } else {
+                button.tintColor = UIColor.black
+            }
+        }
+    }
+    
+    
     
     //----------------------------------------------------------------
     // MARK:- View Life Cycle Methods
@@ -89,7 +176,6 @@ class CommunityDiscussionVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
     }
     
@@ -103,7 +189,7 @@ class CommunityDiscussionVC: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+        setupDiscussionData()
         DispatchQueue.main.async(execute: {
             self.discussionTableView.reloadData()
 
@@ -119,7 +205,6 @@ class CommunityDiscussionVC: UIViewController {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         discussionTableView.reloadData()
     }
-    
 
     /*
     // MARK: - Navigation
@@ -134,9 +219,8 @@ class CommunityDiscussionVC: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "discussionDetailSegue" {
             if let dest = segue.destination as? DetailDiscussionVC {
-                dest.uName = memberName[selectedRow]
-                dest.uImage = UIImage(named: memberImage[selectedRow])
-                dest.discussion = discussion[selectedRow]
+               let discussion = commDiscussions[selectedRow]
+                dest.discussion = discussion
             }
         }
     }
@@ -157,7 +241,6 @@ extension CommunityDiscussionVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         selectedRow = indexPath.row
-        print(selectedRow)
         performSegue(withIdentifier: "discussionDetailSegue", sender: self)
     }
 
@@ -166,18 +249,17 @@ extension CommunityDiscussionVC: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return discussion.count
+        return commDiscussions.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CommunityDiscussionCell", for: indexPath) as! CommunityDiscussionCell
-
+        var discussion = commDiscussions[indexPath.row]
         // Configure the cell...
         if isDarkMode == true {
             cell.contentView.backgroundColor = .systemBackground
             cell.discussionView.backgroundColor = .systemGray5
-        }
-        else {
+        } else {
             cell.contentView.backgroundColor = .systemBackground
             cell.discussionView.backgroundColor = #colorLiteral(red: 0.9803921569, green: 0.9803921569, blue: 0.9921568627, alpha: 1)
             cell.discussionView.shadowColor = .black
@@ -187,11 +269,35 @@ extension CommunityDiscussionVC: UITableViewDataSource, UITableViewDelegate {
         }
         cell.discussionView.cornerRadius = 10
         
-        cell.memberImageView.image = UIImage(named: memberImage[indexPath.row])
-        cell.memberNameLabel.text = memberName[indexPath.row]
-        cell.discussionLabel.text = discussion[indexPath.row]
-        cell.commentCountLabel.text = "\(commentCount[indexPath.row]) Comments"
-        cell.likeCountLabel.text = "\(likeCount[indexPath.row]) Likes"
+       // cell.memberImageView.image = UIImage(named: memberImage[indexPath.row])
+        if let userImage = discussion.user.image {
+            cell.memberImageView.loadImageFromUrl(url: URL(string: userImage)!)
+        } else {
+            cell.memberImageView.image = #imageLiteral(resourceName: "Empty Profile Picture")
+        }
+        
+        cell.likeAction = {() in
+            if discussion.likeStatus == false {
+                discussion.likeStatus = true
+                cell.likeCountLabel.text = "\(discussion.likeCount+1) Likes"
+                self.setupDiscussionLikeApi(discussionId: discussion.id)
+            } else {
+                discussion.likeStatus = false
+                cell.likeCountLabel.text = "\(discussion.likeCount-1) Likes"
+                self.setupDiscussionDislikeApi(likeId: discussion.like!.id)
+            }
+            self.setLikeButtonState(button: cell.likeButton, discussion: discussion)
+        }
+        
+        cell.commentAction = {() in
+            self.performSegue(withIdentifier: "discussionDetailSegue", sender: self)
+        }
+    
+        setLikeButtonState(button: cell.likeButton, discussion: discussion)
+        cell.memberNameLabel.text = discussion.user.name
+        cell.discussionLabel.text = discussion.text
+        cell.commentCountLabel.text = "\(discussion.commentCount) Comments"
+        cell.likeCountLabel.text = "\(discussion.likeCount) Likes"
 
         return cell
     }

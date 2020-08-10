@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17147" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Ic2-hJ-im9">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Ic2-hJ-im9">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17120"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -38,7 +36,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="ZRH-KJ-S0s">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <sections>
                             <tableViewSection id="qn0-EJ-G5s">
                                 <cells>
@@ -49,20 +47,20 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="204"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Photo Profile (Dummy Data)" translatesAutoresizingMaskIntoConstraints="NO" id="eNW-D6-cCf">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Empty Profile Picture" translatesAutoresizingMaskIntoConstraints="NO" id="eNW-D6-cCf">
                                                     <rect key="frame" x="166.5" y="20" width="81" height="81"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="81" id="HV9-sS-SHC"/>
                                                         <constraint firstAttribute="height" constant="81" id="JA4-TO-OvB"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="User Full Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rgp-FF-L6k">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-------" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rgp-FF-L6k">
                                                     <rect key="frame" x="16" y="109" width="382" height="20"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HIr-bS-ZaL" customClass="DesignableButton" customModule="kostzy" customModuleProvider="target">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HIr-bS-ZaL" customClass="DesignableButton" customModule="kostzy" customModuleProvider="target">
                                                     <rect key="frame" x="152" y="159" width="110" height="25"/>
                                                     <color key="backgroundColor" red="1" green="0.74117647060000003" blue="0.086274509799999996" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
@@ -79,7 +77,7 @@
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                     <connections>
-                                                        <segue destination="LzT-cx-Ack" kind="presentation" identifier="data" id="XDM-i2-0D8"/>
+                                                        <action selector="editProfileClicked:" destination="zux-8A-GGn" eventType="touchUpInside" id="jBO-Kc-S3x"/>
                                                     </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="User Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WWe-oB-Fvo">
@@ -122,7 +120,7 @@
                                             <subviews>
                                                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="BCY-hy-paF">
                                                     <rect key="frame" x="0.0" y="0.0" width="414" height="125"/>
-                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="125" id="6jV-Jj-w9k"/>
                                                     </constraints>
@@ -441,7 +439,7 @@
                                                 </label>
                                                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="dgt-kk-OUW" customClass="MyCommunityTable" customModule="kostzy" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="42" width="414" height="133"/>
-                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                     <prototypes>
                                                         <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MyCommunityCell" rowHeight="80" id="wTX-0W-4df" customClass="MyCommunityCell" customModule="kostzy" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="28" width="414" height="80"/>
@@ -513,6 +511,7 @@
                         <outlet property="profileImage" destination="eNW-D6-cCf" id="L0V-kw-N3q"/>
                         <outlet property="profileNameLabel" destination="rgp-FF-L6k" id="nfv-H2-1Ht"/>
                         <outlet property="profileTitleLabel" destination="WWe-oB-Fvo" id="qJ0-cP-O2z"/>
+                        <segue destination="LzT-cx-Ack" kind="show" identifier="editProfileSegue" id="9Ws-ey-wrN"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BZW-wQ-OQ4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -530,22 +529,14 @@
             <point key="canvasLocation" x="1897" y="45"/>
         </scene>
     </scenes>
-    <designables>
-        <designable name="HIr-bS-ZaL">
-            <size key="intrinsicContentSize" width="72" height="28"/>
-        </designable>
-    </designables>
     <resources>
         <image name="Badge-100 Likes" width="39" height="42"/>
         <image name="Badge-200 Likes" width="39" height="42"/>
         <image name="Badge-300 Likes" width="39" height="42"/>
         <image name="Badge-400 Likes" width="39" height="42"/>
         <image name="Badge-500 Likes" width="39" height="42"/>
-        <image name="Photo Profile (Dummy Data)" width="83" height="83"/>
+        <image name="Empty Profile Picture" width="81" height="81"/>
         <image name="Profile Page Selected" width="21" height="26"/>
         <image name="Profile Page Unselected" width="22" height="26"/>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
     </resources>
 </document>

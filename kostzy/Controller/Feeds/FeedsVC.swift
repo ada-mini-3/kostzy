@@ -10,6 +10,7 @@ import CoreLocation
 import UIKit
 import MapKit
 
+let profileImageCache = NSCache<NSString, UIImage>()
 
 //----------------------------------------------------------------
 // MARK: - NoSwipeSegmendtedControl
@@ -47,13 +48,11 @@ class FeedsVC: UIViewController, MKMapViewDelegate {
     //----------------------------------------------------------------
     let defaults = UserDefaults.standard
     
+    var apiManager = BaseAPIManager()
     var location : Location?
-    var feedsInfo = Feeds.initData()
-    var feedsFood = Feeds.initFeedCatData()
-    var feedsExp = Feeds.initFeedExpData()
-    var feedsHangouts = Feeds.initFeedHangoutsData()
+    var feedsData: [Feeds] = []
+    var category = 1
     
-    lazy var feedsToDisplay = feedsInfo
     var locationManager : CLLocationManager?
     
     
@@ -62,22 +61,102 @@ class FeedsVC: UIViewController, MKMapViewDelegate {
     //----------------------------------------------------------------
     @IBAction func unwindToFeeds(_ sender: UIStoryboardSegue) {
         setupButtonToLocation()
-        segmentedCategory.selectedSegmentIndex = 0
-        changeSegmentedImage()
-        feedsToDisplay = feedsInfo
-        feedsCollectionView.reloadData()
+        setupRefreshControl()
+        setupFeedsData()
+        setupLocationManager()
+        setupCollectionViewBg()
     }
     
-    @IBAction func changeCategory(_ sender: NoSwipeSegmentedControl) {
-        changeSegmentedImage()
-        filterFeedBasedOnCategory()
-        feedsCollectionView.reloadData()
+    private func setupFeedsData() {
+        self.actityIndicator.isHidden = false
+        self.actityIndicator.startAnimating()
+        var theToken = ""
+        if let token = defaults.dictionary(forKey: "userToken") {
+            theToken = "Token \(token["token"]!)"
+        }
+        apiManager.performGenericFetchRequest(urlString: "\(apiManager.baseUrl)feeds/?category=\(category)",
+            token: theToken,
+            errorMsg: {
+                self.setEmptyMessage("Feeds aren't loading right now, Try Again")
+        },
+            completion: { (feeds: [Feeds]) in
+            DispatchQueue.main.async {
+                self.actityIndicator.stopAnimating()
+                self.refreshControl.endRefreshing()
+                self.actityIndicator.isHidden = true
+                self.feedsData = feeds
+                self.feedsCollectionView.dataSource = self
+                self.feedsCollectionView.delegate = self
+                self.feedsCollectionView.reloadData()
+            }
+        })
     }
     
+    private func setupFeedLikeApi(button: UIButton, feed: Feeds) {
+        guard let token = defaults.dictionary(forKey: "userToken") else {
+            setupLoginPage()
+            return
+        }
+        let payload = ["feed": feed.id]
+        apiManager.performPostRequest(payload: payload, url: "\(apiManager.baseUrl)likes/",
+        token: "Token \(token["token"]!)") { (data, response, error) in
+            DispatchQueue.main.async {
+                if let response = response as? HTTPURLResponse {
+                    switch response.statusCode {
+                    case 200...299:
+                        print("Like Success")
+                        break
+                    default:
+                        print(response.statusCode)
+                        self.setupAlert(msg: "Something went wrong, please try again later")
+                        break
+                    }
+                } else if let error = error {
+                    self.setupAlert(msg: error.localizedDescription)
+                }
+            }
+        }
+        
+    }
     
-    //----------------------------------------------------------------
-    // MARK: - Custom Methods
-    //----------------------------------------------------------------
+    private func setupFeedDislikeApi(likeId: Int) {
+        guard let token = defaults.dictionary(forKey: "userToken") else {
+            setupLoginPage()
+            return
+        }
+        let theToken = "Token \(token["token"]!)"
+        apiManager.performDeleteRequest(url: "\(apiManager.baseUrl)likes/\(likeId)/", token: theToken) { (response, error) in
+            DispatchQueue.main.async {
+                if let response = response as? HTTPURLResponse {
+                    switch response.statusCode {
+                    case 200...299:
+                        print("Success Dislike Feed")
+                        break
+                    default:
+                        print(response.statusCode)
+                        self.setupAlert(msg: "Something went wrong, please try again later")
+                        break
+                    }
+                } else if let error = error {
+                    self.setupAlert(msg: error.localizedDescription)
+                }
+            }
+        }
+    }
+    
+    private func setupAlert(title: String =  "Whoops!", msg: String) {
+        let alert = UIAlertController(title: title, message: msg, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alert, animated: true)
+    }
+    
+    private func setupLoginPage() {
+        let storyboard = UIStoryboard(name: "Login", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "NavigationController") as! UINavigationController
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true, completion: nil)
+    }
+    
     private func setupCollectionViewBg() {
         if isDarkMode == true {
             feedsCollectionView.backgroundColor = UIColor(red: 10/255, green: 10/255, blue: 10/255, alpha: 1)
@@ -111,17 +190,6 @@ class FeedsVC: UIViewController, MKMapViewDelegate {
         mapItem.openInMaps(launchOptions: options)
     }
     
-    private func setupIndicator() {
-        actityIndicator.startAnimating()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            self.actityIndicator.stopAnimating()
-            self.actityIndicator.isHidden = true
-            self.feedsCollectionView.dataSource = self
-            self.feedsCollectionView.delegate = self
-            self.feedsCollectionView.reloadData()
-        }
-    }
-    
     private func setupRefreshControl() {
         if #available(iOS 10.0, *) {
             feedsCollectionView.refreshControl = refreshControl
@@ -130,12 +198,11 @@ class FeedsVC: UIViewController, MKMapViewDelegate {
         }
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         refreshControl.attributedTitle = NSAttributedString(string: "Fetching New Post ...", attributes: nil)
-
     }
     
     @objc func refresh(){
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            self.refreshControl.endRefreshing()
+            self.setupFeedsData()
         }
     }
     
@@ -182,7 +249,6 @@ class FeedsVC: UIViewController, MKMapViewDelegate {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 for i in 0...(segmentControl.numberOfSegments-1)  {
                     let backgroundSegmentView = segmentControl.subviews[i]
-                    //it is not enogh changing the background color. It has some kind of shadow layer
                     backgroundSegmentView.isHidden = true
                 }
             }
@@ -203,16 +269,27 @@ class FeedsVC: UIViewController, MKMapViewDelegate {
         
     }
     
+    
+    @IBAction func changeCategory(_ sender: UISegmentedControl) {
+        changeSegmentedImage()
+        filterFeedBasedOnCategory()
+        self.feedsData.removeAll()
+        self.feedsCollectionView.dataSource = nil
+        self.feedsCollectionView.delegate = nil
+        feedsCollectionView.reloadData()
+        setupFeedsData()
+    }
+    
     private func filterFeedBasedOnCategory() {
         switch segmentedCategory.selectedSegmentIndex {
             case 0:
-                feedsToDisplay = feedsInfo
+                category = 1
             case 1:
-                feedsToDisplay = feedsFood
+                category = 2
             case 2:
-                feedsToDisplay = feedsExp
+                category = 3
             default:
-                feedsToDisplay = feedsHangouts
+                category = 4
         }
     }
     
@@ -241,27 +318,64 @@ class FeedsVC: UIViewController, MKMapViewDelegate {
         }
     }
     
+    func setEmptyMessage(_ message: String) {
+         let messageLabel = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 30))
+
+         messageLabel.text = message
+         messageLabel.textColor = .black
+         messageLabel.numberOfLines = 0
+         messageLabel.textAlignment = .center
+         messageLabel.font = UIFont.systemFont(ofSize: 17, weight: .regular)
+         messageLabel.sizeToFit()
+         messageLabel.clipsToBounds = true
+
+         self.feedsCollectionView.backgroundView = messageLabel
+     }
+    
+    
+    func cacheProfileImageFromUrl() {
+        guard let token = defaults.dictionary(forKey: "userToken") else { return }
+        let theToken = "Token \(token["token"]!)"
+        if profileImageCache.object(forKey: "imageProfile") == nil {
+            apiManager.performGenericFetchRequest(urlString: "\(BaseAPIManager.authUrl)profile/",
+                token: theToken,
+                errorMsg: {
+                self.setupAlert(msg: "Something went wrong")
+            }) { (profle: Profile) in
+                DispatchQueue.main.async {
+                    if let image = profle.image {
+                        let imageData = try? Data(contentsOf: URL(string: image)!)
+                        if let data = imageData {
+                            if let theImage = UIImage(data: data) {
+                                print("Sampe gak")
+                                profileImageCache.setObject(theImage, forKey: "imageProfile")
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
     
     //----------------------------------------------------------------
     // MARK:- View Life Cycle Methods
     //----------------------------------------------------------------
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        cacheProfileImageFromUrl()
         setupNavigationBarItem()
         setupSegmentedControl()
         setupButtonToLocation()
         setupRefreshControl()
-        setupIndicator()
         setupLocationManager()
         setupCollectionViewBg()
-        
+        setupFeedsData()
         flowLayout.estimatedItemSize = CGSize(width: 342, height: 266)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
         feedsCollectionView.reloadData()
     }
     
@@ -307,11 +421,11 @@ extension FeedsVC : UICollectionViewDelegate, UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-         performSegue(withIdentifier: "detailFeedSegue", sender: feedsToDisplay[indexPath.row])
+         performSegue(withIdentifier: "detailFeedSegue", sender: feedsData[indexPath.row])
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        feedsToDisplay.count
+        feedsData.count
     }
     
     private func setupReportAlert() {
@@ -325,10 +439,9 @@ extension FeedsVC : UICollectionViewDelegate, UICollectionViewDataSource {
     
     private func setLikeButtonState(button: UIButton, feed: Feeds) {
         if feed.likeStatus == true {
-            button.setImage(UIImage(systemName: "hand.thumbsup.fill"), for: .normal)
-            button.tintColor = UIColor(red: 255/255, green: 183/255, blue: 0/255, alpha: 1)
-            }
-        else {
+                button.setImage(UIImage(systemName: "hand.thumbsup.fill"), for: .normal)
+                button.tintColor = UIColor(red: 255/255, green: 183/255, blue: 0/255, alpha: 1)
+        } else if feed.likeStatus == false {
             button.setImage(UIImage(systemName: "hand.thumbsup"), for: .normal)
             if isDarkMode == true {
                 button.tintColor = UIColor.white
@@ -338,60 +451,82 @@ extension FeedsVC : UICollectionViewDelegate, UICollectionViewDataSource {
         }
     }
     
+    private func setupUserBadge(badge: UIImageView,feed: Feeds) {
+        if feed.user.exp <= 100 {
+            badge.image = #imageLiteral(resourceName: "Badge-100 Likes")
+        } else if feed.user.exp <= 200 {
+            badge.image = #imageLiteral(resourceName: "Badge-200 Likes")
+        } else if feed.user.exp <= 300 {
+            badge.image = #imageLiteral(resourceName: "Badge-300 Likes")
+        } else if feed.user.exp <= 400 {
+            badge.image = #imageLiteral(resourceName: "Badge-400 Likes")
+        } else if feed.user.exp >= 500 {
+            badge.image = #imageLiteral(resourceName: "Badge-500 Likes")
+        }
+    }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "feedCell", for: indexPath) as! FeedCell
-        var feed = feedsToDisplay[indexPath.row]
-        
+        var feed = feedsData[indexPath.row]
         if isDarkMode == true {
             cell.contentView.backgroundColor = UIColor(red: 29/255, green: 29/255, blue: 29/255, alpha: 1)
             cell.feedLocation.setTitleColor(.white, for: .normal)
-            cell.feedLocationImageView.tintColor = .white
             cell.commentButton.tintColor = .white
             cell.likeButton.tintColor = .white
             cell.reportButton.setImage(UIImage(named: "Report"), for: .normal)
         } else {
             cell.contentView.backgroundColor = .white
             cell.feedLocation.setTitleColor(#colorLiteral(red: 0.1462399662, green: 0.1462444067, blue: 0.1462419927, alpha: 0.71), for: .normal)
-            cell.feedLocationImageView.tintColor = #colorLiteral(red: 0.1462399662, green: 0.1462444067, blue: 0.1462419927, alpha: 0.71)
             cell.commentButton.tintColor = .black
         }
         
         cell.userName.text = feed.user.name
-        cell.userImage.image = feed.user.image
         
-        if feed.location == nil {
+        if let userImage = feed.user.image {
+            cell.userImage.loadImageFromUrl(url: URL(string: userImage)!)
+        } else {
+            cell.userImage.image = UIImage(named: "Empty Profile Picture")
+        }
+        
+        
+        if feed.location == "" {
             cell.feedLocation.isHidden = true
         } else {
+            cell.feedLocation.isHidden = false
             cell.feedLocation.setTitle(feed.location, for: .normal)
         }
+        
         cell.feed.text = feed.feed
         cell.tags = feed.tags
         cell.likeCount.text = "\(feed.likeCount) Likes"
         cell.commentCount.text = "\(feed.commentCount) Comments"
         cell.commentTapAction = {() in
-            self.performSegue(withIdentifier: "detailFeedSegue", sender: self.feedsInfo[indexPath.row])
-        }
-        cell.locationTapAction = {() in
-            print("Location Clicked!!")
-            self.openMapForPlace()
-            
+            self.performSegue(withIdentifier: "detailFeedSegue", sender: self.feedsData[indexPath.row])
         }
         
+        cell.locationTapAction = {() in
+            self.openMapForPlace()
+        }
+    
         cell.reportTapAction = {() in
             self.setupReportAlert()
         }
-        
+    
         cell.likeTapAction = {() in
             if feed.likeStatus == false {
+                self.setupFeedLikeApi(button: cell.likeButton, feed: feed)
                 feed.likeStatus = true
+                cell.likeCount.text = "\(feed.likeCount + 1) Likes"
             } else {
+                self.setupFeedDislikeApi(likeId: feed.like!.id)
                 feed.likeStatus = false
+                cell.likeCount.text = "\(feed.likeCount - 1) Likes"
             }
             self.setLikeButtonState(button: cell.likeButton, feed: feed)
         }
         
         setLikeButtonState(button: cell.likeButton, feed: feed)
-        
+        setupUserBadge(badge: cell.userBadge, feed: feed)
         cell.configure()
         return cell
     }

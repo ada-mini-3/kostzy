@@ -10,6 +10,7 @@ import UIKit
 
 class FeedsCreateVC: UIViewController {
     
+    
     //----------------------------------------------------------------
     // MARK:- Outlets
     //----------------------------------------------------------------
@@ -26,9 +27,10 @@ class FeedsCreateVC: UIViewController {
     @IBOutlet weak var kostNameTextView: UITextView!
     
     @IBOutlet weak var locationName: UILabel!
+    @IBOutlet weak var addPhoto: UIView!
+    
     @IBOutlet weak var mapView: UIView!
     
-    @IBOutlet weak var addPhoto: UIView!
     @IBOutlet weak var addPhotoButtonOutlet: UIButton!
     @IBOutlet weak var photoImageView: UIImageView!
     
@@ -57,6 +59,9 @@ class FeedsCreateVC: UIViewController {
     let hangoutTags = Tag.initHangoutsTag()
     let expTags = Tag.initExpTag()
     lazy var displayedTags = infoTags
+    let defaults = UserDefaults.standard
+    let apiManager = BaseAPIManager()
+    var tagsId: [Int] = []
     
     var toolbar = UIToolbar()
     var photoImagePicker: UIImagePickerController!
@@ -104,6 +109,7 @@ class FeedsCreateVC: UIViewController {
     //----------------------------------------------------------------
     func setupKeyboardDismissal() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapView(gesture:)))
+        tapGesture.cancelsTouchesInView = false
         let notificationCenter = NotificationCenter.default
         
         view.addGestureRecognizer(tapGesture)
@@ -138,6 +144,7 @@ class FeedsCreateVC: UIViewController {
             charCountLabel.textColor = #colorLiteral(red: 0.2352941176, green: 0.2352941176, blue: 0.262745098, alpha: 0.5)
         }
     }
+    
     
     fileprivate func setupCollectionViewData() {
         switch catId {
@@ -220,6 +227,40 @@ class FeedsCreateVC: UIViewController {
         performSegue(withIdentifier: "mapSegue" , sender: self)
     }
     
+    
+    private func setupPickerView() {
+        categoryPicker = UIPickerView.init()
+        categoryPicker.autoresizingMask = .flexibleWidth
+        if isDarkMode == true {
+            categoryPicker.backgroundColor = UIColor.black
+        } else {
+            categoryPicker.backgroundColor = UIColor.white
+        }
+        categoryPicker.contentMode = .center
+        categoryPicker.frame = CGRect.init(x: 0.0, y: UIScreen.main.bounds.size.height - 350, width: UIScreen.main.bounds.size.width, height: 300)
+        categoryPicker.selectedRow(inComponent: 0)
+        
+        toolbar = UIToolbar.init(frame: CGRect.init(x: 0.0, y: UIScreen.main.bounds.size.height - 350, width: UIScreen.main.bounds.size.width, height: 50))
+        toolbar.barStyle = .default
+        toolbar.setItems([UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(pickerViewDoneButtonClicked))], animated: false)
+        toolbar.tintColor = UIColor(red: 255.0/255, green: 184.0/255, blue: 0.0/255, alpha: 1)
+        categoryPicker.delegate = self
+        categoryPicker.dataSource = self
+        self.view.addSubview(categoryPicker)
+        self.view.addSubview(toolbar)
+    }
+    
+    @objc func pickerViewDoneButtonClicked() {
+        categoryPicker.removeFromSuperview()
+        toolbar.removeFromSuperview()
+    }
+    
+    private func setupProfilePicture() {
+        profilePhoto.layer.cornerRadius = profilePhoto.frame.height / 2
+        profilePhoto.clipsToBounds = true
+    }
+
+    
     private func setupCancelButton() {
         let attributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17, weight: .medium)]
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain , target: self, action: #selector(cancelClicked))
@@ -234,8 +275,51 @@ class FeedsCreateVC: UIViewController {
         postButtonState()
     }
     
+    
+    func postFeedApi() {
+        let payload = ["feed": feedTextView.text ?? "", "category": catId ?? 1,
+                       "lat": 0, "long": 0, "location_name": locationString ?? "",
+                       "tags": tagsId] as [String : Any]
+        
+        let token = "Token \(defaults.dictionary(forKey: "userToken")!["token"] as! String)"
+        apiManager.performPostRequest(payload: payload, url: "\(apiManager.baseUrl)feeds/",
+            token: token)
+        { (data, response, error) in
+            DispatchQueue.main.async {
+                if let response =  response as? HTTPURLResponse {
+                    switch response.statusCode {
+                       case 201:
+                            self.performSegue(withIdentifier: "unwindFeeds", sender: self)
+                           break
+                        
+                       case 400:
+                           if let feedErr = data?["feed"] as? [String] {
+                               self.setupAlert(msg: "\(feedErr[0]) (Feed)")
+                           } else if let catErr = data?["category"] as? [String] {
+                               self.setupAlert(msg: "\(catErr[0]) (Category)")
+                           }
+                            break
+                        
+                       default:
+                            print(response.statusCode)
+                           self.setupAlert(msg: "Something Wrong, Try Again Later")
+                           break
+                    }
+                } else if let error = error {
+                    self.setupAlert(msg: error.localizedDescription)
+                }
+            }
+        }
+    }
+        
+    private func setupAlert(msg: String) {
+        let alert = UIAlertController(title: "Whoops!", message: msg, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alert, animated: true)
+    }
+    
     @objc private func postFeed() {
-        performSegue(withIdentifier: "unwindFeeds", sender: self)
+       postFeedApi()
     }
     
     private func postButtonState() {
@@ -281,7 +365,9 @@ class FeedsCreateVC: UIViewController {
     }
     
     func setupImageView() {
-        profilePhoto.image = loadImageFromDiskWith(fileName: "profileImage")
+        if let image = profileImageCache.object(forKey: "imageProfile") {
+            profilePhoto.image = image
+        }
         profilePhoto.layer.borderWidth = 1
         profilePhoto.layer.masksToBounds = false
         profilePhoto.layer.borderColor = UIColor.lightGray.cgColor
@@ -325,6 +411,7 @@ class FeedsCreateVC: UIViewController {
         tagCollectionView.delegate = self
         tagCollectionView.dataSource = self
         tagCollectionView.allowsMultipleSelection = true
+        
         feedTextView.delegate = self
         
         navigationItem.rightBarButtonItem?.isEnabled = false
@@ -334,7 +421,6 @@ class FeedsCreateVC: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
         setupDiscussionImagePicker()
     }
     
@@ -348,19 +434,19 @@ class FeedsCreateVC: UIViewController {
     //----------------------------------------------------------------
     // MARK:- Segue Preparation
     //----------------------------------------------------------------
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "unwindFeeds" {
-            if let dest = segue.destination as? FeedsVC {
-                let newFeeds = Feeds(user: User.initUser(), time: Date(), location: locationString, feed: feedTextView.text, tags: newTag, likeCount: 0, commentCount: 0, category: catId!, likeStatus: false)
-            switch catId {
-                case 1:
-                    dest.feedsInfo.insert(newFeeds, at: 0)
-                default:
-                    dest.feedsFood.insert(newFeeds, at: 0)
-                }
-            }
-        }
-    }
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.identifier == "unwindFeeds" {
+//            if let dest = segue.destination as? FeedsVC {
+//                let newFeeds = Feeds(user: UserFeeds.initUser(), time: "2019-10-07", location: locationString, feed: feedTextView.text, tags: newTag, likeCount: 0, commentCount: 0, category: catId!, likeStatus: false)
+//            switch catId {
+//                case 1:
+//                    dest.feedsInfo.insert(newFeeds, at: 0)
+//                default:
+//                    dest.feedsFood.insert(newFeeds, at: 0)
+//                }
+//            }
+//        }
+//    }
 
 }
 
@@ -369,6 +455,7 @@ class FeedsCreateVC: UIViewController {
 // MARK:- Picker View Delegate
 //----------------------------------------------------------------
 extension FeedsCreateVC: UIPickerViewDelegate, UIPickerViewDataSource {
+    
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
@@ -394,30 +481,34 @@ extension FeedsCreateVC: UIPickerViewDelegate, UIPickerViewDataSource {
 // MARK:- Collection View Delegate
 //----------------------------------------------------------------
 extension FeedsCreateVC: UICollectionViewDelegate, UICollectionViewDataSource {
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         displayedTags.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = tagCollectionView.dequeueReusableCell(withReuseIdentifier: "tagCreateCell", for: indexPath) as! FeedTagsCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "tagCreateCell", for: indexPath) as! FeedTagsCell
         cell.tagCreateName.text = displayedTags[indexPath.row].name
         return cell
     }
     
-    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let cell = tagCollectionView.cellForItem(at: indexPath)
+        let cell = collectionView.cellForItem(at: indexPath)
         if cell?.isSelected == true {
-            cell?.backgroundColor = displayedTags[indexPath.row].color
+            cell?.backgroundColor = UIColor.hexStringToUIColor(hex: displayedTags[indexPath.row].color)
             newTag.append(displayedTags[indexPath.row])
+            tagsId.append(displayedTags[indexPath.row].id)
+            print(tagsId)
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        let cell = tagCollectionView.cellForItem(at: indexPath)
+        let cell = collectionView.cellForItem(at: indexPath)
         cell?.backgroundColor = UIColor.lightGray
         if let idx = newTag.firstIndex(where: {$0.name == infoTags[indexPath.row].name}) {
             newTag.remove(at: idx)
+            tagsId.remove(at: idx)
+            print(tagsId)
         }
     }
 }
@@ -438,6 +529,7 @@ extension FeedsCreateVC: UITextFieldDelegate {
 // MARK:- Text View Delegate
 //----------------------------------------------------------------
 extension FeedsCreateVC: UITextViewDelegate {
+    
     func setupTextView() {
         feedTextView.delegate = self
         kostNameTextView.delegate = self
@@ -463,6 +555,7 @@ extension FeedsCreateVC: UITextViewDelegate {
         
         kostNameTextView.font = UIFont.systemFont(ofSize: 16, weight: .light)
         kostNameTextView.addDoneButton(title: "Done", target: self, selector: #selector(tapDone(sender:)))
+        
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {

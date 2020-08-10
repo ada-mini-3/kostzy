@@ -23,7 +23,7 @@ class LoginVC: UIViewController, UITextFieldDelegate {
     // MARK:- Variables
     //----------------------------------------------------------------
     let defaults = UserDefaults.standard
-    
+    let apiManager = BaseAPIManager()
     
     //----------------------------------------------------------------
     // MARK:- Action Methods
@@ -33,24 +33,59 @@ class LoginVC: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func signInButtonAction(_ sender: UIButton) {
-        let savedUserDataDict = defaults.dictionary(forKey: "userDataDict") ?? [String: Any]()
-        
-        if emailTextField.text == savedUserDataDict["userEmail"] as? String && passwordTextField.text == savedUserDataDict["userPassword"] as? String {
-            defaults.set(true, forKey: "userIsLoggedIn")
-            
-            dismiss(animated: true, completion: nil)
-        } else {
-            let alert = UIAlertController(title: "Wrong email and/or password", message: "Make sure you input the right email and password", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-            
-            self.present(alert, animated: true)
+        let payload = ["email": emailTextField.text, "password": passwordTextField.text]
+        //let token = "Token \(defaults.dictionary(forKey: "userToken")!["token"] as! String)"
+        apiManager.performPostRequest(payload: payload as [String : Any], url: "\(BaseAPIManager.authUrl)login/",
+            token: "")
+        { (data, response, error) in
+            DispatchQueue.main.async {
+                if let response = response as? HTTPURLResponse {
+                    switch response.statusCode {
+                        case 200:
+                            self.defaults.set(true, forKey: "userIsLoggedIn")
+                            self.defaults.set(data, forKey: "userToken")
+                            self.dismiss(animated: true, completion: nil)
+                        
+                        case 400:
+                            if let validErr = data?["message"] as? [String] {
+                                self.setupAlert(msg: "\(validErr[0])")
+                            } else if let mailErr = data?["email"] as? [String] {
+                                self.setupAlert(msg: "\(mailErr[0]) (Email)")
+                            } else if let passErr = data?["password"] as? [String] {
+                                self.setupAlert(msg: "\(passErr[0]) (Password)")
+                            }
+                        
+                        default:
+                            self.setupAlert(msg: "Something Wrong, Try Again Later")
+                    }
+                } else if let error = error {
+                    self.setupAlert(msg: error.localizedDescription)
+                }
+            }
         }
+        
+//        if emailTextField.text == savedUserDataDict["userEmail"] && passwordTextField.text == savedUserDataDict["userPassword"] {
+//            defaults.set(true, forKey: "userIsLoggedIn")
+//
+//            dismiss(animated: true, completion: nil)
+//        } else {
+//            let alert = UIAlertController(title: "Wrong email and/or password", message: "Make sure you input the right email and password", preferredStyle: .alert)
+//            alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+//
+//            self.present(alert, animated: true)
+//        }
     }
     
     
     //----------------------------------------------------------------
     // MARK:- Custom Methods
     //----------------------------------------------------------------
+    private func setupAlert(msg: String) {
+        let alert = UIAlertController(title: "Whoops!", message: msg, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alert, animated: true)
+    }
+    
     func setupTextField() {
         emailTextField.delegate = self
         passwordTextField.delegate = self

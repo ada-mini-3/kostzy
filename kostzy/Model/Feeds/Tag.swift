@@ -7,54 +7,67 @@
 //
 
 import Foundation
-import UIKit
-struct Tag {
-    
-    var name: String
-    var color: UIColor
 
-    init(name: String, color: UIColor) {
+struct Tag: Codable {
+    
+    var id: Int
+    var name: String
+    var color: String
+
+    init(id: Int,name: String, color: String) {
+        self.id = id
         self.name = name
         self.color = color
     }
     
+    enum CodingKeys: String, CodingKey {
+        case id = "id"
+        case name = "name"
+        case color = "color"
+    }
+    
     static func initData() -> [Tag] {
         var tags = [Tag]()
-        tags.append(Tag(name: "Facility", color: UIColor(red: 42/255, green: 139/255, blue: 211/255, alpha: 1)))
-        tags.append(Tag(name: "Environment", color: UIColor(red: 243/255, green: 77/255, blue: 114/255, alpha: 1)))
-        tags.append(Tag(name: "Price", color: UIColor(red: 33/255, green: 193/255, blue: 202/255, alpha: 1)))
-        tags.append(Tag(name: "Location", color: UIColor(red: 130/255, green: 70/255, blue: 229/255, alpha: 1)))
-        tags.append(Tag(name: "Safety", color: UIColor(red: 114/255, green: 205/255, blue: 192/255, alpha: 1)))
+        //#f34d71
+        tags.append(Tag(id: 1, name: "Facility", color: "#f34d71"))
+        //#2A8BD3
+        tags.append(Tag(id: 2, name: "Environment", color: "#2A8BD3"))
+        //#21c2ca
+        tags.append(Tag(id: 3, name: "Price", color: "#21c2ca"))
+        //#8346e5
+        tags.append(Tag(id: 4, name: "Location", color: "#8346e5"))
+        //#72cdbf
+        tags.append(Tag(id: 5, name: "Safety", color: "#72cdbf"))
         return tags
     }
     
     static func initCulinaryTag() -> [Tag] {
         var tags = [Tag]()
-       tags.append(Tag(name: "Price", color: UIColor(red: 42/255, green: 139/255, blue: 211/255, alpha: 1)))
-       tags.append(Tag(name: "Portion", color: UIColor(red: 243/255, green: 77/255, blue: 114/255, alpha: 1)))
-       tags.append(Tag(name: "Taste", color: UIColor(red: 33/255, green: 193/255, blue: 202/255, alpha: 1)))
-       tags.append(Tag(name: "View", color: UIColor(red: 130/255, green: 70/255, blue: 229/255, alpha: 1)))
-       tags.append(Tag(name: "Vegetarian", color: UIColor(red: 114/255, green: 205/255, blue: 192/255, alpha: 1)))
+        tags.append(Tag(id: 6, name: "Price", color: "#f34d71"))
+        tags.append(Tag(id: 7, name: "Portion", color: "#2A8BD3"))
+        tags.append(Tag(id: 8, name: "Taste", color: "#21c2ca"))
+        tags.append(Tag(id: 9, name: "View", color: "#8346e5"))
+        tags.append(Tag(id: 10, name: "Vegetarian", color: "#72cdbf"))
        return tags
     }
     
     static func initHangoutsTag() -> [Tag] {
         var tags = [Tag]()
-       tags.append(Tag(name: "Wifi", color: UIColor(red: 42/255, green: 139/255, blue: 211/255, alpha: 1)))
-       tags.append(Tag(name: "Ambience", color: UIColor(red: 243/255, green: 77/255, blue: 114/255, alpha: 1)))
-       tags.append(Tag(name: "Price", color: UIColor(red: 33/255, green: 193/255, blue: 202/255, alpha: 1)))
-       tags.append(Tag(name: "Food", color: UIColor(red: 130/255, green: 70/255, blue: 229/255, alpha: 1)))
-       tags.append(Tag(name: "Comfort", color: UIColor(red: 114/255, green: 205/255, blue: 192/255, alpha: 1)))
+        tags.append(Tag(id: 11, name: "Wifi", color: "#f34d71"))
+        tags.append(Tag(id: 12, name: "Ambience", color: "#2A8BD3"))
+        tags.append(Tag(id: 13, name: "Price", color: "#21c2ca"))
+        tags.append(Tag(id: 14, name: "Food", color: "#8346e5"))
+        tags.append(Tag(id: 15, name: "Comfort", color: "#72cdbf"))
        return tags
     }
     
     static func initExpTag() -> [Tag] {
         var tags = [Tag]()
-       tags.append(Tag(name: "Funny", color: UIColor(red: 42/255, green: 139/255, blue: 211/255, alpha: 1)))
-       tags.append(Tag(name: "Hacks", color: UIColor(red: 243/255, green: 77/255, blue: 114/255, alpha: 1)))
-       tags.append(Tag(name: "Upsetting", color: UIColor(red: 33/255, green: 193/255, blue: 202/255, alpha: 1)))
-       tags.append(Tag(name: "Sad", color: UIColor(red: 130/255, green: 70/255, blue: 229/255, alpha: 1)))
-       tags.append(Tag(name: "Happy", color: UIColor(red: 114/255, green: 205/255, blue: 192/255, alpha: 1)))
+        tags.append(Tag(id: 16, name: "Funny", color: "#f34d71"))
+        tags.append(Tag(id: 17, name: "Hacks", color: "#2A8BD3"))
+        tags.append(Tag(id: 18, name: "Upsetting", color: "#21c2ca"))
+        tags.append(Tag(id: 19, name: "Sad", color: "#8346e5"))
+        tags.append(Tag(id: 20, name: "Happy", color: "#72cdbf"))
        return tags
     }
     

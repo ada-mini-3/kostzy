@@ -12,20 +12,41 @@ class CommunityVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
     
     // MARK: - Variable
     var location: Location?
-    
+    var communityData: [Community] = []
+    var apiManager = BaseAPIManager()
+    var defaults = UserDefaults.standard
+    var selectedRow: Int?
     
     // MARK: - IBOutlet
     @IBOutlet weak var communityTableView: UITableView!
-    
     @IBOutlet weak var locationButtonOutlet: UIButton!
-    
+    @IBOutlet weak var communityIndicator: UIActivityIndicatorView!
     
     // MARK:- View Life Cycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        fetchCommunityData()
         setupLocationButton()
+    }
+    
+    private func fetchCommunityData() {
+        self.communityTableView.delegate = nil
+        self.communityTableView.dataSource = nil
+        var theToken = ""
+        if let token = defaults.dictionary(forKey: "userToken") {
+            theToken = "Token \(token["token"]!)"
+        }
+        apiManager.performGenericFetchRequest(urlString: "\(apiManager.baseUrl)community/", token: theToken, errorMsg: {
+            print("Error Kak")
+        }) { (communties: [Community]) in
+            DispatchQueue.main.async {
+                self.communityData = communties
+                self.communityIndicator.stopAnimating()
+                self.communityTableView.delegate = self
+                self.communityTableView.dataSource = self
+                self.communityTableView.reloadData()
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -34,7 +55,6 @@ class CommunityVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
         communityTableView.reloadData()
     }
     
@@ -72,7 +92,7 @@ class CommunityVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return communityName.count
+        return communityData.count
     }
     
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
@@ -108,9 +128,9 @@ class CommunityVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
         }
         cell.communityView.cornerRadius = 5
         cell.communityImage.cornerRadius = 5
-        cell.communityImage.image = UIImage(named: communityImage[indexPath.row])
-        cell.communityNameLabel.text = communityName[indexPath.row]
-        cell.communityBriefLabel.text = communityBrief[indexPath.row]
+        cell.communityImage.loadImageFromUrl(url: URL(string: communityData[indexPath.row].image)!)
+        cell.communityNameLabel.text = communityData[indexPath.row].name
+        cell.communityBriefLabel.text = communityData[indexPath.row].subtitle
 
         return cell
     }
@@ -125,7 +145,8 @@ class CommunityVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        performSegue(withIdentifier: "CommunityDetailSegue", sender: indexPath.row)
+        selectedRow = indexPath.row
+        performSegue(withIdentifier: "CommunityDetailSegue", sender: communityData[indexPath.row])
     }
     
 
@@ -170,21 +191,10 @@ class CommunityVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-        
-        // Uncomment to pass data through navigation controller
-        /*
-        let selectedRow = sender as? Int
-        let navigationVC = segue.destination as? UINavigationController
-        let communityDetailContainerVC = navigationVC?.viewControllers.first as! CommunityDetailContainerVC
-        communityDetailContainerVC.selectedRow = selectedRow
-        */
-        
         if segue.identifier == "CommunityDetailSegue"{
             if let destination = segue.destination as? CommunityDetailContainerVC {
-                let selectedRow = sender as? Int
-
+                let community = sender as? Community
+                destination.community = community
                 destination.selectedRow = selectedRow
             }
         }

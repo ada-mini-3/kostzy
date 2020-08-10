@@ -12,41 +12,22 @@ import UIKit
 // MARK: - DataSource
 class DataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
     
-    // MARK: - Arrays
-    /*var image = ["My Community Dummy Data 2",
-                 "My Community Dummy Data 2 2",
-                 "My Community Dummy Data 2",
-                 "My Community Dummy Data 2 2",
-                 "My Community Dummy Data 2",
-                 "My Community Dummy Data 2 2",
-                 "My Community Dummy Data 2",
-                 "My Community Dummy Data 2 2",
-                 "My Community Dummy Data 2",
-                 "My Community Dummy Data 2 2"]
-    var community = ["Kost Area Anggrek Cakra",
-                     "Kost Area Binus Syahdan",
-                     "Kost Area Anggrek Cakra",
-                     "Kost Area Binus Syahdan",
-                     "Kost Area Anggrek Cakra",
-                     "Kost Area Binus Syahdan",
-                     "Kost Area Anggrek Cakra",
-                     "Kost Area Binus Syahdan",
-                     "Kost Area Anggrek Cakra",
-                     "Kost Area Binus Syahdan"]*/
+    var communities = [CommunityProfile]()
+    let baseUrl = "http://34.101.87.22:8000"
 
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-
         return 1
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Community.myCommunity.count
+        return communities.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyCommunityCell", for: indexPath) as! MyCommunityCell
-        cell.myCommunityImage.image = UIImage(named: Community.myCommunity[indexPath.row].communityImage!)
-        cell.myCommunityLabel.text = Community.myCommunity[indexPath.row].communityName
+        let community = communities[indexPath.row]
+        cell.myCommunityImage.loadImageFromUrl(url: URL(string: baseUrl + community.image)!)
+        cell.myCommunityLabel.text = community.name
         
         return cell
     }
@@ -65,9 +46,11 @@ class ProfileTableVC: UITableViewController {
     let profileTitlePlaceholderText = "Kostzy Beginner"
     let userLikePlaceholderNumber = 0
     let profileAboutMePlaceholderText = "There's no description."
+    var userLike: Int?
+    let apiManager = BaseAPIManager()
     
     var dataSource = DataSource()
-    
+    var profile: Profile?
     
     // MARK: - IBOutlets
     @IBOutlet weak var badgeCollectionView: UICollectionView!
@@ -89,31 +72,25 @@ class ProfileTableVC: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
-        
-
-        myCommunityTableView.delegate = dataSource
-        myCommunityTableView.dataSource = dataSource
+    
         
         myCommunityTableView.rowHeight = 60
         myCommunityTableView.estimatedRowHeight = 600
         
-        setupView()
+        setupBtnEdit()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        loadProfileData()
-        setupView()
-        
-        tableView.reloadData()
+        self.loadProfileData()
+        self.tableView.reloadData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         loadProfileData()
-        setupView()
+        setupBtnEdit()
         
         tableView.reloadData()
         badgeCollectionView.reloadData()
@@ -124,35 +101,7 @@ class ProfileTableVC: UITableViewController {
         profileAboutMeLabel.sizeToFit()
     }
     
-    
-    // MARK: - Custom Methods
-    func loadProfileData() {
-        let savedUserDataDict = defaults.dictionary(forKey: "userDataDict") ?? [String: Any]()
-        let userIsLoggedIn = defaults.bool(forKey: "userIsLoggedIn")
-        
-        if userIsLoggedIn == true {
-            setupImageView()
-            profileNameLabel.text = savedUserDataDict["userName"] as? String
-            profileTitleLabel.text = profileTitlePlaceholderText
-            userLike = userLikePlaceholderNumber
-            profileAboutMeLabel.text = profileAboutMePlaceholderText
-        }
-        else if userIsLoggedIn == false {
-            setupImageView()
-            profileNameLabel.text = profileNamePlaceholderText
-            profileTitleLabel.text = profileTitlePlaceholderText
-            userLike = userLikePlaceholderNumber
-            profileAboutMeLabel.text = profileAboutMePlaceholderText
-        }
-        
-        if savedUserDataDict["userDesc"] != nil {
-            profileAboutMeLabel.text = savedUserDataDict["userDesc"] as? String
-        } else {
-            profileAboutMeLabel.text = profileAboutMePlaceholderText
-        }
-    }
-    
-    func setupView() {
+    func setupBtnEdit() {
         let userIsLoggedIn = defaults.bool(forKey: "userIsLoggedIn")
         
         if userIsLoggedIn == false {
@@ -163,52 +112,44 @@ class ProfileTableVC: UITableViewController {
         }
     }
     
-    func setupImageView() {
-        profileImage.image = loadImageFromDiskWith(fileName: "profileImage")
-        profileImage.layer.borderWidth = 1
-        profileImage.layer.masksToBounds = false
-        profileImage.layer.borderColor = UIColor.lightGray.cgColor
-        profileImage.layer.cornerRadius = profileImage.frame.height/2
-        profileImage.clipsToBounds = true
-    }
     
-    func saveImage(imageName: String, image: UIImage) {
-     guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
-        let fileName = imageName
-        let fileURL = documentsDirectory.appendingPathComponent(fileName)
-        guard let data = image.jpegData(compressionQuality: 1) else { return }
-
-        //Checks if file exists, removes it if so.
-        if FileManager.default.fileExists(atPath: fileURL.path) {
-            do {
-                try FileManager.default.removeItem(atPath: fileURL.path)
-                print("Removed old image")
-            } catch let removeError {
-                print("couldn't remove file at path", removeError)
+    // MARK: - Custom Methods
+    func loadProfileData() {
+        let userIsLoggedIn = defaults.bool(forKey: "userIsLoggedIn")
+        let token = "Token \(defaults.dictionary(forKey: "userToken")!["token"] as! String)"
+        editProfileButtonOutlet.isEnabled = false
+        if userIsLoggedIn == true {
+            apiManager.performGenericFetchRequest(urlString: "\(BaseAPIManager.authUrl)profile/", token: token,
+            errorMsg: {
+                print("Error Kak")
+            }) { (user: Profile) in
+                DispatchQueue.main.async {
+                    self.profile = user
+                    self.editProfileButtonOutlet.isEnabled = true
+                    self.profileNameLabel.text = user.name
+                    if let image = user.image {
+                        self.profileImage.loadImageFromUrl(url: URL(string: image)!)
+                    } else {
+                        self.profileImage.image = UIImage(named: self.profileImagePlaceholderImage)
+                    }
+                    if user.about == "" {
+                        self.profileAboutMeLabel.text = "No About Me"
+                    } else {
+                        self.profileAboutMeLabel.text = user.about
+                    }
+                    self.userLike = user.exp
+                    self.dataSource.communities = user.community
+                    self.myCommunityTableView.delegate = self.dataSource
+                    self.myCommunityTableView.dataSource = self.dataSource
+                }
             }
-
+        } else {
+            profileImage.image = UIImage(named: profileImagePlaceholderImage)
+            profileNameLabel.text = profileNamePlaceholderText
+            profileTitleLabel.text = profileTitlePlaceholderText
+            userLike = userLikePlaceholderNumber
+            profileAboutMeLabel.text = profileAboutMePlaceholderText
         }
-
-        do {
-            try data.write(to: fileURL)
-        } catch let error {
-            print("error saving file with error", error)
-        }
-    }
-    
-    func loadImageFromDiskWith(fileName: String) -> UIImage? {
-        let documentDirectory = FileManager.SearchPathDirectory.documentDirectory
-        let userDomainMask = FileManager.SearchPathDomainMask.userDomainMask
-        let paths = NSSearchPathForDirectoriesInDomains(documentDirectory, userDomainMask, true)
-
-        if let dirPath = paths.first {
-            let imageUrl = URL(fileURLWithPath: dirPath).appendingPathComponent(fileName)
-            let image = UIImage(contentsOfFile: imageUrl.path)
-            
-            return image ?? UIImage(named: profileImagePlaceholderImage)
-        }
-        
-        return nil
     }
     
 
@@ -226,7 +167,21 @@ class ProfileTableVC: UITableViewController {
     func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
-
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "editProfileSegue" {
+            guard let destFirst = segue.destination as? UINavigationController else { return }
+            guard let targetController = destFirst.topViewController as? EditProfileVC else { return }
+            guard let theProfile = self.profile else { return }
+            targetController.profile = theProfile
+        }
+    }
+    
+    
+    @IBAction func editProfileClicked(_ sender: Any) {
+        performSegue(withIdentifier: "editProfileSegue", sender: self)
+    }
+    
     /*
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections

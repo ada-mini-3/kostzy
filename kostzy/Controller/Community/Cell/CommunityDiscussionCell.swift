@@ -23,14 +23,27 @@ class CommunityDiscussionCell: UITableViewCell {
     @IBOutlet weak var commentCountLabel: UILabel!
     @IBOutlet weak var likeCountLabel: UILabel!
     
+    var likeAction: (()->())?
+    var commentAction: (()->())?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        memberImageView.layer.cornerRadius = memberImageView.frame.height / 2
+        memberImageView.clipsToBounds = true
+        likeButton.addTarget(self, action: #selector(likeTapActon), for: .touchUpInside)
+        commentButton.addTarget(self, action: #selector(commentTapAction), for: .touchUpInside)
+    }
+    
+    @objc func likeTapActon() {
+        likeAction?()
+    }
+    
+    @objc func commentTapAction() {
+        commentAction?()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
         // Configure the view for the selected state
     }
 

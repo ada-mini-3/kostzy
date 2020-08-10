@@ -9,24 +9,16 @@
 import Foundation
 import UIKit
 
-struct User {
+struct UserFeeds: Codable {
     
     var name: String
-    var image: UIImage
-    
-    init(name: String, image: UIImage) {
-        self.name = name
-        self.image = image
-    }
-    
-    static func initUser() -> User {
-        return User(name: "Desti", image: #imageLiteral(resourceName: "destong"))
-    }
+    var image: String?
+    let exp: Int
     
 }
 
 var userImage: String?
 var userFullName: String?
 var userTitle: String?
-var userLike: Int?
+//var userLike: Int?
 var userAboutMe: String?

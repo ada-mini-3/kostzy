@@ -44,6 +44,7 @@ class CommunityDetailContainerVC: UIViewController {
     //----------------------------------------------------------------
     
     var selectedRow: Int?
+    var community: Community?
     var containerViewheight: CGFloat!
     var percentageVerticalOffset: CGFloat = 0
     
@@ -57,21 +58,23 @@ class CommunityDetailContainerVC: UIViewController {
         // Instantiate View Controller
         var viewController = storyboard.instantiateViewController(withIdentifier: "CommunityDetailVC") as! CommunityDetailVC
         viewController.selectedRow = selectedRow
-        
+        if let community = self.community {
+             viewController.community = community
+        }
         // Add View Controller as Child View Controller
         self.add(asChildViewController: viewController)
         
         return viewController
     }()
     
-    private lazy var CommunityDiscussionVC: CommunityDiscussionVC = {
+    private lazy var communityDiscussionVC: CommunityDiscussionVC = {
         // Load Storyboard
         let storyboard = UIStoryboard(name: "Community", bundle: Bundle.main)
         
         // Instantiate View Controller
         var viewController = storyboard.instantiateViewController(withIdentifier: "DetailDiscussionVC") as! CommunityDiscussionVC
         containerViewheight = viewController.height
-        
+        viewController.communityId = self.community?.id
         // Add View Controller as Child View Controller
         self.add(asChildViewController: viewController)
         
@@ -109,6 +112,9 @@ class CommunityDetailContainerVC: UIViewController {
         updateView()
     }
     
+    @IBAction func createDiscussionAction(_ sender: Any) {
+        performSegue(withIdentifier: "createDiscussionSegue", sender: self)
+    }
     
     //----------------------------------------------------------------
     // MARK:- Custom Methods
@@ -147,7 +153,7 @@ class CommunityDetailContainerVC: UIViewController {
     
     private func updateView() {
         if aboutAndDiscussionSegmentedControl.selectedSegmentIndex == 0 {
-            remove(asChildViewController: CommunityDiscussionVC)
+            remove(asChildViewController: communityDiscussionVC)
             add(asChildViewController: CommunityAboutVC)
             
             newDiscussionButtonOutlet.isHidden = true
@@ -161,7 +167,7 @@ class CommunityDetailContainerVC: UIViewController {
             })
         } else {
             remove(asChildViewController: CommunityAboutVC)
-            add(asChildViewController: CommunityDiscussionVC)
+            add(asChildViewController: communityDiscussionVC)
             
             newDiscussionButtonOutlet.isHidden = false
             sortByButtonOutlet.isHidden = false
@@ -179,7 +185,6 @@ class CommunityDetailContainerVC: UIViewController {
     
     func setupView() {
 //        setupSegmentedControl()
-        
         updateView()
     }
     
@@ -194,7 +199,7 @@ class CommunityDetailContainerVC: UIViewController {
         scrollView.delegate = self
         
         topView.backgroundColor = UIColor.clear
-        topLabel.text = communityName[selectedRow!]
+        topLabel.text = community?.name
         topLabel.alpha = 0.0
         
         /*topView.addSubview(blurEffectView)
@@ -203,14 +208,13 @@ class CommunityDetailContainerVC: UIViewController {
     
     // Delete or comment this function when user testing is finished
     func debugCustomization() {
-        if communityIsRequested[selectedRow!] == false {
+        guard let community = community else { return }
+        if community.isJoined == false {
             aboutAndDiscussionSegmentedControl.isHidden = true
             newDiscussionButtonOutlet.isHidden = true
             sortByButtonOutlet.isHidden = true
-            
             containerSeparatorTopConstraint.constant = 20
-        }
-        else if communityIsRequested[selectedRow!] == true {
+        } else {
             let segmentedControlTitle = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 12)]
             aboutAndDiscussionSegmentedControl.setTitleTextAttributes(segmentedControlTitle, for: .selected)
         }
@@ -249,12 +253,12 @@ class CommunityDetailContainerVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
+        guard let theCommunity = community else { return }
         
-        communityDetailImageView.image = UIImage(named: communityImage[selectedRow!])
-        communityNameLabel.text = communityName[selectedRow!]
-        communityLocationLabel.text = "\(communityLocation[selectedRow!]) • \(communityPost[selectedRow!]) POSTS"
+        communityDetailImageView.loadImageFromUrl(url: URL(string: theCommunity.image)!)
+        communityNameLabel.text = theCommunity.name
+        communityLocationLabel.text = "\(theCommunity.location) • \(communityPost[selectedRow!]) POSTS"
         
         debugCustomization()
         setupView()
@@ -286,6 +290,16 @@ class CommunityDetailContainerVC: UIViewController {
         else {
             let black = UIColor.init(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: percentageVerticalOffset)
             topView.backgroundColor = black
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "createDiscussionSegue" {
+            if let destFirst = segue.destination as? UINavigationController {
+                guard let targetController = destFirst.topViewController as? NewDiscussionTableVC else { return }
+                guard let id = community?.id else { return }
+                targetController.communityId = id
+            }
         }
     }
     
@@ -353,6 +367,6 @@ extension CommunityDetailContainerVC: UIScrollViewDelegate {
 
         // update the new position acquired
         lastContentOffset = scrollView.contentOffset.y
-        print(lastContentOffset)
+        //print(lastContentOffset)
     }
 }

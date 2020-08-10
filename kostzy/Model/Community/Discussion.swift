@@ -8,12 +8,30 @@
 
 import Foundation
 
-struct Discussion {
-    var postTime: String?
-    var discussion: String?
-    var discussionImage: String?
-    var commentCount: Int?
-    var likeCount: Int?
+struct Discussion: Codable {
+    
+    let id: Int
+    let communityId : Int
+    let user: UserFeeds
+    let text: String
+    let date: String
+    var likeStatus: Bool
+    let likeCount: Int
+    let commentCount: Int
+    let like: DiscussionLike?
+    
+    enum CodingKeys: String, CodingKey {
+        case id = "id"
+        case user = "user"
+        case date = "date"
+        case likeCount = "like_count"
+        case commentCount = "comment_count"
+        case communityId = "community"
+        case likeStatus = "like_status"
+        case text = "text"
+        case like = "like"
+    }
+    
 }
 
 var postTime = ["5 hours ago",
