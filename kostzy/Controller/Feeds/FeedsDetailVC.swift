@@ -61,10 +61,9 @@ class FeedsDetailVC: UIViewController {
         self.commentTableView.dataSource = nil
         apiManager.performGenericFetchRequest(urlString: "\(apiManager.baseUrl)comments?feed=\(id)", token: "",
         errorMsg: {
-            print("Error Kak")
+            self.setEmptyMessage("Feeds aren't loading anymore")
         }, completion: { (comment: [FeedComment]) in
             DispatchQueue.main.async {
-                
                 self.refreshControl.endRefreshing()
                 self.commentData = comment
                 self.setupCommentTableView()
@@ -249,6 +248,24 @@ class FeedsDetailVC: UIViewController {
         likeButton.tintColor = UIColor.red
     }
     
+    func setEmptyMessage(_ message: String) {
+         let messageLabel = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 30))
+
+         messageLabel.text = message
+         messageLabel.textColor = .black
+         messageLabel.numberOfLines = 0
+         messageLabel.textAlignment = .center
+         messageLabel.font = UIFont.systemFont(ofSize: 17, weight: .regular)
+         messageLabel.sizeToFit()
+         messageLabel.clipsToBounds = true
+
+         self.commentTableView.backgroundView = messageLabel
+     }
+    
+    func restore() {
+         self.commentTableView.backgroundView = nil
+    }
+    
 }
 
 extension FeedsDetailVC: UITextFieldDelegate {
@@ -303,7 +320,12 @@ extension FeedsDetailVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        commentData.count
+        if commentData.count == 0 {
+            setEmptyMessage("Feeds Comment is Empty")
+        } else {
+            restore()
+        }
+        return commentData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

@@ -49,9 +49,12 @@ class DetailDiscussionVC: UIViewController {
         guard let token = defaults.dictionary(forKey: "userToken") else { return }
         guard let discussion = discussion else { return }
         let theToken = "Token \(token["token"]!)"
-        apiManager.performGenericFetchRequest(urlString: "\(apiManager.baseUrl)discussion-comment/?discussion=\(discussion.id)", token: theToken, errorMsg: {
+        apiManager.performGenericFetchRequest(urlString: "\(apiManager.baseUrl)discussion-comment/?discussion=\(discussion.id)", token: theToken,
+            errorMsg: {
             print("Error Bro")
-        }) { (comments: [DiscussionComment]) in
+            self.setEmptyMessage("Discussions aren't loading right now")
+        })
+        { (comments: [DiscussionComment]) in
             DispatchQueue.main.async {
                 self.commentIndicator.stopAnimating()
                 self.commentData = comments
@@ -120,6 +123,7 @@ class DetailDiscussionVC: UIViewController {
         }
     }
     
+    
     private func setupView() {
         guard let discussion = discussion else { return }
         if let userImageUrl = discussion.user.image {
@@ -140,6 +144,24 @@ class DetailDiscussionVC: UIViewController {
             commentFormImage.image = image
         }
         commentFormImage.layer.cornerRadius = commentFormImage.frame.height / 2
+    }
+    
+    func setEmptyMessage(_ message: String) {
+         let messageLabel = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 30))
+
+         messageLabel.text = message
+         messageLabel.textColor = .black
+         messageLabel.numberOfLines = 0
+         messageLabel.textAlignment = .center
+         messageLabel.font = UIFont.systemFont(ofSize: 17, weight: .regular)
+         messageLabel.sizeToFit()
+         messageLabel.clipsToBounds = true
+
+         self.commentTV.backgroundView = messageLabel
+     }
+    
+    func restore() {
+         self.commentTV.backgroundView = nil
     }
     
     
@@ -187,6 +209,11 @@ extension DetailDiscussionVC: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if commentData.count == 0 {
+            setEmptyMessage("Comments Empty")
+        } else {
+            restore()
+        }
         return commentData.count
     }
     

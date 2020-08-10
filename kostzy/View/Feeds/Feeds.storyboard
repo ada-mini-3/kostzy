@@ -81,7 +81,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" alpha="0.65000000000000002" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XJD-Du-ztq">
-                                                    <rect key="frame" x="73" y="41" width="99" height="20"/>
+                                                    <rect key="frame" x="73" y="41" width="227" height="20"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="sMj-WP-IqL"/>
                                                     </constraints>
@@ -197,6 +197,7 @@
                                             <constraints>
                                                 <constraint firstItem="DdF-2l-gIu" firstAttribute="leading" secondItem="sq8-oF-Q1o" secondAttribute="leading" constant="16" id="070-Q6-Ohm"/>
                                                 <constraint firstItem="Gvk-RF-Akg" firstAttribute="top" secondItem="DdF-2l-gIu" secondAttribute="bottom" constant="16" id="5z9-Ir-qLf"/>
+                                                <constraint firstItem="tS2-T6-PQk" firstAttribute="leading" secondItem="XJD-Du-ztq" secondAttribute="trailing" constant="20" id="8gy-0m-jnT"/>
                                                 <constraint firstItem="Aom-Z5-pZh" firstAttribute="top" secondItem="Gvk-RF-Akg" secondAttribute="bottom" constant="16" id="9L6-mz-5Qc"/>
                                                 <constraint firstAttribute="trailing" secondItem="XFh-7g-fnO" secondAttribute="trailing" constant="16" id="Bhy-0w-iHf"/>
                                                 <constraint firstAttribute="trailing" secondItem="tS2-T6-PQk" secondAttribute="trailing" constant="16" id="Fra-4U-6rb"/>

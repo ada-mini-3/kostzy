@@ -77,10 +77,11 @@ class FeedsVC: UIViewController, MKMapViewDelegate {
         apiManager.performGenericFetchRequest(urlString: "\(apiManager.baseUrl)feeds/?category=\(category)",
             token: theToken,
             errorMsg: {
-            print("Error Bosss")
+                self.setEmptyMessage("Feeds aren't loading right now, Try Again")
         },
             completion: { (feeds: [Feeds]) in
             DispatchQueue.main.async {
+                self.restore()
                 self.actityIndicator.stopAnimating()
                 self.refreshControl.endRefreshing()
                 self.actityIndicator.isHidden = true
@@ -316,6 +317,24 @@ class FeedsVC: UIViewController, MKMapViewDelegate {
                 segmentedCategory.setImage(UIImage(imageLiteralResourceName: "sc-experience"), forSegmentAt: 2)
                 segmentedCategory.setImage(UIImage(imageLiteralResourceName: "hangout-selected"), forSegmentAt: 3)
         }
+    }
+    
+    func setEmptyMessage(_ message: String) {
+         let messageLabel = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 30))
+
+         messageLabel.text = message
+         messageLabel.textColor = .black
+         messageLabel.numberOfLines = 0
+         messageLabel.textAlignment = .center
+         messageLabel.font = UIFont.systemFont(ofSize: 17, weight: .regular)
+         messageLabel.sizeToFit()
+         messageLabel.clipsToBounds = true
+
+         self.feedsCollectionView.backgroundView = messageLabel
+     }
+    
+    func restore() {
+         self.feedsCollectionView.backgroundView = nil
     }
     
     func cacheProfileImageFromUrl() {
