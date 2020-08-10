@@ -14,7 +14,7 @@ class FeedsDetailVC: UIViewController {
     @IBOutlet weak var userName: UILabel!
     
     @IBOutlet weak var feedLocation: UIButton!
-    @IBOutlet weak var feedLocationImageView: UIImageView!
+   // @IBOutlet weak var feedLocationImageView: UIImageView!
     @IBOutlet weak var feedText: UILabel!
     
     @IBOutlet weak var tagsCollectionView: UICollectionView!
@@ -38,17 +38,11 @@ class FeedsDetailVC: UIViewController {
     @IBOutlet weak var commentIndicator: UIActivityIndicatorView!
     
     var feeds : Feeds?
-       
     var comments = FeedComment.initData()
-    
     var commentData: [FeedComment] =  []
-       
     var bottomConstraint : NSLayoutConstraint?
-    
     var apiManager = BaseAPIManager()
-    
     let defaults = UserDefaults.standard
-    
     let refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
@@ -111,10 +105,10 @@ class FeedsDetailVC: UIViewController {
     private func setupLocationButton() {
         if isDarkMode == true {
             feedLocation.setTitleColor(UIColor.white, for: .normal)
-            feedLocationImageView.tintColor = .white
+            feedLocation.tintColor = UIColor.white
         } else {
             feedLocation.setTitleColor(#colorLiteral(red: 0.1462399662, green: 0.1462444067, blue: 0.1462419927, alpha: 0.71), for: .normal)
-            feedLocationImageView.tintColor = #colorLiteral(red: 0.1462399662, green: 0.1462444067, blue: 0.1462419927, alpha: 0.71)
+            feedLocation.tintColor = UIColor(#colorLiteral(red: 0.1462399662, green: 0.1462444067, blue: 0.1462419927, alpha: 0.71))
         }
     }
     
@@ -124,14 +118,14 @@ class FeedsDetailVC: UIViewController {
             commentButton.tintColor = UIColor.white
             feedLocation.tintColor = UIColor.white
             feedLocation.setTitleColor(UIColor.white, for: .normal)
-            feedLocationImageView.tintColor = .white
+            feedLocation.tintColor = .white
         }
         else {
             likeButton.tintColor = UIColor.black
             commentButton.tintColor = UIColor.black
             feedLocation.tintColor = #colorLiteral(red: 0.1462399662, green: 0.1462444067, blue: 0.1462419927, alpha: 0.71)
             feedLocation.setTitleColor(#colorLiteral(red: 0.1462399662, green: 0.1462444067, blue: 0.1462419927, alpha: 0.71), for: .normal)
-            feedLocationImageView.tintColor = #colorLiteral(red: 0.1462399662, green: 0.1462444067, blue: 0.1462419927, alpha: 0.71)
+            feedLocation.tintColor = #colorLiteral(red: 0.1462399662, green: 0.1462444067, blue: 0.1462419927, alpha: 0.71)
         }
     }
     
