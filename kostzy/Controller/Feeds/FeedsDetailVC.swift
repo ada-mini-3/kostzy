@@ -11,21 +11,18 @@ import UIKit
 class FeedsDetailVC: UIViewController {
             
     @IBOutlet weak var userImage: UIImageView!
-    
     @IBOutlet weak var userName: UILabel!
     
     @IBOutlet weak var feedLocation: UIButton!
-    
+    @IBOutlet weak var feedLocationImageView: UIImageView!
     @IBOutlet weak var feedText: UILabel!
     
     @IBOutlet weak var tagsCollectionView: UICollectionView!
     
     @IBOutlet weak var commentButton: UIButton!
-    
     @IBOutlet weak var likeButton: UIButton!
     
     @IBOutlet weak var commentCount: UILabel!
-    
     @IBOutlet weak var likeCount: UILabel!
     
     @IBOutlet weak var commentTableView: UITableView!
@@ -48,6 +45,7 @@ class FeedsDetailVC: UIViewController {
         super.viewDidLoad()
         setupView()
         setupNavigationBar()
+        setupLocationButton()
         setupCommentTableView()
         setupKeyboardConstraint()
         setupDarkMode()
@@ -57,19 +55,17 @@ class FeedsDetailVC: UIViewController {
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        setupLocationButton()
         setupDarkMode()
         commentTableView.reloadData()
     }
     
     private func setupLocationButton() {
-        feedLocation.contentHorizontalAlignment = .left
-        feedLocation.imageEdgeInsets = UIEdgeInsets(top: 2, left: 5, bottom: 2, right: 5)
-        
         if isDarkMode == true {
             feedLocation.setTitleColor(UIColor.white, for: .normal)
+            feedLocationImageView.tintColor = .white
         } else {
-            feedLocation.setTitleColor(UIColor.black, for: .normal)
+            feedLocation.setTitleColor(#colorLiteral(red: 0.1462399662, green: 0.1462444067, blue: 0.1462419927, alpha: 0.71), for: .normal)
+            feedLocationImageView.tintColor = #colorLiteral(red: 0.1462399662, green: 0.1462444067, blue: 0.1462419927, alpha: 0.71)
         }
     }
     
@@ -79,12 +75,14 @@ class FeedsDetailVC: UIViewController {
             commentButton.tintColor = UIColor.white
             feedLocation.tintColor = UIColor.white
             feedLocation.setTitleColor(UIColor.white, for: .normal)
+            feedLocationImageView.tintColor = .white
         }
         else {
             likeButton.tintColor = UIColor.black
             commentButton.tintColor = UIColor.black
-            feedLocation.tintColor = UIColor.black
-            feedLocation.setTitleColor(UIColor.black, for: .normal)
+            feedLocation.tintColor = #colorLiteral(red: 0.1462399662, green: 0.1462444067, blue: 0.1462419927, alpha: 0.71)
+            feedLocation.setTitleColor(#colorLiteral(red: 0.1462399662, green: 0.1462444067, blue: 0.1462419927, alpha: 0.71), for: .normal)
+            feedLocationImageView.tintColor = #colorLiteral(red: 0.1462399662, green: 0.1462444067, blue: 0.1462419927, alpha: 0.71)
         }
     }
     
