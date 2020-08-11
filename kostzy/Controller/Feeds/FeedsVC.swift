@@ -378,6 +378,8 @@ class FeedsVC: UIViewController, MKMapViewDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        setupFeedsData()
         feedsCollectionView.reloadData()
     }
     

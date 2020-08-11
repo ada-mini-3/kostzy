@@ -51,6 +51,7 @@ class FeedsDetailVC: UIViewController {
         setupView()
         setupNavigationBar()
         setupLocationButton()
+        setLikeButtonState(button: likeButton, feed: feeds!)
         setupCommentTableView()
         setupKeyboardConstraint()
         setupCommentData()
@@ -59,7 +60,14 @@ class FeedsDetailVC: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification), name: UIResponder.keyboardWillHideNotification, object: nil)
         tagsCollectionView.dataSource = self
     }
-
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        setupView()
+        setLikeButtonState(button: likeButton, feed: feeds!)
+        setupCommentData()
+    }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         setupDarkMode()
@@ -280,7 +288,8 @@ class FeedsDetailVC: UIViewController {
                 if let response = response as? HTTPURLResponse {
                     switch response.statusCode {
                     case 200...299:
-                      self.setupAlert(title: "Success!" ,msg: "Success Post Reply")
+                      self.commentField.text = ""
+                      self.setupCommentData()
                       self.view.endEditing(true)
                     case 400:
                         self.setupAlert(msg: "Bad Request")
