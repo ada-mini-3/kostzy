@@ -96,8 +96,6 @@ class ProfileTableVC: UITableViewController {
         setupBtnEdit()
         
         tableView.reloadData()
-        badgeCollectionView.reloadData()
-        myCommunityTableView.reloadData()
     }
     
     override func viewDidLayoutSubviews() {
@@ -147,6 +145,7 @@ class ProfileTableVC: UITableViewController {
                     self.refreshControl?.endRefreshing()
                     self.myCommunityTableView.delegate = self.dataSource
                     self.myCommunityTableView.dataSource = self.dataSource
+                    self.badgeCollectionView.reloadData()
                     self.myCommunityTableView.reloadData()
                 }
             }
@@ -293,25 +292,26 @@ extension ProfileTableVC: UICollectionViewDataSource, UICollectionViewDelegate, 
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BadgeCollectionCell", for: indexPath) as! BadgeCollectionCell
-        let floatXP = Float(userLike ?? 0)
-    
+        let floatXP = Float(profile?.exp ?? 0)
+        
         // Configure the cell
         cell.likeProgressView.setProgress(floatXP / 600, animated: true)
         print(floatXP / 600)
+        print(profile?.exp, "EXP")
         
-        if userLike ?? 0 >= 100 {
+        if profile?.exp ?? 0 >= 100 {
             cell.like100DotView.backgroundColor = #colorLiteral(red: 0.3333333333, green: 0.3098039216, blue: 0.7882352941, alpha: 1)
         }
-        if userLike ?? 0 >= 200 {
+        if profile?.exp ?? 0 >= 200 {
             cell.like200DotView.backgroundColor = #colorLiteral(red: 0.3333333333, green: 0.3098039216, blue: 0.7882352941, alpha: 1)
         }
-        if userLike ?? 0 >= 300 {
+        if profile?.exp ?? 0 >= 300 {
             cell.like300DotView.backgroundColor = #colorLiteral(red: 0.3333333333, green: 0.3098039216, blue: 0.7882352941, alpha: 1)
         }
-        if userLike ?? 0 >= 400 {
+        if profile?.exp ?? 0 >= 400 {
             cell.like400DotView.backgroundColor = #colorLiteral(red: 0.3333333333, green: 0.3098039216, blue: 0.7882352941, alpha: 1)
         }
-        if userLike ?? 0 >= 500 {
+        if profile?.exp ?? 0 >= 500 {
             cell.like500DotView.backgroundColor = #colorLiteral(red: 0.3333333333, green: 0.3098039216, blue: 0.7882352941, alpha: 1)
         }
         
