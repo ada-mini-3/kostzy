@@ -384,6 +384,8 @@ extension FeedsDetailVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if commentData.count == 0 {
             setEmptyMessage("Feeds Comment is Empty")
+        } else {
+            restore()
         }
         return commentData.count
     }
