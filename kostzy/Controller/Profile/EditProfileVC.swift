@@ -141,7 +141,11 @@ class EditProfileVC: UIViewController, UIGestureRecognizerDelegate, UITextFieldD
     }
     
     func setupImageView() {
-        profileImageView.image = loadImageFromDiskWith(fileName: "profileImage")
+        if let imageCache = profileImageCache.object(forKey: "imageProfile"){
+            profileImageView.image = imageCache
+        } else {
+            profileImageView.image = #imageLiteral(resourceName: "Empty Profile Picture")
+        }
         profileImageView.layer.borderWidth = 1
         profileImageView.layer.masksToBounds = false
         profileImageView.layer.borderColor = UIColor.lightGray.cgColor
