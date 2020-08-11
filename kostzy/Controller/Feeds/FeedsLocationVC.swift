@@ -133,7 +133,7 @@ class FeedsLocationVC: UIViewController {
 
 extension FeedsLocationVC: CLLocationManagerDelegate {
     
-    func fetchCityAndCountry(from location: CLLocation, completion: @escaping (_ city: String?, _ error: Error?) -> ()) {
+    func fetchCity(from location: CLLocation, completion: @escaping (_ city: String?, _ error: Error?) -> ()) {
         CLGeocoder().reverseGeocodeLocation(location, completionHandler: { placemark, error in
             completion(placemark?.first?.locality,
                        error)
@@ -142,7 +142,7 @@ extension FeedsLocationVC: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location: CLLocation = manager.location else { return }
-        fetchCityAndCountry(from: location) { city, error in
+        fetchCity(from: location) { city, error in
             guard let city = city, error == nil else { return }
             self.currentLocation = Location(name: city, type: .area, lat: location.coordinate.latitude, long: location.coordinate.longitude)
         }
