@@ -110,8 +110,6 @@ class FeedsDetailVC: UIViewController {
     
     private func setupCommentData() {
         guard let id = feeds?.id else { return }
-        self.commentTableView.delegate = nil
-        self.commentTableView.dataSource = nil
         apiManager.performGenericFetchRequest(urlString: "\(apiManager.baseUrl)comments?feed=\(id)", token: "",
         errorMsg: {
             self.setEmptyMessage("Feeds aren't loading anymore")
@@ -382,11 +380,6 @@ extension FeedsDetailVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if commentData.count == 0 {
-            setEmptyMessage("Feeds Comment is Empty")
-        } else {
-            restore()
-        }
         return commentData.count
     }
     
@@ -399,7 +392,11 @@ extension FeedsDetailVC: UITableViewDelegate, UITableViewDataSource {
             cell.commentText.backgroundColor = UIColor(red: 234/255, green: 234/255, blue: 234/255, alpha: 1)
         }
         
-        cell.userimage.loadImageFromUrl(url: URL(string: commentData[indexPath.row].user.image!)!)
+        if let image = commentData[indexPath.row].user.image {
+            cell.userimage.loadImageFromUrl(url: URL(string: image)!)
+        } else {
+            cell.userimage.image = #imageLiteral(resourceName: "Empty Profile Picture")
+        }
         cell.userName.text = commentData[indexPath.row].user.name
         cell.commentText.text = commentData[indexPath.row].comment
         
