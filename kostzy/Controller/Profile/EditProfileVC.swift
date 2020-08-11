@@ -24,10 +24,10 @@ class EditProfileVC: UIViewController, UIGestureRecognizerDelegate, UITextFieldD
     //----------------------------------------------------------------
     // MARK:- Variables
     //----------------------------------------------------------------
+    let defaults = UserDefaults.standard
+    let profileImagePlaceholderImage = "Empty Profile Picture"
     var profileTableVC: ProfileTableVC!
     var profileImagePicker: UIImagePickerController!
-    let defaults = UserDefaults.standard
-    var nameText = ""
     var apiManager = BaseAPIManager()
     var imagePicked = false
     var profile: Profile?
@@ -144,7 +144,7 @@ class EditProfileVC: UIViewController, UIGestureRecognizerDelegate, UITextFieldD
         if let imageCache = profileImageCache.object(forKey: "imageProfile"){
             profileImageView.image = imageCache
         } else {
-            profileImageView.image = #imageLiteral(resourceName: "Empty Profile Picture")
+            profileImageView.image = UIImage(named: profileImagePlaceholderImage)
         }
         profileImageView.layer.borderWidth = 1
         profileImageView.layer.masksToBounds = false

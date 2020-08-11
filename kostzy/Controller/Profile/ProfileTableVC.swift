@@ -77,13 +77,15 @@ class ProfileTableVC: UITableViewController {
         myCommunityTableView.rowHeight = 60
         myCommunityTableView.estimatedRowHeight = 600
         
+        setupImageView()
         setupBtnEdit()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.loadProfileData()
-        self.tableView.reloadData()
+        
+        loadProfileData()
+        tableView.reloadData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -99,17 +101,6 @@ class ProfileTableVC: UITableViewController {
     
     override func viewDidLayoutSubviews() {
         profileAboutMeLabel.sizeToFit()
-    }
-    
-    func setupBtnEdit() {
-        let userIsLoggedIn = defaults.bool(forKey: "userIsLoggedIn")
-        
-        if userIsLoggedIn == false {
-            editProfileButtonOutlet.isHidden = true
-        }
-        else {
-            editProfileButtonOutlet.isHidden = false
-        }
     }
     
     
@@ -150,6 +141,25 @@ class ProfileTableVC: UITableViewController {
             profileTitleLabel.text = profileTitlePlaceholderText
             userLike = userLikePlaceholderNumber
             profileAboutMeLabel.text = profileAboutMePlaceholderText
+        }
+    }
+    
+    func setupImageView() {
+        profileImage.layer.borderWidth = 1
+        profileImage.layer.masksToBounds = false
+        profileImage.layer.borderColor = UIColor.lightGray.cgColor
+        profileImage.layer.cornerRadius = profileImage.frame.height/2
+        profileImage.clipsToBounds = true
+    }
+    
+    func setupBtnEdit() {
+        let userIsLoggedIn = defaults.bool(forKey: "userIsLoggedIn")
+        
+        if userIsLoggedIn == false {
+            editProfileButtonOutlet.isHidden = true
+        }
+        else {
+            editProfileButtonOutlet.isHidden = false
         }
     }
     

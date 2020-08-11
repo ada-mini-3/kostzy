@@ -59,7 +59,7 @@
                                                     <action selector="changePhotoButtonAction:" destination="otR-k4-EAg" eventType="touchUpInside" id="MNr-O5-Q0d"/>
                                                 </connections>
                                             </button>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Empty Profile Picture" translatesAutoresizingMaskIntoConstraints="NO" id="juH-VB-gMj">
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Empty Profile Picture" translatesAutoresizingMaskIntoConstraints="NO" id="juH-VB-gMj">
                                                 <rect key="frame" x="166.5" y="20" width="81" height="81"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="81" id="3pQ-J4-gmY"/>

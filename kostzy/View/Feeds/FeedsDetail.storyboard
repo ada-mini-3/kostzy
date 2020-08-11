@@ -76,7 +76,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Empty Profile Picture" translatesAutoresizingMaskIntoConstraints="NO" id="nDs-te-XWL">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Empty Profile Picture" translatesAutoresizingMaskIntoConstraints="NO" id="nDs-te-XWL">
                                 <rect key="frame" x="20" y="72" width="45" height="45"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="Z3b-dM-IpN"/>
@@ -147,7 +147,7 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Empty Profile Picture" translatesAutoresizingMaskIntoConstraints="NO" id="065-KZ-9dv">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Empty Profile Picture" translatesAutoresizingMaskIntoConstraints="NO" id="065-KZ-9dv">
                                                     <rect key="frame" x="26" y="18" width="45" height="45"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="45" id="c9t-CT-3au"/>
