@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="at3-Xr-KQo">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -10,7 +11,7 @@
             <objects>
                 <tableViewController id="at3-Xr-KQo" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="8IP-Gj-XoL">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <sections>
@@ -25,13 +26,13 @@
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UGC-3h-Qw7">
                                                     <rect key="frame" x="20" y="20" width="374" height="4"/>
-                                                    <string key="text">We want to ensure that Koszy is safe and remains a platform for all anak kost to engage in fun and meaningful experiences
+                                                    <mutableString key="text">We want to ensure that kostzy is safe and remains a platform for all anak kost to engage in fun and meaningful experiences
 
 If you see any off-limits content, please report it!
 
 Rude or abusive behavior
 
-We value respect on Koszy and encourage all users to approach users with no judgment especially when disagreeing with one another. We can all have different opinions! If you’re ever concerned or worried about something someone has said, we urge that you report them immediately and our team will get right on it.
+We value respect on kostzy and encourage all users to approach users with no judgment especially when disagreeing with one another. We can all have different opinions! If you’re ever concerned or worried about something someone has said, we urge that you report them immediately and our team will get right on it.
 
 Buying, selling, and advertising
 
@@ -43,18 +44,18 @@ We do not allow any advertising, which includes:
 
 Recruitment
 
-Koszy is not a job board, or a recruitment agency. Finding work can be challenging, but there are many other online resources for this! In particular, we will strictly take down:
+kostzy is not a job board, or a recruitment agency. Finding work can be challenging, but there are many other online resources for this! In particular, we will strictly take down:
 1.	 Any content promoting or recruiting for multi-level marketing schemes (MLM)
 2.	Content asking for services (for instance childcare)
 3.	Surveys on behalf of third parties
 
 Self-promotion
 
-Koszy is a place to find information, sharing experiences, find support – not gain status, attention or “followers”. We don’t allow promoting your social media accounts.
+kostzy is a place to find information, sharing experiences, find support – not gain status, attention or “followers”. We don’t allow promoting your social media accounts.
 
 Fundraising
 
-We understand some users on Koszy may be in difficult positions or in needed of donation from the school/work project. But we’re currenty unable to verify them. This includes any posts or comments about raising money for an individual or cause in any and every situation
+We understand some users on kostzy may be in difficult positions or in needed of donation from the school/work project. But we’re currenty unable to verify them. This includes any posts or comments about raising money for an individual or cause in any and every situation
 
 Seeking relationship or arrangement
 
@@ -69,7 +70,7 @@ We want our users to freely communicate on Koszy, but we have to impose restrict
 4.	Is defamatory or libelous
 5.	Relates to commercial activities (including, without limitation, sales, competitions, and advertising(
 6.	Contains any spy ware, adware, viruses, corrupt files, worm programmes or other malicious code designed to interrupt, damage or limit the functionality of or disrupt any software, hardware, telecommunications, networks, servers or other equipment, Trojan horse or any other material designed to damage, interfere with, wrongly intercept or expropriate any data or personal information whether from Koszy or otherwise.
-</string>
+</mutableString>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
