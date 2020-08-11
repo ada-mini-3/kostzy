@@ -38,7 +38,7 @@ class CommunityDetailVC: UIViewController {
         if let community = self.community {
             communityDescriptionLabel.text = community.description
         }
-       
+
         /* memberCountLabel.text = "\(memberCount[selectedRow!]) Members" */
         memberCountLabel.text = "\(memberName.count) Members"
         setupRequestButton()

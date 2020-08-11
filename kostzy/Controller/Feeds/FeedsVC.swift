@@ -77,7 +77,9 @@ class FeedsVC: UIViewController, MKMapViewDelegate {
         apiManager.performGenericFetchRequest(urlString: "\(apiManager.baseUrl)feeds/?category=\(category)",
             token: theToken,
             errorMsg: {
-                self.setEmptyMessage("Feeds aren't loading right now, Try Again")
+                DispatchQueue.main.async {
+                    self.setEmptyMessage("Feeds aren't loading right now, Try Again")
+                }
         },
             completion: { (feeds: [Feeds]) in
             DispatchQueue.main.async {

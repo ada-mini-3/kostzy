@@ -28,15 +28,10 @@ struct Tag: Codable {
     
     static func initData() -> [Tag] {
         var tags = [Tag]()
-        //#f34d71
         tags.append(Tag(id: 1, name: "Facility", color: "#f34d71"))
-        //#2A8BD3
         tags.append(Tag(id: 2, name: "Environment", color: "#2A8BD3"))
-        //#21c2ca
         tags.append(Tag(id: 3, name: "Price", color: "#21c2ca"))
-        //#8346e5
         tags.append(Tag(id: 4, name: "Location", color: "#8346e5"))
-        //#72cdbf
         tags.append(Tag(id: 5, name: "Safety", color: "#72cdbf"))
         return tags
     }

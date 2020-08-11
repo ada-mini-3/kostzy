@@ -209,7 +209,11 @@ class NewDiscussionTableVC: UITableViewController {
     }
     
     func setupImageView() {
-        profileImageView.image = loadImageFromDiskWith(fileName: "profileImage")
+         if let imageCache = profileImageCache.object(forKey: "imageProfile"){
+             profileImageView.image = imageCache
+         } else {
+             profileImageView.image = UIImage(named: profileImagePlaceholderImage)
+         }
         profileImageView.layer.borderWidth = 1
         profileImageView.layer.masksToBounds = false
         profileImageView.layer.borderColor = UIColor.lightGray.cgColor
