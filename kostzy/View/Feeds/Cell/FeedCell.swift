@@ -11,12 +11,19 @@ import UIKit
 class FeedCell: UICollectionViewCell, UICollectionViewDataSource {
     
     //----------------------------------------------------------------
+    // MARK:- Constraints Outlets
+    //----------------------------------------------------------------
+    @IBOutlet weak var userNameTopConstraint: NSLayoutConstraint!
+    
+    
+    //----------------------------------------------------------------
     // MARK:- Outlets
     //----------------------------------------------------------------
     @IBOutlet weak var userImage: UIImageView!
     @IBOutlet weak var userName: UILabel!
     @IBOutlet weak var feedTime: UILabel!
     @IBOutlet weak var feedLocation: UIButton!
+    @IBOutlet weak var feedLocationChevronImage: UIImageView!
     @IBOutlet weak var feed: UILabel!
     @IBOutlet weak var feedTags: UICollectionView!
     @IBOutlet weak var commentButton: UIButton!

@@ -10,10 +10,19 @@ import UIKit
 
 class FeedsDetailVC: UIViewController {
             
+    //----------------------------------------------------------------
+    // MARK:- Constraints Outlets
+    //----------------------------------------------------------------
+    @IBOutlet weak var userNameTopConstraint: NSLayoutConstraint!
+    
+    
+    //----------------------------------------------------------------
+    // MARK:- Outlets
+    //----------------------------------------------------------------
     @IBOutlet weak var userImage: UIImageView!
     @IBOutlet weak var userName: UILabel!
     @IBOutlet weak var feedLocation: UIButton!
-   // @IBOutlet weak var feedLocationImageView: UIImageView!
+    @IBOutlet weak var feedLocationChevronImage: UIImageView!
     @IBOutlet weak var feedText: UILabel!
     @IBOutlet weak var tagsCollectionView: UICollectionView!
     @IBOutlet weak var commentButton: UIButton!
@@ -140,33 +149,27 @@ class FeedsDetailVC: UIViewController {
     }
     
     private func setupLocationButton() {
-        if isDarkMode == true {
-            feedLocation.setTitleColor(UIColor.white, for: .normal)
-            feedLocation.tintColor = UIColor.white
-        } else {
-            feedLocation.setTitleColor(#colorLiteral(red: 0.1462399662, green: 0.1462444067, blue: 0.1462419927, alpha: 0.71), for: .normal)
-            feedLocation.tintColor = UIColor(#colorLiteral(red: 0.1462399662, green: 0.1462444067, blue: 0.1462419927, alpha: 0.71))
-        }
-        
         if let location = feeds?.location {
-            feedLocation.setTitle(location, for: .normal)
+            if location == "" {
+                feedLocationChevronImage.isHidden = true
+                feedLocation.isHidden = true
+                userNameTopConstraint.constant = 14
+            } else {
+                feedLocationChevronImage.isHidden = false
+                feedLocation.isHidden = false
+                feedLocation.setTitle(location, for: .normal)
+                userNameTopConstraint.constant = 2
+            }
         }
-         feedLocation.contentHorizontalAlignment = .left
     }
     
     private func setupDarkMode() {
         if isDarkMode == true {
             likeButton.tintColor = UIColor.white
             commentButton.tintColor = UIColor.white
-            feedLocation.tintColor = UIColor.white
-            feedLocation.setTitleColor(UIColor.white, for: .normal)
-            feedLocation.tintColor = .white
         } else {
             likeButton.tintColor = UIColor.black
             commentButton.tintColor = UIColor.black
-            feedLocation.tintColor = #colorLiteral(red: 0.1462399662, green: 0.1462444067, blue: 0.1462419927, alpha: 0.71)
-            feedLocation.setTitleColor(#colorLiteral(red: 0.1462399662, green: 0.1462444067, blue: 0.1462419927, alpha: 0.71), for: .normal)
-            feedLocation.tintColor = #colorLiteral(red: 0.1462399662, green: 0.1462444067, blue: 0.1462419927, alpha: 0.71)
         }
     }
     
@@ -213,7 +216,6 @@ class FeedsDetailVC: UIViewController {
         commentField.delegate = self
         
         userName.text = feeds?.user.name
-        feedLocation.setTitle(feeds?.location, for: .normal)
         
         feedText.text = feeds?.feed
         commentCount.text = "\(feeds?.commentCount ?? 0) Comments"

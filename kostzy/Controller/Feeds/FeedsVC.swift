@@ -470,13 +470,11 @@ extension FeedsVC : UICollectionViewDelegate, UICollectionViewDataSource {
         var feed = feedsData[indexPath.row]
         if isDarkMode == true {
             cell.contentView.backgroundColor = UIColor(red: 29/255, green: 29/255, blue: 29/255, alpha: 1)
-            cell.feedLocation.setTitleColor(.white, for: .normal)
             cell.commentButton.tintColor = .white
             cell.likeButton.tintColor = .white
             cell.reportButton.setImage(UIImage(named: "Report"), for: .normal)
         } else {
             cell.contentView.backgroundColor = .white
-            cell.feedLocation.setTitleColor(#colorLiteral(red: 0.1462399662, green: 0.1462444067, blue: 0.1462419927, alpha: 0.71), for: .normal)
             cell.commentButton.tintColor = .black
         }
         
@@ -490,10 +488,14 @@ extension FeedsVC : UICollectionViewDelegate, UICollectionViewDataSource {
         
         
         if feed.location == "" {
+            cell.feedLocationChevronImage.isHidden = true
             cell.feedLocation.isHidden = true
+            cell.userNameTopConstraint.constant = 14
         } else {
+            cell.feedLocationChevronImage.isHidden = false
             cell.feedLocation.isHidden = false
             cell.feedLocation.setTitle(feed.location, for: .normal)
+            cell.userNameTopConstraint.constant = 4
         }
         
         cell.feed.text = feed.feed

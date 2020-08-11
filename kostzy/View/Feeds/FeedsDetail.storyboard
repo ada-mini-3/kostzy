@@ -195,7 +195,7 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <button opaque="NO" alpha="0.64999997615814209" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QV7-dr-noe">
+                            <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QV7-dr-noe">
                                 <rect key="frame" x="77" y="93.5" width="86" height="29"/>
                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
                                 <color key="tintColor" systemColor="systemGrayColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -293,12 +293,13 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chevron.right" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="bit-P7-AtX">
-                                <rect key="frame" x="163" y="103" width="14" height="10.5"/>
+                                <rect key="frame" x="163" y="103" width="14" height="10"/>
                                 <color key="tintColor" systemColor="systemGrayColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="14" id="0rC-mt-vZy"/>
                                     <constraint firstAttribute="width" constant="14" id="qa9-I5-EUN"/>
                                 </constraints>
+                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" weight="light"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -355,6 +356,7 @@
                         <outlet property="commentIndicator" destination="plx-cF-1kJ" id="64Y-cd-2sT"/>
                         <outlet property="commentTableView" destination="PxD-2y-dpu" id="SMc-SA-ERF"/>
                         <outlet property="feedLocation" destination="QV7-dr-noe" id="Mgo-uI-49c"/>
+                        <outlet property="feedLocationChevronImage" destination="bit-P7-AtX" id="O1w-L6-iGo"/>
                         <outlet property="feedText" destination="If6-W4-iEv" id="kG8-qi-yzL"/>
                         <outlet property="likeButton" destination="LPR-qo-Gh7" id="V4N-EV-Zp8"/>
                         <outlet property="likeCount" destination="CPa-D3-f6g" id="1Ql-AI-JJG"/>
@@ -363,6 +365,7 @@
                         <outlet property="tagsCollectionView" destination="G8c-si-YTZ" id="noE-EX-c3d"/>
                         <outlet property="userImage" destination="nDs-te-XWL" id="eKN-LN-8bX"/>
                         <outlet property="userName" destination="ZOe-Qc-LCb" id="kKp-ym-f7x"/>
+                        <outlet property="userNameTopConstraint" destination="WkL-5Z-pFL" id="ayJ-6y-Q8S"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TZ9-b4-8To" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
