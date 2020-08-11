@@ -116,10 +116,11 @@ class ProfileTableVC: UITableViewController {
     // MARK: - Custom Methods
     func loadProfileData() {
         let userIsLoggedIn = defaults.bool(forKey: "userIsLoggedIn")
-        let token = "Token \(defaults.dictionary(forKey: "userToken")!["token"] as! String)"
+        guard let token = defaults.dictionary(forKey: "userToken") else { return }
+        let theToken = "Token \(token["token"]!)"
         editProfileButtonOutlet.isEnabled = false
         if userIsLoggedIn == true {
-            apiManager.performGenericFetchRequest(urlString: "\(BaseAPIManager.authUrl)profile/", token: token,
+            apiManager.performGenericFetchRequest(urlString: "\(BaseAPIManager.authUrl)profile/", token: theToken,
             errorMsg: {
                 print("Error Kak")
             }) { (user: Profile) in
