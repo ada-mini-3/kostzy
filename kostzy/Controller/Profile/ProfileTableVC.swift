@@ -77,6 +77,7 @@ class ProfileTableVC: UITableViewController {
         myCommunityTableView.rowHeight = 60
         myCommunityTableView.estimatedRowHeight = 600
         
+        setupRefreshControl()
         setupImageView()
         setupBtnEdit()
     }
@@ -105,6 +106,18 @@ class ProfileTableVC: UITableViewController {
     
     
     // MARK: - Custom Methods
+    @objc func refresh(_ sender: AnyObject) {
+       // Code to refresh table view
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.loadProfileData()
+        }
+    }
+    
+    func setupRefreshControl() {
+        refreshControl?.attributedTitle = NSAttributedString(string: "Fetching Profile Data")
+        refreshControl?.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
+    }
+    
     func loadProfileData() {
         let userIsLoggedIn = defaults.bool(forKey: "userIsLoggedIn")
         guard let token = defaults.dictionary(forKey: "userToken") else { return }
@@ -125,14 +138,16 @@ class ProfileTableVC: UITableViewController {
                         self.profileImage.image = UIImage(named: self.profileImagePlaceholderImage)
                     }
                     if user.about == "" {
-                        self.profileAboutMeLabel.text = "No About Me"
+                        self.profileAboutMeLabel.text = self.profileAboutMePlaceholderText
                     } else {
                         self.profileAboutMeLabel.text = user.about
                     }
                     self.userLike = user.exp
                     self.dataSource.communities = user.community
+                    self.refreshControl?.endRefreshing()
                     self.myCommunityTableView.delegate = self.dataSource
                     self.myCommunityTableView.dataSource = self.dataSource
+                    self.myCommunityTableView.reloadData()
                 }
             }
         } else {

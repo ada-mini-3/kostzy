@@ -14,6 +14,7 @@ class CommunityVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
     var location: Location?
     var communityData: [Community] = []
     var apiManager = BaseAPIManager()
+    var refreshControl = UIRefreshControl()
     var defaults = UserDefaults.standard
     var selectedRow: Int?
     
@@ -25,28 +26,10 @@ class CommunityVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
     // MARK:- View Life Cycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         fetchCommunityData()
         setupLocationButton()
-    }
-    
-    private func fetchCommunityData() {
-        self.communityTableView.delegate = nil
-        self.communityTableView.dataSource = nil
-        var theToken = ""
-        if let token = defaults.dictionary(forKey: "userToken") {
-            theToken = "Token \(token["token"]!)"
-        }
-        apiManager.performGenericFetchRequest(urlString: "\(apiManager.baseUrl)community/", token: theToken, errorMsg: {
-            print("Error Kak")
-        }) { (communties: [Community]) in
-            DispatchQueue.main.async {
-                self.communityData = communties
-                self.communityIndicator.stopAnimating()
-                self.communityTableView.delegate = self
-                self.communityTableView.dataSource = self
-                self.communityTableView.reloadData()
-            }
-        }
+        setupRefreshControl()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -74,6 +57,43 @@ class CommunityVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
     
     
     // MARK: - Function
+    private func fetchCommunityData() {
+        self.communityTableView.delegate = nil
+        self.communityTableView.dataSource = nil
+        self.communityIndicator.isHidden = false
+        self.communityIndicator.startAnimating()
+        var theToken = ""
+        if let token = defaults.dictionary(forKey: "userToken") {
+            theToken = "Token \(token["token"]!)"
+        }
+        apiManager.performGenericFetchRequest(urlString: "\(apiManager.baseUrl)community/", token: theToken, errorMsg: {
+            print("Error Kak")
+        }) { (communties: [Community]) in
+            DispatchQueue.main.async {
+                self.communityData = communties
+                self.communityIndicator.stopAnimating()
+                self.communityIndicator.isHidden = true
+                self.refreshControl.endRefreshing()
+                self.communityTableView.delegate = self
+                self.communityTableView.dataSource = self
+                self.communityTableView.reloadData()
+            }
+        }
+    }
+    
+    @objc func refresh(_ sender: AnyObject) {
+        // Code to refresh table view
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.fetchCommunityData()
+        }
+    }
+    
+    func setupRefreshControl() {
+        refreshControl.attributedTitle = NSAttributedString(string: "Fetching Community Data")
+        refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
+        communityTableView.addSubview(refreshControl) // not required when using UITableViewController
+    }
+
     func setupLocationButton() {
         if location == nil {
             locationButtonOutlet.setTitle("Slipi", for: .normal)

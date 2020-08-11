@@ -503,6 +503,9 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Profile" id="WKU-hG-gU2"/>
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="ljJ-0m-gnd">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </refreshControl>
                     <connections>
                         <outlet property="badgeCollectionView" destination="BCY-hy-paF" id="FZx-DI-Fzs"/>
                         <outlet property="editProfileButtonOutlet" destination="HIr-bS-ZaL" id="UCP-VM-kLG"/>
