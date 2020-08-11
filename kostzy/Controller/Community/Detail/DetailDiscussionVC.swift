@@ -55,8 +55,9 @@ class DetailDiscussionVC: UIViewController {
         let theToken = "Token \(token["token"]!)"
         apiManager.performGenericFetchRequest(urlString: "\(apiManager.baseUrl)discussion-comment/?discussion=\(discussion.id)", token: theToken,
             errorMsg: {
-            print("Error Bro")
-            self.setEmptyMessage("Discussions aren't loading right now")
+                DispatchQueue.main.async {
+                    self.setEmptyMessage("Discussions aren't loading right now")
+                }
         })
         { (comments: [DiscussionComment]) in
             DispatchQueue.main.async {

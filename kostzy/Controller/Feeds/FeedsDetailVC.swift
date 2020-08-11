@@ -121,7 +121,9 @@ class FeedsDetailVC: UIViewController {
         guard let id = feeds?.id else { return }
         apiManager.performGenericFetchRequest(urlString: "\(apiManager.baseUrl)comments?feed=\(id)", token: "",
         errorMsg: {
-            self.setEmptyMessage("Feeds aren't loading anymore")
+            DispatchQueue.main.async {
+                self.setEmptyMessage("Feeds aren't loading anymore")
+            }
         }, completion: { (comment: [FeedComment]) in
             DispatchQueue.main.async {
                 self.refreshControl.endRefreshing()
