@@ -417,7 +417,6 @@ extension FeedsVC : CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if status == .authorizedAlways {
-            if CLLocationManager.isMonitoringAvailable(for: CLBeacon.self) {
                 if CLLocationManager.isRangingAvailable() {
                     guard let location: CLLocation = manager.location else { return }
                     fetchCity(from: location) { city, error in
@@ -425,7 +424,6 @@ extension FeedsVC : CLLocationManagerDelegate {
                        self.btnLocation.setTitle(city, for: .normal)
                    }
                 }
-            }
         }
     }
     
