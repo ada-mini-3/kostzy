@@ -70,7 +70,7 @@ class EditProfileVC: UIViewController, UIGestureRecognizerDelegate, UITextFieldD
                                 self.setupAlert(msg: errImage[0] + " (Image)")
                             }
                         default:
-                            print(data)
+                            print(data!)
                             self.setupAlert(msg: "Something's Wrong, Please Try Again Later")
                     }
                 } else if let error = error {

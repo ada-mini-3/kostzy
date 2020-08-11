@@ -196,11 +196,11 @@
                                 </prototypes>
                             </tableView>
                             <button opaque="NO" alpha="0.64999997615814209" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QV7-dr-noe">
-                                <rect key="frame" x="77" y="97.5" width="261" height="18"/>
+                                <rect key="frame" x="77" y="93.5" width="86" height="29"/>
                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
-                                <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="Kost Mandala" image="chevron.left" catalog="system">
-                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" systemColor="systemGrayColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="Kost Mandala">
+                                    <color key="titleColor" systemColor="systemGrayColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Kz-AB-C0s">
@@ -292,14 +292,23 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chevron.right" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="bit-P7-AtX">
+                                <rect key="frame" x="163" y="103" width="14" height="10.5"/>
+                                <color key="tintColor" systemColor="systemGrayColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="14" id="0rC-mt-vZy"/>
+                                    <constraint firstAttribute="width" constant="14" id="qa9-I5-EUN"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="LPR-qo-Gh7" firstAttribute="leading" secondItem="Yfb-nm-cZJ" secondAttribute="trailing" constant="17" id="4mO-wR-2VI"/>
                             <constraint firstItem="PxD-2y-dpu" firstAttribute="leading" secondItem="KqW-WA-1HY" secondAttribute="leading" id="6i4-yx-Dxw"/>
+                            <constraint firstItem="bit-P7-AtX" firstAttribute="leading" secondItem="QV7-dr-noe" secondAttribute="trailing" id="77Y-wo-Bwj"/>
                             <constraint firstItem="c4N-d7-eHZ" firstAttribute="leading" secondItem="KqW-WA-1HY" secondAttribute="leading" constant="20" id="9O1-2w-oDz"/>
                             <constraint firstAttribute="trailingMargin" secondItem="XPN-DB-hOv" secondAttribute="trailing" constant="-20" id="Cip-0B-bJa"/>
-                            <constraint firstItem="QV7-dr-noe" firstAttribute="top" secondItem="ZOe-Qc-LCb" secondAttribute="bottom" constant="4" id="E2N-b6-XdY"/>
+                            <constraint firstItem="QV7-dr-noe" firstAttribute="top" secondItem="ZOe-Qc-LCb" secondAttribute="bottom" id="E2N-b6-XdY"/>
                             <constraint firstItem="QV7-dr-noe" firstAttribute="leading" secondItem="nDs-te-XWL" secondAttribute="trailing" constant="12" id="Etd-QH-bB5"/>
                             <constraint firstItem="lXv-7Q-O7x" firstAttribute="centerY" secondItem="ZOe-Qc-LCb" secondAttribute="centerY" id="Fkt-6T-mJL"/>
                             <constraint firstItem="LPR-qo-Gh7" firstAttribute="centerY" secondItem="Yfb-nm-cZJ" secondAttribute="centerY" id="Fzw-eo-MmE"/>
@@ -330,10 +339,10 @@
                             <constraint firstItem="nDs-te-XWL" firstAttribute="leading" secondItem="KqW-WA-1HY" secondAttribute="leading" constant="20" id="mMI-PT-eNL"/>
                             <constraint firstItem="MRc-42-hKd" firstAttribute="leading" secondItem="c4N-d7-eHZ" secondAttribute="trailing" constant="8" id="qnS-VK-wuZ"/>
                             <constraint firstItem="KqW-WA-1HY" firstAttribute="trailing" secondItem="If6-W4-iEv" secondAttribute="trailing" constant="20" id="sl2-7Y-bDj"/>
+                            <constraint firstItem="bit-P7-AtX" firstAttribute="centerY" secondItem="QV7-dr-noe" secondAttribute="centerY" id="tiF-HM-cX3"/>
                             <constraint firstItem="CPa-D3-f6g" firstAttribute="leading" secondItem="MRc-42-hKd" secondAttribute="trailing" constant="8" id="w0s-s2-vWH"/>
                             <constraint firstItem="If6-W4-iEv" firstAttribute="top" secondItem="nDs-te-XWL" secondAttribute="bottom" constant="20" id="wMj-a0-WX1"/>
                             <constraint firstItem="Yfb-nm-cZJ" firstAttribute="leading" secondItem="KqW-WA-1HY" secondAttribute="leading" constant="20" id="wcX-KP-XPH"/>
-                            <constraint firstItem="8rD-5c-f1y" firstAttribute="leading" secondItem="QV7-dr-noe" secondAttribute="trailing" constant="16" id="yUL-sE-NZT"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="KqW-WA-1HY"/>
                     </view>
@@ -364,7 +373,7 @@
     <resources>
         <image name="Badge-100 Likes" width="39" height="42"/>
         <image name="Empty Profile Picture" width="81" height="81"/>
-        <image name="chevron.left" catalog="system" width="96" height="128"/>
+        <image name="chevron.right" catalog="system" width="96" height="128"/>
         <image name="circle.fill" catalog="system" width="128" height="121"/>
         <image name="ellipses.bubble" catalog="system" width="128" height="110"/>
         <image name="hand.thumbsup" catalog="system" width="128" height="128"/>
