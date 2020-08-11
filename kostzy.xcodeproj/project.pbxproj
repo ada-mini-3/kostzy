@@ -884,7 +884,7 @@
 				CODE_SIGN_ENTITLEMENTS = kostzy/kostzy.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = RTU67JB7DC;
+				DEVELOPMENT_TEAM = QWVAEMBXMM;
 				INFOPLIST_FILE = kostzy/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
