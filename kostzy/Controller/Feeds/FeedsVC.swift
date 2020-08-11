@@ -257,8 +257,10 @@ class FeedsVC: UIViewController, MKMapViewDelegate {
         }
     }
     
-    private func setupButtonToLocation() {        if location != nil {
-             btnLocation.setTitle(location?.name, for: .normal)
+    private func setupButtonToLocation() {
+        
+        if let location = location {
+            btnLocation.setTitle(location.name, for: .normal)
         }
         
         if isDarkMode == true {
@@ -396,11 +398,30 @@ class FeedsVC: UIViewController, MKMapViewDelegate {
 //----------------------------------------------------------------
 extension FeedsVC : CLLocationManagerDelegate {
     
+    func fetchCity(from location: CLLocation, completion: @escaping (_ city: String?, _ error: Error?) -> ()) {
+        CLGeocoder().reverseGeocodeLocation(location, completionHandler: { placemark, error in
+            completion(placemark?.first?.locality,
+                       error)
+        })
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let location: CLLocation = manager.location else { return }
+        fetchCity(from: location) { city, error in
+            guard let city = city, error == nil else { return }
+            self.btnLocation.setTitle(city, for: .normal)
+        }
+    }
+    
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if status == .authorizedAlways {
             if CLLocationManager.isMonitoringAvailable(for: CLBeacon.self) {
                 if CLLocationManager.isRangingAvailable() {
-                    
+                    guard let location: CLLocation = manager.location else { return }
+                    fetchCity(from: location) { city, error in
+                       guard let city = city, error == nil else { return }
+                       self.btnLocation.setTitle(city, for: .normal)
+                   }
                 }
             }
         }
@@ -460,7 +481,7 @@ extension FeedsVC : UICollectionViewDelegate, UICollectionViewDataSource {
             badge.image = #imageLiteral(resourceName: "Badge-200 Likes")
         } else if feed.user.exp <= 300 {
             badge.image = #imageLiteral(resourceName: "Badge-300 Likes")
-        } else if feed.user.exp <= 400 {
+        } else if feed.user.exp <= 500 {
             badge.image = #imageLiteral(resourceName: "Badge-400 Likes")
         } else if feed.user.exp >= 500 {
             badge.image = #imageLiteral(resourceName: "Badge-500 Likes")
@@ -531,6 +552,7 @@ extension FeedsVC : UICollectionViewDelegate, UICollectionViewDataSource {
                 self.setupFeedLikeApi(button: cell.likeButton, feed: feed)
                 feed.likeStatus = true
                 cell.likeCount.text = "\(feed.likeCount + 1) Likes"
+                print(feed)
             } else {
                 self.setupFeedDislikeApi(likeId: feed.like!.id)
                 feed.likeStatus = false

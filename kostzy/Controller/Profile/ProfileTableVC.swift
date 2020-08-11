@@ -67,13 +67,6 @@ class ProfileTableVC: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
-    
-        
         myCommunityTableView.rowHeight = 60
         myCommunityTableView.estimatedRowHeight = 600
         
@@ -110,7 +103,7 @@ class ProfileTableVC: UITableViewController {
             self.loadProfileData()
         }
     }
-    
+    // Kostzy Beginner, Experienced, 
     func setupRefreshControl() {
         refreshControl?.attributedTitle = NSAttributedString(string: "Fetching Profile Data")
         refreshControl?.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
@@ -297,7 +290,6 @@ extension ProfileTableVC: UICollectionViewDataSource, UICollectionViewDelegate, 
         // Configure the cell
         cell.likeProgressView.setProgress(floatXP / 600, animated: true)
         print(floatXP / 600)
-        print(profile?.exp, "EXP")
         
         if profile?.exp ?? 0 >= 100 {
             cell.like100DotView.backgroundColor = #colorLiteral(red: 0.3333333333, green: 0.3098039216, blue: 0.7882352941, alpha: 1)

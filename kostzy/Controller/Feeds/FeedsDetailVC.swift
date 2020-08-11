@@ -38,10 +38,13 @@ class FeedsDetailVC: UIViewController {
     @IBOutlet weak var buttonLocation: UIButton!
     @IBOutlet weak var commentIndicator: UIActivityIndicatorView!
     @IBOutlet weak var replyButton: UIButton!
+    @IBOutlet weak var userBadge: UIImageView!
     
-    var feeds : Feeds?
+    
     var commentData: [FeedComment] =  []
     var bottomConstraint : NSLayoutConstraint?
+    var feeds : Feeds?
+    
     var apiManager = BaseAPIManager()
     let defaults = UserDefaults.standard
     let refreshControl = UIRefreshControl()
@@ -55,6 +58,9 @@ class FeedsDetailVC: UIViewController {
         setupKeyboardConstraint()
         setupCommentData()
         setupRefreshControl()
+        if let feeds = feeds {
+            setupUserBadge(badge: userBadge, feed: feeds)
+        }
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification), name: UIResponder.keyboardWillHideNotification, object: nil)
         tagsCollectionView.dataSource = self
@@ -116,6 +122,20 @@ class FeedsDetailVC: UIViewController {
                     self.setupAlert(msg: error.localizedDescription)
                 }
             }
+        }
+    }
+    
+    private func setupUserBadge(badge: UIImageView,feed: Feeds) {
+        if feed.user.exp <= 100 {
+            badge.image = #imageLiteral(resourceName: "Badge-100 Likes")
+        } else if feed.user.exp <= 200 {
+            badge.image = #imageLiteral(resourceName: "Badge-200 Likes")
+        } else if feed.user.exp <= 300 {
+            badge.image = #imageLiteral(resourceName: "Badge-300 Likes")
+        } else if feed.user.exp <= 500 {
+            badge.image = #imageLiteral(resourceName: "Badge-400 Likes")
+        } else if feed.user.exp >= 500 {
+            badge.image = #imageLiteral(resourceName: "Badge-500 Likes")
         }
     }
     
