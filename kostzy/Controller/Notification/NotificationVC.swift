@@ -42,14 +42,14 @@ class NotificationVC: UIViewController {
     let notifStore = NotifStore.shared
     static let refreshNotification = Notification.Name(rawValue: "refreshNotification")
     
-    var notifications = [Notif(date: parseDate("2020-08-05"), userImage: "Other User 1", userName: "Eleanor", time: "Now", userComment: "Liked your post"),
-                 Notif(date: parseDate("2020-08-05"), userImage: "Other User 2", userName: "Kahfi", time: "10m", userComment: "Commented: Itu emang tempatnya pewe banget sih gilaa"),
-                 Notif(date: parseDate("2020-08-05"), userImage: "Other User 2", userName: "Kahfi", time: "11m", userComment: "Liked your post"),
-                 Notif(date: parseDate("2020-08-05"), userImage: "Other User 3", userName: "Justin", time: "20m", userComment: "Liked your post"),
-                 Notif(date: parseDate("2020-08-04"), userImage: "Other User 4", userName: "Emily", time: "1d", userComment: "Liked your post"),
-                 Notif(date: parseDate("2020-08-04"), userImage: "Other User 5", userName: "Tanos", time: "1d", userComment: "Liked your post"),
-                 Notif(date: parseDate("2020-08-04"), userImage: "Other User 6", userName: "Mawar", time: "1d", userComment: "Commented: Gue sih no bgt sama kostan itu.. Ibu kostnya rese trs kamarnya kotor"),
-                 Notif(date: parseDate("2020-08-04"), userImage: "Rais", userName: "Rey", time: "1d", userComment: "Liked your post")]
+    var notifications = [Notif(date: parseDate("2020-08-11"), userImage: "Other User 1", userName: "Eleanor", time: "Now", userComment: "Liked your post"),
+                 Notif(date: parseDate("2020-08-11"), userImage: "Other User 2", userName: "Nicholas", time: "10m", userComment: "Commented: Itu emang tempatnya pewe banget sih gilaa"),
+                 Notif(date: parseDate("2020-08-11"), userImage: "Other User 2", userName: "Nicholas", time: "11m", userComment: "Liked your post"),
+                 Notif(date: parseDate("2020-08-11"), userImage: "Other User 3", userName: "Justin", time: "20m", userComment: "Liked your post"),
+                 Notif(date: parseDate("2020-08-10"), userImage: "Other User 4", userName: "Emily", time: "1d", userComment: "Liked your post"),
+                 Notif(date: parseDate("2020-08-10"), userImage: "Other User 5", userName: "Rais", time: "1d", userComment: "Liked your post"),
+                 Notif(date: parseDate("2020-08-10"), userImage: "Other User 6", userName: "Dinda", time: "1d", userComment: "Commented: Gue sih no bgt sama kostan itu.. Ibu kostnya rese trs kamarnya kotor"),
+                 Notif(date: parseDate("2020-08-10"), userImage: "Rais", userName: "Rey", time: "1d", userComment: "Liked your post")]
    
     var sections = [GroupedSection<Date, Notif>]()
     
