@@ -14,6 +14,8 @@ class FeedCell: UICollectionViewCell, UICollectionViewDataSource {
     // MARK:- Constraints Outlets
     //----------------------------------------------------------------
     @IBOutlet weak var userNameTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var feedTagsTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var feedTagsHeightConstraint: NSLayoutConstraint!
     
     
     //----------------------------------------------------------------

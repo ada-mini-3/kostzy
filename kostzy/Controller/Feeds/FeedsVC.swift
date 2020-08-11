@@ -501,7 +501,17 @@ extension FeedsVC : UICollectionViewDelegate, UICollectionViewDataSource {
         }
         
         cell.feed.text = feed.feed
-        cell.tags = feed.tags
+        
+        if feed.tags.count == 0 {
+            cell.feedTagsTopConstraint.constant = 0
+            cell.feedTagsHeightConstraint.constant = 0
+        }
+        else {
+            cell.feedTagsTopConstraint.constant = 16
+            cell.feedTagsHeightConstraint.constant = 30
+            cell.tags = feed.tags
+        }
+        
         cell.likeCount.text = "\(feed.likeCount) Likes"
         cell.commentCount.text = "\(feed.commentCount) Comments"
         cell.commentTapAction = {() in

@@ -14,6 +14,8 @@ class FeedsDetailVC: UIViewController {
     // MARK:- Constraints Outlets
     //----------------------------------------------------------------
     @IBOutlet weak var userNameTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var feedTagsTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var feedTagsHeightConstraint: NSLayoutConstraint!
     
     
     //----------------------------------------------------------------
@@ -213,6 +215,15 @@ class FeedsDetailVC: UIViewController {
             setLikeButtonState(button: likeButton, feed: feed)
         }
         
+        if feeds?.tags.count == 0 {
+            feedTagsTopConstraint.constant = 0
+            feedTagsHeightConstraint.constant = 0
+        }
+        else {
+            feedTagsTopConstraint.constant = 16
+            feedTagsHeightConstraint.constant = 30
+        }
+        
         replyButton.isEnabled = false
         replyButton.setTitleColor(UIColor.lightGray, for: .normal)
         commentField.delegate = self
@@ -366,8 +377,10 @@ extension FeedsDetailVC: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = tagsCollectionView.dequeueReusableCell(withReuseIdentifier: "tagCell", for: indexPath) as! FeedTagsCell
+        
         cell.tagName.text = feeds?.tags[indexPath.row].name
         cell.contentView.backgroundColor = UIColor.hexStringToUIColor(hex: (feeds?.tags[indexPath.row].color)!)
+        
         return cell
     }
     
