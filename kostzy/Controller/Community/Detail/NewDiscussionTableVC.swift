@@ -39,6 +39,7 @@ class NewDiscussionTableVC: UITableViewController {
     let discussionTextViewPlaceholderText = "Information or question"
     var discussionImagePicker: UIImagePickerController!
     var apiManager = BaseAPIManager()
+    var profile: Profile?
     var communityId: Int?
     
     //----------------------------------------------------------------
@@ -209,11 +210,27 @@ class NewDiscussionTableVC: UITableViewController {
     }
     
     func setupImageView() {
-         if let imageCache = profileImageCache.object(forKey: "imageProfile"){
-             profileImageView.image = imageCache
-         } else {
-             profileImageView.image = UIImage(named: profileImagePlaceholderImage)
-         }
+        let userIsLoggedIn = defaults.bool(forKey: "userIsLoggedIn")
+        guard let token = defaults.dictionary(forKey: "userToken") else { return }
+        let theToken = "Token \(token["token"]!)"
+        if userIsLoggedIn == true {
+            apiManager.performGenericFetchRequest(urlString: "\(BaseAPIManager.authUrl)profile/", token: theToken,
+            errorMsg: {
+                print("Error Kak")
+            }) { (user: Profile) in
+                DispatchQueue.main.async {
+                    self.profile = user
+                    if let image = user.image {
+                        self.profileImageView.loadImageFromUrl(url: URL(string: image)!)
+                    } else {
+                        self.profileImageView.image = UIImage(named: self.profileImagePlaceholderImage)
+                    }
+                }
+            }
+        } else {
+            profileImageView.image = UIImage(named: profileImagePlaceholderImage)
+        }
+        
         profileImageView.layer.borderWidth = 1
         profileImageView.layer.masksToBounds = false
         profileImageView.layer.borderColor = UIColor.lightGray.cgColor

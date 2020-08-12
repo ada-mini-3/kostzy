@@ -46,11 +46,14 @@ class FeedsCreateVC: UIViewController {
     let feedTextViewPlaceholderText = "Information or Question"
     let kostNameTextViewPlaceholderText = "Kost Name"
     
+    let defaults = UserDefaults.standard
+    let apiManager = BaseAPIManager()
+    var profile: Profile?
+    
     let categories = FeedCategory.initData()
     var categoryPicker = UIPickerView()
     var category : String = ""
     var catId : Int?
-    
     var locationString :String?
     
     var newTag = [Tag]()
@@ -59,8 +62,6 @@ class FeedsCreateVC: UIViewController {
     let hangoutTags = Tag.initHangoutsTag()
     let expTags = Tag.initExpTag()
     lazy var displayedTags = infoTags
-    let defaults = UserDefaults.standard
-    let apiManager = BaseAPIManager()
     var tagsId: [Int] = []
     
     var toolbar = UIToolbar()
@@ -255,12 +256,6 @@ class FeedsCreateVC: UIViewController {
         toolbar.removeFromSuperview()
     }
     
-    private func setupProfilePicture() {
-        profilePhoto.layer.cornerRadius = profilePhoto.frame.height / 2
-        profilePhoto.clipsToBounds = true
-    }
-
-    
     private func setupCancelButton() {
         let attributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17, weight: .medium)]
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain , target: self, action: #selector(cancelClicked))
@@ -365,9 +360,27 @@ class FeedsCreateVC: UIViewController {
     }
     
     func setupImageView() {
-        if let image = profileImageCache.object(forKey: "imageProfile") {
-            profilePhoto.image = image
+        let userIsLoggedIn = defaults.bool(forKey: "userIsLoggedIn")
+        guard let token = defaults.dictionary(forKey: "userToken") else { return }
+        let theToken = "Token \(token["token"]!)"
+        if userIsLoggedIn == true {
+            apiManager.performGenericFetchRequest(urlString: "\(BaseAPIManager.authUrl)profile/", token: theToken,
+            errorMsg: {
+                print("Error Kak")
+            }) { (user: Profile) in
+                DispatchQueue.main.async {
+                    self.profile = user
+                    if let image = user.image {
+                        self.profilePhoto.loadImageFromUrl(url: URL(string: image)!)
+                    } else {
+                        self.profilePhoto.image = UIImage(named: self.profileImagePlaceholderImage)
+                    }
+                }
+            }
+        } else {
+            profilePhoto.image = UIImage(named: profileImagePlaceholderImage)
         }
+        
         profilePhoto.layer.borderWidth = 1
         profilePhoto.layer.masksToBounds = false
         profilePhoto.layer.borderColor = UIColor.lightGray.cgColor
